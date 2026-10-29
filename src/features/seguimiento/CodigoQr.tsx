@@ -1,0 +1,44 @@
+// QR simulado: una grilla estable generada a partir del código del pedido (no se puede escanear).
+const N = 21
+
+const esMarcaEsquina = (x: number, y: number) => {
+  const en = (cx: number, cy: number) => x >= cx && x < cx + 7 && y >= cy && y < cy + 7
+  return en(0, 0) || en(N - 7, 0) || en(0, N - 7)
+}
+
+const celdaMarca = (x: number, y: number) => {
+  const lx = x >= N - 7 ? x - (N - 7) : x
+  const ly = y >= N - 7 ? y - (N - 7) : y
+  const borde = lx === 0 || lx === 6 || ly === 0 || ly === 6
+  const centro = lx >= 2 && lx <= 4 && ly >= 2 && ly <= 4
+  return borde || centro
+}
+
+export default function CodigoQr({ codigo, activo }: { codigo: string; activo: boolean }) {
+  let semilla = [...codigo].reduce((a, c) => (a * 31 + c.charCodeAt(0)) % 2147483647, 17)
+  const azar = () => {
+    semilla = (semilla * 48271) % 2147483647
+    return semilla / 2147483647
+  }
+
+  const celdas: { x: number; y: number }[] = []
+  for (let y = 0; y < N; y++) {
+    for (let x = 0; x < N; x++) {
+      const lleno = esMarcaEsquina(x, y) ? celdaMarca(x, y) : azar() > 0.5
+      if (lleno) celdas.push({ x, y })
+    }
+  }
+
+  return (
+    <svg
+      viewBox={`-1 -1 ${N + 2} ${N + 2}`}
+      className={`h-44 w-44 rounded-lg bg-surface ${activo ? 'text-ink' : 'text-line'}`}
+      role="img"
+      aria-label={`Código de recojo ${codigo}`}
+    >
+      {celdas.map((c) => (
+        <rect key={`${c.x}-${c.y}`} x={c.x} y={c.y} width={1.02} height={1.02} fill="currentColor" />
+      ))}
+    </svg>
+  )
+}
