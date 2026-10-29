@@ -1,0 +1,32 @@
+@import 'tailwindcss';
+
+/* Tokens de diseño compartidos. Úsalos como clases: bg-brand, text-ink-muted, border-line, etc.
+   No agregues colores sueltos (#hex) en los componentes: si falta uno, agrégalo aquí. */
+@theme {
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --color-brand: #0f766e;
+  --color-brand-dark: #115e59;
+  --color-brand-soft: #e6f4f2;
+
+  --color-ink: #17181c;
+  --color-ink-muted: #5f6470;
+  --color-line: #e6e7eb;
+  --color-surface: #ffffff;
+  --color-canvas: #f7f7f8;
+
+  --color-ok: #15803d;
+  --color-warn: #b45309;
+  --color-bad: #b91c1c;
+}
+
+html {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
