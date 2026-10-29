@@ -23,7 +23,8 @@ git checkout feat/tu-modulo
 git merge main                # mantén tu rama al día
 npm run dev                   # trabaja y prueba en http://localhost:5173
 npm run build                 # debe pasar sin errores
-git add src/features/tu-modulo
+# marca tus tareas en EQUIPO.md y agrega tu fila en BITACORA.md
+git add src/features/tu-modulo EQUIPO.md BITACORA.md
 git commit -m "catalogo: filtros por categoría"
 git push -u origin feat/tu-modulo
 ```
@@ -38,11 +39,14 @@ Luego abre un **Pull Request** hacia `main` en GitHub. Vercel comentará con un 
 - **Nada de claves ni contraseñas en el código.** El frontend es público.
 - Usa los componentes de `src/components/ui.tsx` y los colores de `src/index.css` (clases como `bg-brand`, `text-ink-muted`) para que todo se vea igual.
 - Mensajes de commit cortos: `modulo: qué hiciste`.
+- **Bitácora:** en cada PR, marca `[x]` tus tareas terminadas en [EQUIPO.md](EQUIPO.md) y agrega una fila al final de tu tabla en [BITACORA.md](BITACORA.md). Solo en tu sección, para no chocar con los demás.
 
 ## Usar Claude Code o Antigravity
 
 Ambos leen las reglas del proyecto en [AGENTS.md](AGENTS.md): Claude Code a través de `CLAUDE.md` y Antigravity a través de `.agent/rules/proyecto.md` (detalle en el [README](README.md#trabajar-con-agentes-de-ia)). Pídeles trabajar solo en tu módulo, por ejemplo:
 
-> Implementa el módulo de catálogo en src/features/catalogo siguiendo AGENTS.md y las tareas de EQUIPO.md. Usa el store y los componentes compartidos; no modifiques archivos fuera de mi carpeta.
+> Soy Ruth, responsable del catálogo. Dime qué tengo pendiente según EQUIPO.md y BITACORA.md, implementa la siguiente tarea en src/features/catalogo y actualiza la bitácora al terminar.
+
+El agente está instruido para identificarte, resumirte tus pendientes, trabajar solo en tu módulo y actualizar `EQUIPO.md` y `BITACORA.md` en tu sección.
 
 Revisa siempre lo que generan antes de hacer commit.
