@@ -52,12 +52,14 @@ Versión inicial del catálogo hecha por Rafael (grilla, stock, filtros, búsque
 - [ ] Mostrar el tiempo ahorrado frente a hacer cola (usa `esperaCajaMin` de la tienda)
 
 ### Hemsy · Seguimiento y recojo
-- [ ] Línea de tiempo: recibido → preparando → listo → recogido
-- [ ] Código QR de recojo para el mostrador
-- [ ] Vista previa de aviso tipo WhatsApp en cada estado
-- [ ] Lista «Mis pedidos»
-- [ ] Botón de reclamo o cambio (postventa)
-- [ ] Al recoger, invitar a la encuesta NPS
+- [x] Línea de tiempo: recibido → preparando → listo → recogido
+- [x] Código QR de recojo para el mostrador
+- [x] Vista previa de aviso tipo WhatsApp en cada estado
+- [x] Lista «Mis pedidos»
+- [x] Botón de reclamo o cambio (postventa)
+- [x] Al recoger, invitar a la encuesta NPS
+- [x] Extra: «Antes / ahora» en Mis pedidos para dejar claro el dolor que resuelve
+- [x] Extra: el estado se actualiza solo si el Panel avanza el pedido en otra pestaña
 
 ### Rafael · Club 3A y NPS
 - [x] Saldo de puntos y nivel del cliente
