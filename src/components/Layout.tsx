@@ -18,11 +18,9 @@ export default function Layout() {
   const navigate = useNavigate()
 
   // Visitante: solo ve el catálogo; los demás módulos aparecen al ingresar como cliente.
-  // «Antes y después» es pública para todos los roles (se usa en la presentación).
-  const enlaces = [
-    ...(sesion?.rol === 'admin' ? enlacesAdmin : sesion ? enlacesCliente : enlacesCliente.slice(0, 1)),
-    { to: '/journey', label: 'Antes y después' },
-  ]
+  // «Antes y después» es material de presentación, no de cliente: solo aparece en el menú del administrador.
+  // La ruta /journey sigue abierta por enlace directo para la demo.
+  const enlaces = sesion?.rol === 'admin' ? [...enlacesAdmin, { to: '/journey', label: 'Antes y después' }] : sesion ? enlacesCliente : enlacesCliente.slice(0, 1)
 
   const salir = () => {
     // Primero salimos de la ruta protegida; si no, el guard nos mandaría a /login.

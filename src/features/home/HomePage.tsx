@@ -13,6 +13,7 @@ const pasos = [
 export default function HomePage() {
   const tiendaId = useApp((s) => s.tiendaId)
   const setTienda = useApp((s) => s.setTienda)
+  const sesion = useApp((s) => s.sesion)
 
   return (
     <div className="space-y-14">
@@ -85,7 +86,7 @@ export default function HomePage() {
         <p className="mt-1 text-ink-muted">Cada parte de esta experiencia responde a un punto de dolor del customer journey.</p>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {modulos
-            .filter((m) => m.id !== 'base')
+            .filter((m) => m.id !== 'base' && (m.id !== 'journey' || sesion?.rol === 'admin'))
             .map((m) => (
               <Link key={m.id} to={m.ruta}>
                 <Card className="h-full transition-colors hover:border-ink-muted">
