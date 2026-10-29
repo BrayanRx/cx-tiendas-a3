@@ -79,3 +79,15 @@ Todos los módulos se comunican por `src/lib/store.ts`:
 ## Presentación (próxima semana)
 
 Cada integrante prepara 1 a 2 diapositivas de su módulo con: dolor → solución → captura de pantalla → concepto del curso (journey, blueprint, 7P, NPS, KPI). El líder arma la introducción (proceso crítico) y el cierre (demo en vivo con el enlace de Vercel).
+
+## Acceso simulado (login)
+
+No hay backend: el login solo elige un rol y guarda `sesion` en `useApp` (sin contraseñas).
+
+| Rol | Rutas | Notas |
+|---|---|---|
+| Visitante | `/`, `/catalogo`, `/login` | Puede ver stock; para pedir debe ingresar |
+| Cliente | `/catalogo`, `/pedido`, `/seguimiento`, `/club` | Si entra a `/panel` vuelve a su inicio |
+| Administrador de tienda | `/panel` | Elige la tienda que administra en la cabecera |
+
+Las rutas protegidas se declaran en `src/App.tsx` con `RequireRol`.

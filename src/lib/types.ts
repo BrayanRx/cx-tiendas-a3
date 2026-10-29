@@ -65,3 +65,11 @@ export interface RespuestaNps {
   comentario?: string
   fecha: number
 }
+
+export type RolSesion = 'cliente' | 'admin'
+
+/** Sesión simulada (sin backend ni contraseñas). */
+export interface Sesion {
+  rol: RolSesion
+  nombre: string
+}

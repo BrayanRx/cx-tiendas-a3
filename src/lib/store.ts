@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { productos } from '@/data/productos'
 import { tiendas } from '@/data/tiendas'
-import type { EstadoPedido, ItemCarrito, MetodoPago, Pedido, RespuestaNps } from './types'
+import type { EstadoPedido, ItemCarrito, MetodoPago, Pedido, RespuestaNps, Sesion } from './types'
 
 // Estado global compartido entre módulos, guardado en el navegador (localStorage).
 // Es el "contrato" del equipo: cada módulo lee y escribe aquí en vez de inventar su propio estado.
@@ -44,6 +44,11 @@ interface AppState {
   encuestas: RespuestaNps[]
   registrarNps: (r: Omit<RespuestaNps, 'fecha'>) => void
 
+  // Sesión simulada (Acceso): cliente o administrador de tienda
+  sesion: Sesion | null
+  iniciarSesion: (sesion: Sesion) => void
+  cerrarSesion: () => void
+
   // Utilidad para demos
   reiniciarDemo: () => void
 }
@@ -56,10 +61,13 @@ const inicial = {
   encuestas: [] as RespuestaNps[],
 }
 
+const sesionInicial = null as Sesion | null
+
 export const useApp = create<AppState>()(
   persist(
     (set, get) => ({
       ...inicial,
+      sesion: sesionInicial,
 
       setTienda: (id) => set({ tiendaId: id }),
 
@@ -123,6 +131,10 @@ export const useApp = create<AppState>()(
       },
       registrarNps: (r) => set((s) => ({ encuestas: [...s.encuestas, { ...r, fecha: Date.now() }] })),
 
+      iniciarSesion: (sesion) => set({ sesion }),
+      cerrarSesion: () => set({ sesion: null }),
+
+      // La sesión no se reinicia: la demo conserva quién está conectado.
       reiniciarDemo: () => set({ ...inicial }),
     }),
     { name: 'cx-pide-y-recoge', version: 1 },

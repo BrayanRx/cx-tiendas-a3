@@ -91,6 +91,9 @@ export default function HomePage() {
                 <Card className="h-full transition-colors hover:border-ink-muted">
                   <p className="text-sm text-ink-muted">{m.dolor}</p>
                   <p className="mt-3 font-medium text-brand-dark">{m.nombre} →</p>
+                  {m.id === 'panel' && (
+                    <p className="mt-1 text-xs text-ink-muted">Solo administrador de tienda</p>
+                  )}
                 </Card>
               </Link>
             ))}
