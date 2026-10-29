@@ -82,7 +82,12 @@ Cada integrante prepara 1 a 2 diapositivas de su módulo con: dolor → solució
 
 ## Acceso simulado (login)
 
-No hay backend: el login solo elige un rol y guarda `sesion` en `useApp` (sin contraseñas).
+No hay backend: el login valida contra dos cuentas de prueba (visibles en `/login` para probar rápido) y guarda `sesion` en `useApp`.
+
+| Cuenta | Correo | Contraseña |
+|---|---|---|
+| Cliente | `cliente@3a.pe` | `cliente123` |
+| Administrador | `admin@3a.pe` | `admin123` |
 
 | Rol | Rutas | Notas |
 |---|---|---|
