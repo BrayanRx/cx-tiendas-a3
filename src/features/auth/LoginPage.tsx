@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 import Logo from '@/components/Logo'
 import { inicioDeRol } from '@/components/RequireRol'
 import { Button, Card } from '@/components/ui'
@@ -27,7 +27,6 @@ const roles: { id: RolSesion; titulo: string; detalle: string; modulos: string[]
 export default function LoginPage() {
   const sesion = useApp((s) => s.sesion)
   const iniciarSesion = useApp((s) => s.iniciarSesion)
-  const navigate = useNavigate()
   const location = useLocation()
   const pedido = location.state as { desde?: string; rol?: RolSesion } | null
 
@@ -35,13 +34,13 @@ export default function LoginPage() {
   const [correo, setCorreo] = useState('')
   const actual = roles.find((r) => r.id === rol)!
 
-  if (sesion) return <Navigate to={inicioDeRol(sesion.rol)} replace />
+  // Vuelve a la ruta que se quiso abrir antes de ingresar, si corresponde a su rol.
+  if (sesion) return <Navigate to={pedido?.desde && pedido.rol === sesion.rol ? pedido.desde : inicioDeRol(sesion.rol)} replace />
 
   const entrar = (e: FormEvent) => {
     e.preventDefault()
     const nombre = correo.trim().split('@')[0] || actual.demo
     iniciarSesion({ rol, nombre })
-    navigate(pedido?.desde && pedido.rol === rol ? pedido.desde : inicioDeRol(rol), { replace: true })
   }
 
   return (
