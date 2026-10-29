@@ -29,6 +29,8 @@ export interface Producto {
   volumenMin?: number
   /** Emoji como imagen provisional; se puede reemplazar por una ruta en /public. */
   imagen: string
+  /** Foto real en /public/productos (ver CREDITOS.md). Si falta o no carga, se usa el emoji. */
+  foto?: string
 }
 
 /** Stock por tienda: stock[tiendaId][productoId] = unidades. */

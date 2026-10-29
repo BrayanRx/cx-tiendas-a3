@@ -5,6 +5,7 @@ import { categorias, getProducto, productos } from '@/data/productos'
 import { getTienda, stock } from '@/data/tiendas'
 import { precioUnitario, totalItems, useApp } from '@/lib/store'
 import type { Categoria } from '@/lib/types'
+import ProductoFoto from './ProductoFoto'
 
 // Responsable: Ruth Amaya · rama feat/catalogo
 // Lee: productos, categorias (@/data/productos), stock y tiendaId (@/data/tiendas, useApp)
@@ -84,11 +85,13 @@ export default function CatalogoPage() {
                 const tope = enCarrito >= disponible
                 return (
                   <Card key={p.id} className="flex flex-col gap-1">
-                    <div className="flex items-start justify-between">
-                      <span className="text-4xl" aria-hidden>
-                        {p.imagen}
-                      </span>
-                      {p.marcaPropia && <Badge tono="brand">Marca propia</Badge>}
+                    <div className="relative mb-2 overflow-hidden rounded-lg">
+                      <ProductoFoto producto={p} className={`aspect-[4/3] w-full ${agotado ? 'opacity-50 grayscale' : ''}`} emojiClase="text-6xl" />
+                      {p.marcaPropia && (
+                        <span className="absolute left-2 top-2">
+                          <Badge tono="brand">Marca propia</Badge>
+                        </span>
+                      )}
                     </div>
                     <p className="mt-1 font-medium leading-tight">{p.nombre}</p>
                     <p className="text-sm text-ink-muted">
@@ -134,8 +137,9 @@ export default function CatalogoPage() {
                   return (
                     <li key={p.id} className="text-sm">
                       <div className="flex justify-between gap-2">
-                        <span>
-                          {p.imagen} {p.nombre}
+                        <span className="flex min-w-0 items-center gap-2">
+                          <ProductoFoto producto={p} className="size-9 shrink-0 rounded-md" emojiClase="text-lg" />
+                          <span className="truncate">{p.nombre}</span>
                         </span>
                         <span className="font-medium">S/ {(unit * i.cantidad).toFixed(2)}</span>
                       </div>
