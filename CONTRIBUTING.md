@@ -41,7 +41,7 @@ Luego abre un **Pull Request** hacia `main` en GitHub. Vercel comentará con un 
 
 ## Usar Claude Code o Antigravity
 
-Ambos leen las reglas del proyecto en [AGENTS.md](AGENTS.md) (Claude Code a través de `CLAUDE.md`). Pídeles trabajar solo en tu módulo, por ejemplo:
+Ambos leen las reglas del proyecto en [AGENTS.md](AGENTS.md): Claude Code a través de `CLAUDE.md` y Antigravity a través de `.agent/rules/proyecto.md` (detalle en el [README](README.md#trabajar-con-agentes-de-ia)). Pídeles trabajar solo en tu módulo, por ejemplo:
 
 > Implementa el módulo de catálogo en src/features/catalogo siguiendo AGENTS.md y las tareas de EQUIPO.md. Usa el store y los componentes compartidos; no modifiques archivos fuera de mi carpeta.
 

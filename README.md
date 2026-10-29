@@ -54,3 +54,22 @@ src/
 ```
 
 Cada integrante trabaja **solo dentro de su carpeta** de `src/features/`. El reparto y las tareas están en [EQUIPO.md](EQUIPO.md) y el flujo de trabajo en [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Trabajar con agentes de IA
+
+Todas las instrucciones para agentes viven en un solo archivo: **[AGENTS.md](AGENTS.md)**. Contiene el contexto de negocio (caso, proceso crítico, perfil del cliente, puntos de dolor), los criterios de diseño y las reglas técnicas. Los demás archivos solo apuntan a él, para que todos los agentes sigan lo mismo:
+
+| Archivo | Lo lee | Qué hace |
+|---|---|---|
+| `AGENTS.md` | Codex, Cursor y otros agentes | Instrucciones completas |
+| `CLAUDE.md` | Claude Code | Importa `AGENTS.md` |
+| `.agent/rules/proyecto.md` | Antigravity | Regla siempre activa que remite a `AGENTS.md` |
+| `GEMINI.md` | Gemini CLI | Importa `AGENTS.md` |
+
+Si cambian las reglas, edita **solo `AGENTS.md`** (por PR, avisando al líder).
+
+**Cómo pedirle algo a tu agente.** Empieza indicando tu módulo, por ejemplo:
+
+> Soy responsable del módulo de catálogo. Lee AGENTS.md y EQUIPO.md e implementa las tareas pendientes de mi módulo en src/features/catalogo. No modifiques archivos fuera de esa carpeta y ejecuta npm run build al terminar.
+
+Si tu agente no parece seguir las reglas (por ejemplo, edita otras carpetas), pégale esa misma instrucción al inicio de la conversación. Revisa siempre el código que genera antes de hacer commit.
