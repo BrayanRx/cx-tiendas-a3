@@ -1,11 +1,13 @@
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Badge, Button, Card, PageHeader } from '@/components/ui'
+import { getModulo } from '@/config/equipo'
 import { getTienda } from '@/data/tiendas'
 import { formatFecha, formatHora, formatSoles } from '@/lib/format'
 import { useApp } from '@/lib/store'
 import type { Pedido } from '@/lib/types'
 import DetallePedido from './DetallePedido'
 import { ITEMS_DEMO, etiquetaEstado, proximaFranja, tonoEstado } from './datos'
+import { useSincronizarPedidos } from './useSincronizarPedidos'
 
 // Responsable: Hemsy Cárdenas · rama feat/seguimiento
 // Lee: pedidos (useApp) y el parámetro :id (useParams de react-router-dom)
@@ -14,6 +16,7 @@ export default function SeguimientoPage() {
   const { id } = useParams()
   const navigate = useNavigate()
   const pedidos = useApp((s) => s.pedidos)
+  useSincronizarPedidos()
 
   if (id) {
     const pedido = pedidos.find((p) => p.id === id)
@@ -46,6 +49,8 @@ function MisPedidos() {
         <CrearPedidoDemo />
       </PageHeader>
 
+      <AntesAhora />
+
       {pedidos.length === 0 ? (
         <Card className="text-center">
           <p className="text-4xl" aria-hidden>
@@ -63,6 +68,22 @@ function MisPedidos() {
           {anteriores.length > 0 && <ListaPedidos titulo="Anteriores" lista={anteriores} />}
         </div>
       )}
+    </div>
+  )
+}
+
+// Deja claro en pantalla qué dolor del customer journey resuelve este módulo.
+function AntesAhora() {
+  return (
+    <div className="mb-6 grid gap-3 text-sm sm:grid-cols-2">
+      <div className="rounded-xl border border-line bg-surface p-4">
+        <p className="text-xs font-semibold tracking-wide text-bad uppercase">Antes</p>
+        <p className="mt-1 text-ink-muted">{getModulo('seguimiento').dolor} Ibas a la tienda sin saber si tu compra estaba lista, y si algo fallaba no tenías a quién decirle.</p>
+      </div>
+      <div className="rounded-xl border border-line bg-surface p-4">
+        <p className="text-xs font-semibold tracking-wide text-ok uppercase">Ahora</p>
+        <p className="mt-1 text-ink-muted">Te avisamos por WhatsApp en cada paso, recoges con tu código sin hacer fila y puedes reclamar desde aquí mismo.</p>
+      </div>
     </div>
   )
 }
