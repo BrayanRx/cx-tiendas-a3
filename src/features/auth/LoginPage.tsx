@@ -2,27 +2,19 @@ import { useState, type FormEvent } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 import Logo from '@/components/Logo'
 import { inicioDeRol } from '@/components/RequireRol'
-import { Button, Card } from '@/components/ui'
+import { Button } from '@/components/ui'
 import { useApp } from '@/lib/store'
 import type { RolSesion } from '@/lib/types'
 
-// Acceso simulado: no hay backend ni contraseñas. Solo elige el rol para mostrar los módulos que le corresponden.
-const roles: { id: RolSesion; titulo: string; detalle: string; modulos: string[]; demo: string }[] = [
-  {
-    id: 'cliente',
-    titulo: 'Cliente',
-    detalle: 'Compra y recoge sin fila.',
-    modulos: ['Catálogo con stock', 'Mi pedido y pago', 'Seguimiento y recojo', 'Club 3A y NPS'],
-    demo: 'Cliente demo',
-  },
-  {
-    id: 'admin',
-    titulo: 'Administrador de tienda',
-    detalle: 'Gestiona la operación de la tienda.',
-    modulos: ['Panel de tienda', 'Asistente IA', 'Alertas de stock y KPIs'],
-    demo: 'Admin demo',
-  },
+// Acceso simulado: no hay backend ni cuentas guardadas. Se valida el formato del correo y que la
+// contraseña tenga 6+ caracteres; el rol elegido define qué módulos ve la persona.
+const roles: { id: RolSesion; titulo: string; correo: string; demo: string }[] = [
+  { id: 'cliente', titulo: 'Cliente', correo: 'tucorreo@ejemplo.pe', demo: 'Cliente' },
+  { id: 'admin', titulo: 'Administrador de tienda', correo: 'tienda@ejemplo.pe', demo: 'Administrador' },
 ]
+
+const CORREO_VALIDO = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const MIN_CLAVE = 6
 
 export default function LoginPage() {
   const sesion = useApp((s) => s.sesion)
@@ -32,32 +24,39 @@ export default function LoginPage() {
 
   const [rol, setRol] = useState<RolSesion>(pedido?.rol ?? 'cliente')
   const [correo, setCorreo] = useState('')
+  const [clave, setClave] = useState('')
+  const [verClave, setVerClave] = useState(false)
+  const [intento, setIntento] = useState(false)
   const actual = roles.find((r) => r.id === rol)!
 
   // Vuelve a la ruta que se quiso abrir antes de ingresar, si corresponde a su rol.
   if (sesion) return <Navigate to={pedido?.desde && pedido.rol === sesion.rol ? pedido.desde : inicioDeRol(sesion.rol)} replace />
 
+  const errorCorreo = !CORREO_VALIDO.test(correo.trim()) ? 'Ingresa un correo válido, por ejemplo nombre@dominio.pe.' : ''
+  const errorClave = clave.length < MIN_CLAVE ? `La contraseña debe tener al menos ${MIN_CLAVE} caracteres.` : ''
+
   const entrar = (e: FormEvent) => {
     e.preventDefault()
-    const nombre = correo.trim().split('@')[0] || actual.demo
-    iniciarSesion({ rol, nombre })
+    setIntento(true)
+    if (errorCorreo || errorClave) return
+    iniciarSesion({ rol, nombre: correo.trim().split('@')[0] || actual.demo })
   }
 
   return (
-    <div className="mx-auto grid max-w-4xl overflow-hidden rounded-2xl border border-line bg-surface md:grid-cols-[1fr_1.1fr]">
-      <div className="bg-brand-gradient flex flex-col items-center justify-center gap-4 p-8 text-center text-white">
-        <Logo className="h-20" sobreNaranja />
+    <div className="mx-auto grid max-w-4xl grid-cols-1 overflow-hidden rounded-2xl border border-line bg-surface md:grid-cols-[1fr_1.1fr]">
+      <div className="bg-brand-gradient flex flex-col items-center justify-center gap-4 p-8 text-center text-white md:min-h-[32rem]">
+        <Logo className="h-20 max-w-full" sobreNaranja />
         <p className="text-lg font-semibold tracking-tight">Barato en precio. Barato en tiempo.</p>
         <p className="text-sm text-white/90">#TiendasDeAhorro3A</p>
       </div>
 
-      <form onSubmit={entrar} className="space-y-5 p-6 sm:p-8">
+      <form onSubmit={entrar} noValidate className="flex min-w-0 flex-col justify-center gap-5 p-6 sm:p-10">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Ingresar</h1>
-          <p className="mt-1 text-sm text-ink-muted">Acceso simulado para el prototipo: no se valida ninguna contraseña.</p>
+          <h1 className="text-2xl font-semibold tracking-tight">Bienvenido de vuelta</h1>
+          <p className="mt-1 text-sm text-ink-muted">Ingresa a tu cuenta para continuar.</p>
         </div>
 
-        <div role="radiogroup" aria-label="Tipo de cuenta" className="grid gap-2 sm:grid-cols-2">
+        <div role="radiogroup" aria-label="Tipo de cuenta" className="grid grid-cols-2 gap-1 rounded-xl bg-canvas p-1">
           {roles.map((r) => (
             <button
               key={r.id}
@@ -65,43 +64,68 @@ export default function LoginPage() {
               role="radio"
               aria-checked={rol === r.id}
               onClick={() => setRol(r.id)}
-              className={`rounded-xl border p-3 text-left text-sm transition-colors ${
-                rol === r.id ? 'border-brand bg-brand-soft' : 'border-line hover:border-ink-muted'
+              className={`rounded-lg px-2 py-2 text-sm leading-tight transition-colors ${
+                rol === r.id ? 'bg-surface font-medium text-brand-dark shadow-sm' : 'text-ink-muted hover:text-ink'
               }`}
             >
-              <span className="block font-medium">{r.titulo}</span>
-              <span className="text-xs text-ink-muted">{r.detalle}</span>
+              {r.titulo}
             </button>
           ))}
         </div>
 
-        <Card className="bg-canvas">
-          <p className="text-xs font-medium uppercase tracking-wide text-ink-muted">Módulos disponibles</p>
-          <ul className="mt-2 space-y-1 text-sm">
-            {actual.modulos.map((m) => (
-              <li key={m} className="flex gap-2">
-                <span className="text-brand">✓</span>
-                {m}
-              </li>
-            ))}
-          </ul>
-        </Card>
-
         <label className="block text-sm">
-          <span className="font-medium">Correo (opcional)</span>
+          <span className="font-medium">Correo electrónico</span>
           <input
             type="email"
             value={correo}
             onChange={(e) => setCorreo(e.target.value)}
-            placeholder={rol === 'admin' ? 'tienda@ejemplo.pe' : 'tucorreo@ejemplo.pe'}
-            autoComplete="off"
-            className="mt-1 w-full rounded-lg border border-line bg-surface px-3 py-2.5"
+            placeholder={actual.correo}
+            autoComplete="email"
+            aria-invalid={intento && !!errorCorreo}
+            aria-describedby={intento && errorCorreo ? 'err-correo' : undefined}
+            className="mt-1 w-full rounded-lg border border-line bg-surface px-3 py-2.5 outline-none focus:border-brand focus:ring-2 focus:ring-brand-soft"
           />
+          {intento && errorCorreo && (
+            <span id="err-correo" role="alert" className="mt-1 block text-xs text-bad">
+              {errorCorreo}
+            </span>
+          )}
         </label>
 
-        <Button type="submit" className="w-full">
-          Ingresar como {actual.titulo.toLowerCase()}
+        <label className="block text-sm">
+          <span className="font-medium">Contraseña</span>
+          <span className="relative mt-1 block">
+            <input
+              type={verClave ? 'text' : 'password'}
+              value={clave}
+              onChange={(e) => setClave(e.target.value)}
+              placeholder="••••••••"
+              autoComplete="current-password"
+              aria-invalid={intento && !!errorClave}
+              aria-describedby={intento && errorClave ? 'err-clave' : undefined}
+              className="w-full rounded-lg border border-line bg-surface py-2.5 pl-3 pr-20 outline-none focus:border-brand focus:ring-2 focus:ring-brand-soft"
+            />
+            <button
+              type="button"
+              onClick={() => setVerClave((v) => !v)}
+              aria-pressed={verClave}
+              className="absolute inset-y-0 right-2 my-auto h-8 rounded-md px-2 text-xs font-medium text-brand hover:bg-brand-soft"
+            >
+              {verClave ? 'Ocultar' : 'Mostrar'}
+            </button>
+          </span>
+          {intento && errorClave && (
+            <span id="err-clave" role="alert" className="mt-1 block text-xs text-bad">
+              {errorClave}
+            </span>
+          )}
+        </label>
+
+        <Button type="submit" className="w-full py-3">
+          Ingresar
         </Button>
+
+        <p className="text-center text-xs text-ink-muted">Prototipo académico: el acceso es simulado y no se guarda ninguna contraseña.</p>
       </form>
     </div>
   )
