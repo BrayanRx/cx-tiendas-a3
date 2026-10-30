@@ -14,6 +14,9 @@
   --color-accent: #1f33b0;
   --color-accent-soft: #e8ebfb;
   --color-accent-dark: #16247e;
+  /* Amarillo de oferta para banners de promoción. */
+  --color-sun: #ffc233;
+  --color-sun-soft: #fff6dc;
 
   --color-ink: #17181c;
   --color-ink-muted: #5f6470;
