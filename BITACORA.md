@@ -30,6 +30,7 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-30 | hecho | Rediseño de la base inspirado en tiendas de abarrotes en línea, con la paleta 3A: canastas semanal, quincenal y bodeguero; opiniones NPS; «Antes y después» en el pie de página | este PR |
 | 2026-10-30 | cambio | Inicio con más jerarquía: carruseles (canastas, lo más pedido, opiniones), tienda elegida destacada y componente compartido `Carrusel` | este PR |
 | 2026-10-30 | cambio | Acabado más profesional en Inicio: íconos de línea (`Icono`), tarjetas que se elevan, encabezados centrados con separador, fondo de puntos y aviso emergente al agregar al carrito | este PR |
+| 2026-10-30 | cambio | Reseñas con resumen NPS (puntaje, promedio y reparto promotores/pasivos/detractores) y tarjetas con estrellas, fecha y tienda | este PR |
 
 ## Ruth · Catálogo + Journey
 

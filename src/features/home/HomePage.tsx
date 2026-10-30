@@ -7,8 +7,9 @@ import { canastas, type Canasta } from '@/data/canastas'
 import { encuestasDemo } from '@/data/demo'
 import { getProducto } from '@/data/productos'
 import { getTienda, stock, tiendas } from '@/data/tiendas'
-import { formatSoles } from '@/lib/format'
+import { formatFecha, formatSoles } from '@/lib/format'
 import { totalItems, useApp } from '@/lib/store'
+import type { RespuestaNps } from '@/lib/types'
 
 // Responsable: Brayan Rojas · rama feat/base
 // Dolor que resuelve: poca presencia digital (el cliente no descubre ni ubica la tienda).
@@ -38,8 +39,37 @@ const STOCK_BAJO = 8
 /** Minutos que toma recoger en el mostrador «Pide y recoge» (el mismo valor que usa el Panel). */
 const RECOJO_MIN = 2
 
-// Comentarios de respaldo si aún no hay encuestas guardadas (se toman de los datos de demostración).
-const opinionesRespaldo = encuestasDemo(0).filter((e) => e.comentario && e.puntaje >= 9)
+// Encuestas de respaldo si aún no hay ninguna guardada (se toman de los datos de demostración).
+const encuestasRespaldo = encuestasDemo(Date.now())
+
+/** Resumen NPS: % promotores (9-10) − % detractores (0-6), más el reparto y el promedio. */
+function resumenNps(lista: RespuestaNps[]) {
+  const n = lista.length || 1
+  const pct = (f: (e: RespuestaNps) => boolean) => Math.round((lista.filter(f).length / n) * 100)
+  const promotores = pct((e) => e.puntaje >= 9)
+  const detractores = pct((e) => e.puntaje <= 6)
+  return {
+    nps: promotores - detractores,
+    promotores,
+    pasivos: 100 - promotores - detractores,
+    detractores,
+    promedio: lista.reduce((s, e) => s + e.puntaje, 0) / n,
+    total: lista.length,
+  }
+}
+
+/** Cinco estrellas a partir del puntaje de 0 a 10 (media estrella por punto). */
+function Estrellas({ puntaje, className = 'size-4' }: { puntaje: number; className?: string }) {
+  return (
+    <span className="inline-flex gap-0.5 text-warn" aria-label={`${puntaje} de 10`}>
+      {[1, 2, 3, 4, 5].map((i) => (
+        <svg key={i} viewBox="0 0 24 24" className={`${className} ${puntaje / 2 >= i - 0.25 ? '' : 'text-line'}`} fill="currentColor" aria-hidden>
+          <path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z" />
+        </svg>
+      ))}
+    </span>
+  )
+}
 
 export default function HomePage() {
   const { tiendaId, setTienda, carrito, agregarAlCarrito, encuestas, pedidos, cargarDemo, reiniciarDemo } = useApp()
@@ -61,7 +91,12 @@ export default function HomePage() {
     if (hash) document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: 'smooth' })
   }, [hash])
 
-  const opiniones = [...encuestas.filter((e) => e.comentario && e.puntaje >= 9), ...opinionesRespaldo].slice(0, 5)
+  const fuenteNps = encuestas.length ? encuestas : encuestasRespaldo
+  const resumen = resumenNps(fuenteNps)
+  const opiniones = fuenteNps
+    .filter((e) => e.comentario && e.puntaje >= 8)
+    .sort((a, b) => b.puntaje - a.puntaje || b.fecha - a.fecha)
+    .slice(0, 6)
   const libre = (productoId: string) =>
     Math.max((stock[tiendaId]?.[productoId] ?? 0) - (carrito.find((x) => x.productoId === productoId)?.cantidad ?? 0), 0)
 
@@ -349,36 +384,71 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Opiniones: salen de las encuestas NPS del Club (concepto del curso: NPS) */}
+      {/* Opiniones: resumen NPS (concepto del curso) + comentarios de la encuesta que responden al recoger */}
       <section aria-labelledby="h-opiniones">
-        <SectionHeader id="h-opiniones" centrado titulo="Lo que dicen nuestros clientes" descripcion="Comentarios de la encuesta NPS que responden al recoger su pedido." />
-        <Carrusel etiqueta="Opiniones de clientes">
-          {opiniones.map((o, i) => {
-            const t = getTienda(o.tiendaId)
-            return (
-              <figure key={i} className="relative w-[85%] shrink-0 overflow-hidden rounded-3xl border border-line bg-surface p-6 shadow-sm sm:w-96">
-                <span className="absolute -top-4 right-4 text-8xl font-extrabold leading-none text-brand-soft" aria-hidden>
-                  ”
-                </span>
-                <p className="relative text-sm text-warn" aria-label={`Puntaje ${o.puntaje} de 10`}>
-                  ★★★★★
-                </p>
-                <blockquote className="relative mt-3 text-lg font-semibold leading-snug">{o.comentario}</blockquote>
-                <figcaption className="mt-5 flex items-center gap-3 text-sm">
-                  <span className="grid size-9 place-items-center rounded-full bg-accent-soft text-xs font-bold text-accent">
-                    {t?.distrito.split(' ').map((w) => w[0]).join('').slice(0, 2)}
-                  </span>
-                  <span>
-                    <span className="block font-semibold">Cliente de Pide y recoge</span>
-                    <span className="text-xs text-ink-muted">
-                      {t?.nombre} · NPS {o.puntaje}/10
-                    </span>
-                  </span>
-                </figcaption>
-              </figure>
-            )
-          })}
-        </Carrusel>
+        <SectionHeader id="h-opiniones" centrado titulo="Lo que dicen nuestros clientes" descripcion="Cada cliente califica su experiencia al recoger su pedido." />
+        <div className="grid gap-6 lg:grid-cols-[19rem_1fr] lg:items-start">
+          <div className="rounded-3xl border border-line bg-surface p-6 shadow-sm">
+            <p className="text-xs font-bold uppercase tracking-widest text-ink-muted">Net Promoter Score</p>
+            <div className="mt-2 flex items-end gap-3">
+              <span className={`text-5xl font-extrabold leading-none ${resumen.nps >= 0 ? 'text-ok' : 'text-bad'}`}>{resumen.nps > 0 ? `+${resumen.nps}` : resumen.nps}</span>
+              <span className="pb-1 text-sm text-ink-muted">de −100 a +100</span>
+            </div>
+            <div className="mt-3 flex items-center gap-2 text-sm">
+              <Estrellas puntaje={resumen.promedio} />
+              <span className="font-semibold">{resumen.promedio.toFixed(1)}/10</span>
+              <span className="text-ink-muted">· {resumen.total} encuestas</span>
+            </div>
+            <div className="mt-5 flex h-2.5 overflow-hidden rounded-full bg-canvas" aria-hidden>
+              <span className="bg-ok" style={{ width: `${resumen.promotores}%` }} />
+              <span className="bg-warn/60" style={{ width: `${resumen.pasivos}%` }} />
+              <span className="bg-bad" style={{ width: `${resumen.detractores}%` }} />
+            </div>
+            <dl className="mt-3 space-y-1.5 text-sm">
+              {[
+                { etiqueta: 'Promotores (9-10)', valor: resumen.promotores, color: 'bg-ok' },
+                { etiqueta: 'Pasivos (7-8)', valor: resumen.pasivos, color: 'bg-warn/60' },
+                { etiqueta: 'Detractores (0-6)', valor: resumen.detractores, color: 'bg-bad' },
+              ].map((f) => (
+                <div key={f.etiqueta} className="flex items-center justify-between">
+                  <dt className="flex items-center gap-2 text-ink-muted">
+                    <span className={`size-2.5 rounded-full ${f.color}`} />
+                    {f.etiqueta}
+                  </dt>
+                  <dd className="font-semibold">{f.valor}%</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          <div className="min-w-0">
+            <Carrusel etiqueta="Opiniones de clientes">
+              {opiniones.map((o, i) => {
+                const t = getTienda(o.tiendaId)
+                return (
+                  <figure key={i} className="flex w-[85%] shrink-0 flex-col rounded-3xl border border-line bg-surface p-6 shadow-sm sm:w-80">
+                    <div className="flex items-center justify-between gap-2">
+                      <Estrellas puntaje={o.puntaje} />
+                      <span className="text-xs text-ink-muted">{formatFecha(o.fecha)}</span>
+                    </div>
+                    <blockquote className="mt-4 flex-1 text-base font-medium leading-relaxed">“{o.comentario}”</blockquote>
+                    <figcaption className="mt-5 flex items-center gap-3 border-t border-line pt-4 text-sm">
+                      <span className="grid size-10 shrink-0 place-items-center rounded-full bg-accent-soft text-accent">
+                        <Icono nombre="usuario" className="size-5" />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block font-semibold">Cliente de {t?.distrito}</span>
+                        <span className="flex items-center gap-1 text-xs text-ok">
+                          <Icono nombre="check" className="size-3.5" /> Recogió sin fila · {t?.nombre.replace('Tienda ', '')}
+                        </span>
+                      </span>
+                    </figcaption>
+                  </figure>
+                )
+              })}
+            </Carrusel>
+          </div>
+        </div>
       </section>
 
       {/* Del dolor a la solución: un solo banner que lleva a la comparación completa */}
