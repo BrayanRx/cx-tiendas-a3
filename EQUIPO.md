@@ -32,6 +32,7 @@ Marca `[x]` cuando una tarea esté en `main`. Cada responsable mantiene **solo s
 - [ ] Pedirle a Hemsy que use `@/components/CodigoQr` y `AvisoWhatsapp` en vez de sus copias locales, y a Nicole que use el QR para el pago
 - [ ] Revisar y aprobar los PR de cada módulo
 - [ ] Integración final y ensayo del recorrido completo
+- [x] Rediseño de la base: tipografía, botones y tarjetas, cabecera, pie de página con «Antes y después» e Inicio con canastas armadas y opiniones NPS
 
 ### Ruth · Catálogo con stock + Journey antes y después
 Versión inicial del catálogo hecha por Rafael (grilla, stock, filtros, búsqueda, volumen, carrito). Ruth es la dueña del módulo desde aquí.
