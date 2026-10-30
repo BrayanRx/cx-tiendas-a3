@@ -68,6 +68,7 @@ Versión inicial del catálogo hecha por Rafael (grilla, stock, filtros, búsque
 - [x] Encuesta NPS de 0 a 10 con comentario
 - [x] Cómo ganar puntos
 - [x] Extra: login simulado con roles cliente / administrador
+- [x] Extra: «Antes y después» solo en el menú del administrador
 
 ### Edison · Panel de tienda y asistente IA
 Versión inicial del panel hecha por Rafael (cola de pedidos, alertas de stock, KPIs, sugerencias fijas y comparativo antes/después). Edison es el dueño del módulo desde aquí. El taller pide una transformación **con IA**: el asistente es lo que la demuestra.
