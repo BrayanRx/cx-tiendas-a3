@@ -31,6 +31,7 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-30 | cambio | Inicio con más jerarquía: carruseles (canastas, lo más pedido, opiniones), tienda elegida destacada y componente compartido `Carrusel` | este PR |
 | 2026-10-30 | cambio | Acabado más profesional en Inicio: íconos de línea (`Icono`), tarjetas que se elevan, encabezados centrados con separador, fondo de puntos y aviso emergente al agregar al carrito | este PR |
 | 2026-10-30 | cambio | Reseñas con resumen NPS (puntaje, promedio y reparto promotores/pasivos/detractores) y tarjetas con estrellas, fecha y tienda | este PR |
+| 2026-10-30 | asignado | Presentación: introducción (proceso crítico) y cierre (demo en vivo) | este PR |
 
 ## Ruth · Catálogo + Journey
 
@@ -39,12 +40,15 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-29 | asignado | Catálogo con stock | f712024 |
 | 2026-10-29 | cambio | Rafael entregó la versión inicial del catálogo; Ruth sigue como dueña y lo pule | bc1b880 |
 | 2026-10-29 | asignado | Pulir catálogo y crear la página «Journey antes y después» (ver EQUIPO.md) | commit «Bitácora del equipo» |
+| 2026-10-30 | asignado | Validar las 7 etapas del Journey con el Taller 2 | este PR |
 
 ## Nicole · Pedido y pago
 
 | Fecha | Tipo | Detalle | Referencia |
 |---|---|---|---|
 | 2026-10-29 | asignado | Pedido y pago | f712024 |
+| 2026-10-30 | hecho | Pedido y pago: carrito, franja, método de pago, pago QR simulado, creación del pedido y tiempo ahorrado (registrado por el líder) | PR #6 |
+| 2026-10-30 | asignado | Ajustes de la revisión del PR #6 y usar el QR compartido `CodigoQr` | este PR |
 
 ## Hemsy · Seguimiento y recojo
 
@@ -53,6 +57,7 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-29 | asignado | Seguimiento y recojo | f712024 |
 | 2026-10-29 | hecho | Seguimiento: línea de tiempo, QR de recojo, aviso tipo WhatsApp, Mis pedidos, reclamo o cambio, cancelar e invitación a la encuesta NPS | 15309, PR #7 |
 | 2026-10-29 | hecho | Seguimiento: «Antes / ahora» con el dolor que resuelve y actualización en vivo cuando el Panel avanza el pedido en otra pestaña | este PR |
+| 2026-10-30 | asignado | Usar los componentes compartidos `CodigoQr` y `AvisoWhatsapp` | este PR |
 
 ## Rafael · Club 3A y NPS
 
@@ -66,6 +71,7 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-29 | hecho | Página «Journey antes y después» (módulo de Ruth): 7 etapas con acción, emoción y dolor, pantalla que lo resuelve, curva de emoción y conceptos del curso | este PR |
 | 2026-10-29 | hecho | Fotos reales de los 18 productos del catálogo (Wikimedia Commons, con créditos y respaldo de emoji) | PR #4 |
 | 2026-10-29 | hecho | Catálogo (módulo de Ruth): pulido en celular, textos cercanos, «avísame cuando llegue» y sugerencia del producto en otra tienda cercana | este PR |
+| 2026-10-30 | asignado | Fotos genéricas sin marca para 9 productos (se quitaron las que mostraban marcas reales en el PR #10) | este PR |
 
 ## Edison · Panel de tienda y asistente IA
 
@@ -74,3 +80,5 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-29 | asignado | Panel de tienda y asistente IA | f712024 |
 | 2026-10-29 | cambio | Rafael entregó la versión inicial del panel; Edison sigue como dueño | 08c1ba6 |
 | 2026-10-29 | asignado | Asistente IA en formato chat basado en los datos del panel (ver EQUIPO.md) | commit «Bitácora del equipo» |
+| 2026-10-30 | asignado | Recordatorio: asistente IA en formato chat, prioridad del equipo para la presentación | este PR |
+

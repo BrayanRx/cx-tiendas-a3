@@ -32,6 +32,7 @@ Marca `[x]` cuando una tarea esté en `main`. Cada responsable mantiene **solo s
 - [ ] Pedirle a Hemsy que use `@/components/CodigoQr` y `AvisoWhatsapp` en vez de sus copias locales, y a Nicole que use el QR para el pago
 - [ ] Revisar y aprobar los PR de cada módulo
 - [ ] Integración final y ensayo del recorrido completo
+- [ ] Presentación: introducción (proceso crítico) y cierre (demo en vivo del recorrido del cliente)
 - [x] Rediseño de la base: tipografía, botones y tarjetas, cabecera, pie de página con «Antes y después» e Inicio con canastas armadas y opiniones NPS
 
 ### Ruth · Catálogo con stock + Journey antes y después
@@ -48,14 +49,17 @@ Las 4 tareas de Catálogo las hizo Rafael por encargo (PR de `feat/catalogo-puli
 - [x] Journey: conceptos del curso (momentos de la verdad, front-stage / back-stage)
 
 Las 4 tareas de Journey las hizo Rafael por encargo (PR de `feat/journey-pagina`). Las 7 etapas salen de los 7 puntos de dolor del cliente (`AGENTS.md`): Ruth debe contrastarlas con su Taller 2 y ajustar `src/features/journey/etapas.ts` si difieren.
+- [ ] Journey: validar las 7 etapas y emociones con el Taller 2 (se defiende en vivo)
 
 ### Nicole · Pedido y pago
-- [ ] Revisión del carrito: cantidades, quitar, total
-- [ ] Elegir franja de recojo de 30 minutos
-- [ ] Método de pago: QR, tarjeta o pago en tienda
-- [ ] Simular pago QR (código y confirmación)
-- [ ] Crear el pedido con `crearPedido()` y redirigir a `/seguimiento/:id`
-- [ ] Mostrar el tiempo ahorrado frente a hacer cola (usa `esperaCajaMin` de la tienda)
+- [x] Revisión del carrito: cantidades, quitar, total
+- [x] Elegir franja de recojo de 30 minutos
+- [x] Método de pago: QR, tarjeta o pago en tienda
+- [x] Simular pago QR (código y confirmación)
+- [x] Crear el pedido con `crearPedido()` y redirigir a `/seguimiento/:id`
+- [x] Mostrar el tiempo ahorrado frente a hacer cola (usa `esperaCajaMin` de la tienda)
+- [ ] Ajustes de la revisión del PR #6: tildes y signos (¿Cuándo…?, catálogo, débito…), recojo de 2 min igual que el Panel, descripción de tarjeta coherente con Seguimiento, franja en formato 24 h y que empiece al menos 20 min después
+- [ ] Usar el QR compartido `@/components/CodigoQr` en el pago (en vez de `PATRON_QR`)
 
 ### Hemsy · Seguimiento y recojo
 - [x] Línea de tiempo: recibido → preparando → listo → recogido
@@ -66,6 +70,7 @@ Las 4 tareas de Journey las hizo Rafael por encargo (PR de `feat/journey-pagina`
 - [x] Al recoger, invitar a la encuesta NPS
 - [x] Extra: «Antes / ahora» en Mis pedidos para dejar claro el dolor que resuelve
 - [x] Extra: el estado se actualiza solo si el Panel avanza el pedido en otra pestaña
+- [ ] Usar los componentes compartidos `@/components/CodigoQr` y `@/components/AvisoWhatsapp` en vez de las copias locales
 
 ### Rafael · Club 3A y NPS
 - [x] Saldo de puntos y nivel del cliente
@@ -75,6 +80,7 @@ Las 4 tareas de Journey las hizo Rafael por encargo (PR de `feat/journey-pagina`
 - [x] Cómo ganar puntos
 - [x] Extra: login simulado con roles cliente / administrador
 - [x] Extra: fotos reales en el catálogo
+- [ ] Fotos genéricas sin marca para los 9 productos que hoy usan emoji (aceite, leche, yogurt, gaseosa, agua, detergente, lejía, papel y pañales)
 
 ### Edison · Panel de tienda y asistente IA
 Versión inicial del panel hecha por Rafael (cola de pedidos, alertas de stock, KPIs, sugerencias fijas y comparativo antes/después). Edison es el dueño del módulo desde aquí. El taller pide una transformación **con IA**: el asistente es lo que la demuestra.
