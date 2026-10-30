@@ -34,10 +34,12 @@ Marca `[x]` cuando una tarea esté en `main`. Cada responsable mantiene **solo s
 
 ### Ruth · Catálogo con stock + Journey antes y después
 Versión inicial del catálogo hecha por Rafael (grilla, stock, filtros, búsqueda, volumen, carrito). Ruth es la dueña del módulo desde aquí.
-- [ ] Catálogo: revisar y pulir en celular (360 px)
-- [ ] Catálogo: textos en tono cercano para el cliente
-- [ ] Catálogo: aviso «avísame cuando llegue» en productos agotados
-- [ ] Catálogo: sugerir el mismo producto en otra tienda cercana con stock
+- [x] Catálogo: revisar y pulir en celular (360 px)
+- [x] Catálogo: textos en tono cercano para el cliente
+- [x] Catálogo: aviso «avísame cuando llegue» en productos agotados
+- [x] Catálogo: sugerir el mismo producto en otra tienda cercana con stock
+
+Las 4 tareas de Catálogo las hizo Rafael por encargo (PR de `feat/catalogo-pulido`, apilado sobre las fotos del PR #4). «Avísame cuando llegue» es simulado y vive solo en la pantalla; la cercanía entre tiendas se define a mano en `src/features/catalogo/cercanas.ts`.
 - [ ] Journey: las 7 etapas del customer journey (Taller 2) con acción, emoción y dolor de hoy
 - [ ] Journey: por etapa, la pantalla de la app que lo resuelve (con enlace)
 - [ ] Journey: curva de emoción antes vs. después

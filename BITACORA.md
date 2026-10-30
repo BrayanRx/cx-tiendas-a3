@@ -56,6 +56,7 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-29 | hecho | Versión inicial del panel de tienda (módulo de Edison) | 08c1ba6, PR #3 |
 | 2026-10-29 | hecho | Identidad visual, logo y login simulado con roles (subido directo a main) | 81782e9, bb80ae9, 0932ad8 |
 | 2026-10-29 | hecho | Fotos reales de los 18 productos del catálogo (Wikimedia Commons, con créditos y respaldo de emoji) | PR #4 |
+| 2026-10-29 | hecho | Catálogo (módulo de Ruth): pulido en celular, textos cercanos, «avísame cuando llegue» y sugerencia del producto en otra tienda cercana | este PR |
 
 ## Edison · Panel de tienda y asistente IA
 
