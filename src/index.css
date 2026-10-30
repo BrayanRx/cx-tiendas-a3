@@ -41,3 +41,11 @@ body {
 @utility bg-brand-gradient {
   background: radial-gradient(circle at 50% 40%, var(--color-brand-light), var(--color-brand) 75%);
 }
+
+/* Oculta la barra de desplazamiento sin quitar el scroll (carruseles). */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

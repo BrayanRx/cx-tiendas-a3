@@ -28,6 +28,7 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-30 | hecho | `main` protegida con ruleset: exige Pull Request y bloquea force push y borrado | — |
 | 2026-10-30 | hecho | Revisión de PRs: merge de #11, #6 y #9; en #10 se quitaron 9 fotos con marcas registradas reales antes del merge | PR #10 |
 | 2026-10-30 | hecho | Rediseño de la base inspirado en tiendas de abarrotes en línea, con la paleta 3A: canastas semanal, quincenal y bodeguero; opiniones NPS; «Antes y después» en el pie de página | este PR |
+| 2026-10-30 | cambio | Inicio con más jerarquía: carruseles (canastas, lo más pedido, opiniones), tienda elegida destacada y componente compartido `Carrusel` | este PR |
 
 ## Ruth · Catálogo + Journey
 
