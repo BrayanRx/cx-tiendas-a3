@@ -55,6 +55,7 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-29 | hecho | Versión inicial del catálogo (módulo de Ruth) | bc1b880, PR #2 |
 | 2026-10-29 | hecho | Versión inicial del panel de tienda (módulo de Edison) | 08c1ba6, PR #3 |
 | 2026-10-29 | hecho | Identidad visual, logo y login simulado con roles (subido directo a main) | 81782e9, bb80ae9, 0932ad8 |
+| 2026-10-29 | hecho | Página «Journey antes y después» (módulo de Ruth): 7 etapas con acción, emoción y dolor, pantalla que lo resuelve, curva de emoción y conceptos del curso | este PR |
 
 ## Edison · Panel de tienda y asistente IA
 
