@@ -27,8 +27,9 @@ Marca `[x]` cuando una tarea esté en `main`. Cada responsable mantiene **solo s
 - [x] Página de inicio y selector de tienda
 - [x] Conectar Vercel al repositorio
 - [ ] Proteger `main` (exigir Pull Request)
-- [ ] Datos de demostración (pedidos y encuestas de ejemplo)
-- [ ] Componentes compartidos: código QR y aviso tipo WhatsApp
+- [x] Datos de demostración (pedidos y encuestas de ejemplo)
+- [x] Componentes compartidos: código QR y aviso tipo WhatsApp
+- [ ] Pedirle a Hemsy que use `@/components/CodigoQr` y `AvisoWhatsapp` en vez de sus copias locales, y a Nicole que use el QR para el pago
 - [ ] Revisar y aprobar los PR de cada módulo
 - [ ] Integración final y ensayo del recorrido completo
 
@@ -89,6 +90,9 @@ Todos los módulos se comunican por `src/lib/store.ts`:
 | `avanzarPedido` | Panel | Seguimiento |
 | `puntos`, `canjearPuntos` | Pedido (suma), Club (canje) | Club |
 | `registrarNps`, `encuestas` | Club / Seguimiento | Panel |
+| `cargarDemo`, `reiniciarDemo` | Inicio (modo demostración) | Todos |
+
+Componentes compartidos para mostrar al cliente: `@/components/CodigoQr` (QR simulado de recojo o pago) y `@/components/AvisoWhatsapp` (vista previa de un aviso). Los datos de ejemplo están en `src/data/demo.ts`.
 
 ## Presentación (próxima semana)
 
