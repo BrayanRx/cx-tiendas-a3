@@ -32,7 +32,8 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-30 | cambio | Acabado más profesional en Inicio: íconos de línea (`Icono`), tarjetas que se elevan, encabezados centrados con separador, fondo de puntos y aviso emergente al agregar al carrito | este PR |
 | 2026-10-30 | cambio | Reseñas con resumen NPS (puntaje, promedio y reparto promotores/pasivos/detractores) y tarjetas con estrellas, fecha y tienda | este PR |
 | 2026-10-30 | asignado | Presentación: introducción (proceso crítico) y cierre (demo en vivo) | PR #13 |
-| 2026-10-30 | cambio | Inicio con estilo de supermercado moderno: portada dividida con bloque naranja y fotos en círculo, titulares en dos colores, banners de promoción y filtros por categoría | este PR |
+| 2026-10-30 | cambio | Inicio con estilo de supermercado moderno: portada dividida con bloque naranja y fotos en círculo, titulares en dos colores, banners de promoción y filtros por categoría | PR #14 |
+| 2026-10-30 | cambio | Cabecera de página compartida con el estilo del Inicio (banda de color y título en dos colores) y «Guía visual» en EQUIPO.md para que cada módulo la aplique | este PR |
 
 ## Ruth · Catálogo + Journey
 

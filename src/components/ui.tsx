@@ -42,14 +42,33 @@ export function Badge({ children, tono = 'neutral' }: { children: ReactNode; ton
   return <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${tonos[tono]}`}>{children}</span>
 }
 
-export function PageHeader({ titulo, descripcion, children }: { titulo: string; descripcion?: string; children?: ReactNode }) {
+/** Cabecera de página: banda de color con el título en mayúsculas de dos colores (la última palabra va en naranja).
+ *  `resaltado` reemplaza esa regla: titulo="Tu" resaltado="pedido". `children` va a la derecha (badges, enlaces, botones). */
+export function PageHeader({
+  titulo,
+  resaltado,
+  descripcion,
+  children,
+}: {
+  titulo: string
+  resaltado?: string
+  descripcion?: string
+  children?: ReactNode
+}) {
+  const palabras = titulo.split(' ')
+  const [base, color] = resaltado !== undefined ? [titulo, resaltado] : palabras.length > 1 ? [palabras.slice(0, -1).join(' '), palabras.at(-1)] : [titulo, '']
   return (
-    <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
-      <div>
-        <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">{titulo}</h1>
-        {descripcion && <p className="mt-1 max-w-2xl text-ink-muted">{descripcion}</p>}
+    <div className="relative mb-8 overflow-hidden rounded-3xl bg-brand-soft px-6 py-8 sm:px-10 sm:py-10">
+      <span className="absolute -right-14 -top-14 size-48 rounded-full border-[22px] border-brand/10" aria-hidden />
+      <div className="relative flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-black uppercase leading-none tracking-tight sm:text-5xl">
+            {base} {color && <span className="text-brand">{color}</span>}
+          </h1>
+          {descripcion && <p className="mt-3 max-w-2xl text-ink-muted">{descripcion}</p>}
+        </div>
+        {children}
       </div>
-      {children}
     </div>
   )
 }

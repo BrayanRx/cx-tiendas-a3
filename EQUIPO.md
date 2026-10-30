@@ -106,6 +106,20 @@ Todos los módulos se comunican por `src/lib/store.ts`:
 
 Componentes compartidos para mostrar al cliente: `@/components/CodigoQr` (QR simulado de recojo o pago) y `@/components/AvisoWhatsapp` (vista previa de un aviso). Los datos de ejemplo están en `src/data/demo.ts`.
 
+## Guía visual (para todos los módulos)
+
+El Inicio define el estilo. Para que tu módulo se vea igual, usa los componentes compartidos en lugar de estilos propios. Tu agente de IA puede aplicar esta guía en tu carpeta:
+
+- **Cabecera de página:** `PageHeader` ya es una banda de color con el título en mayúsculas de dos colores (la última palabra va en naranja). Si quieres resaltar otra parte: `<PageHeader titulo="Tu" resaltado="pedido" />`.
+- **Secciones:** `SectionHeader` con `centrado` y `resaltado` para las secciones principales (`titulo="Lo más" resaltado="pedido"`).
+- **Tarjetas:** `Card` (bordes redondeados y sombra). Para tarjetas que se tocan: `transition-all duration-300 hover:-translate-y-1 hover:shadow-lg`.
+- **Fotos:** `rounded-xl` u `object-cover` en círculo (`rounded-full border-4 border-white`) como en Inicio; con zoom suave: `group` en la tarjeta y `group-hover:scale-105` en la imagen.
+- **Botones:** `Button` (tipo píldora). Para el botón redondo de agregar: `Icono nombre="mas"`, nunca el carácter «+».
+- **Íconos:** `@/components/Icono` (caja, reloj, etiqueta, check, carrito, ubicación, flecha, usuario, más) en lugar de emojis en botones y sellos.
+- **Listas deslizables:** `@/components/Carrusel`.
+- **Colores:** solo tokens: `bg-brand`, `bg-brand-soft`, `bg-accent`, `bg-accent-soft`, `bg-sun` (ofertas), `text-ok`, `text-warn`, `text-bad`. Nada de hex sueltos.
+- **QR y WhatsApp:** `@/components/CodigoQr` y `@/components/AvisoWhatsapp`.
+
 ## Presentación (próxima semana)
 
 Cada integrante prepara 1 a 2 diapositivas de su módulo con: dolor → solución → captura de pantalla → concepto del curso (journey, blueprint, 7P, NPS, KPI). El líder arma la introducción (proceso crítico) y el cierre (demo en vivo con el enlace de Vercel).
