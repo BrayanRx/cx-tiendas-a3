@@ -26,9 +26,10 @@ Marca `[x]` cuando una tarea esté en `main`. Cada responsable mantiene **solo s
 - [x] Proyecto, rutas, layout, tokens de diseño, componentes compartidos y datos simulados
 - [x] Página de inicio y selector de tienda
 - [x] Conectar Vercel al repositorio
-- [ ] Proteger `main` (exigir Pull Request)
-- [ ] Datos de demostración (pedidos y encuestas de ejemplo)
-- [ ] Componentes compartidos: código QR y aviso tipo WhatsApp
+- [x] Proteger `main` (exigir Pull Request)
+- [x] Datos de demostración (pedidos y encuestas de ejemplo)
+- [x] Componentes compartidos: código QR y aviso tipo WhatsApp
+- [ ] Pedirle a Hemsy que use `@/components/CodigoQr` y `AvisoWhatsapp` en vez de sus copias locales, y a Nicole que use el QR para el pago
 - [ ] Revisar y aprobar los PR de cada módulo
 - [ ] Integración final y ensayo del recorrido completo
 
@@ -40,10 +41,12 @@ Versión inicial del catálogo hecha por Rafael (grilla, stock, filtros, búsque
 - [x] Catálogo: sugerir el mismo producto en otra tienda cercana con stock
 
 Las 4 tareas de Catálogo las hizo Rafael por encargo (PR de `feat/catalogo-pulido`, apilado sobre las fotos del PR #4). «Avísame cuando llegue» es simulado y vive solo en la pantalla; la cercanía entre tiendas se define a mano en `src/features/catalogo/cercanas.ts`.
-- [ ] Journey: las 7 etapas del customer journey (Taller 2) con acción, emoción y dolor de hoy
-- [ ] Journey: por etapa, la pantalla de la app que lo resuelve (con enlace)
-- [ ] Journey: curva de emoción antes vs. después
-- [ ] Journey: conceptos del curso (momentos de la verdad, front-stage / back-stage)
+- [x] Journey: las 7 etapas del customer journey (Taller 2) con acción, emoción y dolor de hoy
+- [x] Journey: por etapa, la pantalla de la app que lo resuelve (con enlace)
+- [x] Journey: curva de emoción antes vs. después
+- [x] Journey: conceptos del curso (momentos de la verdad, front-stage / back-stage)
+
+Las 4 tareas de Journey las hizo Rafael por encargo (PR de `feat/journey-pagina`). Las 7 etapas salen de los 7 puntos de dolor del cliente (`AGENTS.md`): Ruth debe contrastarlas con su Taller 2 y ajustar `src/features/journey/etapas.ts` si difieren.
 
 ### Nicole · Pedido y pago
 - [ ] Revisión del carrito: cantidades, quitar, total
@@ -92,6 +95,9 @@ Todos los módulos se comunican por `src/lib/store.ts`:
 | `avanzarPedido` | Panel | Seguimiento |
 | `puntos`, `canjearPuntos` | Pedido (suma), Club (canje) | Club |
 | `registrarNps`, `encuestas` | Club / Seguimiento | Panel |
+| `cargarDemo`, `reiniciarDemo` | Inicio (modo demostración) | Todos |
+
+Componentes compartidos para mostrar al cliente: `@/components/CodigoQr` (QR simulado de recojo o pago) y `@/components/AvisoWhatsapp` (vista previa de un aviso). Los datos de ejemplo están en `src/data/demo.ts`.
 
 ## Presentación (próxima semana)
 
