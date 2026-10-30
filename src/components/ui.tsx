@@ -54,8 +54,37 @@ export function PageHeader({ titulo, descripcion, children }: { titulo: string; 
   )
 }
 
-/** Encabezado de sección dentro de una página: título, subtítulo opcional y una acción a la derecha (ej. «Ver todo →»). */
-export function SectionHeader({ id, titulo, descripcion, children }: { id?: string; titulo: string; descripcion?: string; children?: ReactNode }) {
+/** Encabezado de sección: título, subtítulo opcional y una acción (ej. «Ver todo →»).
+ *  `centrado` lo muestra al medio con un separador decorativo, para las secciones principales. */
+export function SectionHeader({
+  id,
+  titulo,
+  descripcion,
+  centrado = false,
+  children,
+}: {
+  id?: string
+  titulo: string
+  descripcion?: string
+  centrado?: boolean
+  children?: ReactNode
+}) {
+  if (centrado) {
+    return (
+      <div className="mb-8 text-center">
+        <div className="mx-auto mb-3 flex max-w-40 items-center gap-3" aria-hidden>
+          <span className="h-px flex-1 bg-brand/30" />
+          <span className="size-2 rotate-45 rounded-[2px] bg-brand" />
+          <span className="h-px flex-1 bg-brand/30" />
+        </div>
+        <h2 id={id} className="text-2xl font-extrabold tracking-tight sm:text-3xl">
+          {titulo}
+        </h2>
+        {descripcion && <p className="mx-auto mt-2 max-w-lg text-sm text-ink-muted sm:text-base">{descripcion}</p>}
+        {children && <div className="mt-3">{children}</div>}
+      </div>
+    )
+  }
   return (
     <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
       <div>

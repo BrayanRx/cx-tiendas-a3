@@ -49,3 +49,10 @@ body {
     display: none;
   }
 }
+
+/* Fondo de puntitos sutil para bandas de sección (inspirado en textura de papel). */
+@utility bg-puntos {
+  background-color: var(--color-canvas);
+  background-image: radial-gradient(var(--color-line) 1px, transparent 0);
+  background-size: 22px 22px;
+}

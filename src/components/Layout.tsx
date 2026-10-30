@@ -41,7 +41,7 @@ export default function Layout() {
             <Logo className="h-9" />
             <span className="hidden text-sm font-bold sm:inline">Pide y recoge</span>
           </NavLink>
-          <nav className="order-3 -mx-4 flex w-[calc(100%+2rem)] gap-1 overflow-x-auto px-4 text-sm sm:order-none sm:mx-0 sm:w-auto sm:px-0">
+          <nav className="scrollbar-none order-3 -mx-4 flex w-[calc(100%+2rem)] gap-1 overflow-x-auto px-4 text-sm sm:order-none sm:mx-0 sm:w-auto sm:px-0">
             {enlaces.map((e) => (
               <NavLink
                 key={e.to}
