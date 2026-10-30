@@ -13,25 +13,35 @@ Cada módulo responde a un punto de dolor del customer journey (Taller 2). Esa r
 | Seguimiento y recojo | Hemsy Cárdenas | `feat/seguimiento` | `features/seguimiento` | `/seguimiento` | Sin información ni postventa |
 | Club 3A y NPS | Rafael Chu-lau | `feat/club` | `features/club` | `/club` | Fidelización solo por precio |
 | Panel de tienda y asistente IA | Edison Rosales | `feat/panel` | `features/panel` | `/panel` | Atención desigual, quiebres de stock |
+| Journey antes y después | Ruth Amaya | `feat/journey` | `features/journey` | `/journey` | El valor no se ve sin comparar con hoy |
 
-> Los responsables son una propuesta: pueden intercambiarse. Si cambian, actualicen esta tabla y `src/config/equipo.ts`.
+> Si cambia un responsable, actualicen esta tabla y `src/config/equipo.ts`.
+> El historial de qué se asignó y qué se hizo está en [BITACORA.md](BITACORA.md).
 
 ## Tareas por módulo
+
+Marca `[x]` cuando una tarea esté en `main`. Cada responsable mantiene **solo su sección**.
 
 ### Brayan · Base, inicio y Ubícanos (líder)
 - [x] Proyecto, rutas, layout, tokens de diseño, componentes compartidos y datos simulados
 - [x] Página de inicio y selector de tienda
-- [ ] Conectar Vercel al repositorio y proteger `main`
+- [x] Conectar Vercel al repositorio
+- [ ] Proteger `main` (exigir Pull Request)
+- [ ] Datos de demostración (pedidos y encuestas de ejemplo)
+- [ ] Componentes compartidos: código QR y aviso tipo WhatsApp
 - [ ] Revisar y aprobar los PR de cada módulo
 - [ ] Integración final y ensayo del recorrido completo
 
-### Ruth · Catálogo con stock
-- [ ] Grilla de productos con precio y stock de la tienda elegida
-- [ ] Filtros por categoría y «solo marca propia»
-- [ ] Búsqueda por nombre
-- [ ] Agregar al carrito (deshabilitado si stock = 0, con aviso «agotado en esta tienda»)
-- [ ] Aviso de precio por volumen para bodegueros
-- [ ] Resumen del carrito con botón «Continuar al pedido»
+### Ruth · Catálogo con stock + Journey antes y después
+Versión inicial del catálogo hecha por Rafael (grilla, stock, filtros, búsqueda, volumen, carrito). Ruth es la dueña del módulo desde aquí.
+- [ ] Catálogo: revisar y pulir en celular (360 px)
+- [ ] Catálogo: textos en tono cercano para el cliente
+- [ ] Catálogo: aviso «avísame cuando llegue» en productos agotados
+- [ ] Catálogo: sugerir el mismo producto en otra tienda cercana con stock
+- [ ] Journey: las 7 etapas del customer journey (Taller 2) con acción, emoción y dolor de hoy
+- [ ] Journey: por etapa, la pantalla de la app que lo resuelve (con enlace)
+- [ ] Journey: curva de emoción antes vs. después
+- [ ] Journey: conceptos del curso (momentos de la verdad, front-stage / back-stage)
 
 ### Nicole · Pedido y pago
 - [ ] Revisión del carrito: cantidades, quitar, total
@@ -42,26 +52,30 @@ Cada módulo responde a un punto de dolor del customer journey (Taller 2). Esa r
 - [ ] Mostrar el tiempo ahorrado frente a hacer cola (usa `esperaCajaMin` de la tienda)
 
 ### Hemsy · Seguimiento y recojo
-- [ ] Línea de tiempo: recibido → preparando → listo → recogido
-- [ ] Código QR de recojo para el mostrador
-- [ ] Vista previa de aviso tipo WhatsApp en cada estado
-- [ ] Lista «Mis pedidos»
-- [ ] Botón de reclamo o cambio (postventa)
-- [ ] Al recoger, invitar a la encuesta NPS
+- [x] Línea de tiempo: recibido → preparando → listo → recogido
+- [x] Código QR de recojo para el mostrador
+- [x] Vista previa de aviso tipo WhatsApp en cada estado
+- [x] Lista «Mis pedidos»
+- [x] Botón de reclamo o cambio (postventa)
+- [x] Al recoger, invitar a la encuesta NPS
+- [x] Extra: «Antes / ahora» en Mis pedidos para dejar claro el dolor que resuelve
+- [x] Extra: el estado se actualiza solo si el Panel avanza el pedido en otra pestaña
 
 ### Rafael · Club 3A y NPS
-- [ ] Saldo de puntos y nivel del cliente
-- [ ] Cupones canjeables en marca propia
-- [ ] Historial de puntos por pedido
-- [ ] Encuesta NPS de 0 a 10 con comentario
-- [ ] Cómo ganar puntos
+- [x] Saldo de puntos y nivel del cliente
+- [x] Cupones canjeables en marca propia
+- [x] Historial de puntos por pedido
+- [x] Encuesta NPS de 0 a 10 con comentario
+- [x] Cómo ganar puntos
+- [x] Extra: login simulado con roles cliente / administrador
 
 ### Edison · Panel de tienda y asistente IA
-- [ ] Cola de pedidos por estado con botón «avanzar»
-- [ ] Alertas de quiebre de stock de la tienda
-- [ ] KPIs: tiempo en cola, pedidos del día, NPS, recompra
-- [ ] Asistente IA simulado que sugiere acciones (abrir caja, reponer, priorizar)
-- [ ] Comparativo antes / después para la presentación
+Versión inicial del panel hecha por Rafael (cola de pedidos, alertas de stock, KPIs, sugerencias fijas y comparativo antes/después). Edison es el dueño del módulo desde aquí. El taller pide una transformación **con IA**: el asistente es lo que la demuestra.
+- [ ] Asistente en formato chat: el administrador pregunta y recibe respuestas
+- [ ] Respuestas basadas en los datos del panel (colas, stock, NPS, pedidos), sin claves de API
+- [ ] Preguntas sugeridas: «¿Qué hago ahora?», «¿Qué repongo?», «¿Abro otra caja?»
+- [ ] Mostrar qué datos usó la IA para cada recomendación
+- [ ] Opcional: modo presentación (recorrido guiado de la demo)
 
 ## Contrato compartido
 

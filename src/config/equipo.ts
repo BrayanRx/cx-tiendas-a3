@@ -1,6 +1,6 @@
 // Reparto de módulos. Fuente única: si cambia un responsable, se cambia aquí y en EQUIPO.md.
 
-export type ModuloId = 'base' | 'catalogo' | 'pedido' | 'seguimiento' | 'club' | 'panel'
+export type ModuloId = 'base' | 'catalogo' | 'pedido' | 'seguimiento' | 'club' | 'panel' | 'journey'
 
 export interface Modulo {
   id: ModuloId
@@ -30,12 +30,10 @@ export const modulos: Modulo[] = [
     rama: 'feat/catalogo',
     dolor: 'No sabe si el producto está en stock antes de ir.',
     tareas: [
-      'Grilla de productos con precio y stock de la tienda elegida',
-      'Filtros por categoría y "solo marca propia"',
-      'Búsqueda por nombre',
-      'Botón agregar al carrito (deshabilitado si stock = 0)',
-      'Aviso de precio por volumen para bodegueros',
-      'Resumen del carrito con botón "Continuar al pedido"',
+      'Revisar y pulir la versión actual en celular (360 px)',
+      'Textos en tono cercano para el cliente',
+      'Aviso "avísame cuando llegue" en productos agotados',
+      'Sugerir el mismo producto en otra tienda cercana con stock',
     ],
   },
   {
@@ -93,11 +91,26 @@ export const modulos: Modulo[] = [
     rama: 'feat/panel',
     dolor: 'Atención desigual y quiebres de stock sin aviso.',
     tareas: [
-      'Cola de pedidos por estado con botón "avanzar"',
-      'Alertas de quiebre de stock de la tienda',
-      'KPIs: tiempo en cola, pedidos del día, NPS, recompra',
-      'Asistente IA (simulado) que sugiere acciones: abrir caja, reponer',
-      'Comparativo antes / después para la presentación',
+      'Asistente IA en formato chat: el administrador pregunta y recibe respuestas',
+      'Respuestas basadas en los datos del panel (colas, stock, NPS, pedidos)',
+      'Preguntas sugeridas: "¿Qué hago ahora?", "¿Qué repongo?", "¿Abro otra caja?"',
+      'Explicar en pantalla qué datos usó la IA para cada recomendación',
+      'Opcional: modo presentación (recorrido guiado de la demo)',
+    ],
+  },
+  {
+    id: 'journey',
+    nombre: 'Journey antes y después',
+    ruta: '/journey',
+    responsable: 'Ruth Amaya',
+    rama: 'feat/journey',
+    dolor: 'El valor de la propuesta no se ve si no se compara con la experiencia actual.',
+    tareas: [
+      'Las 7 etapas del customer journey de Tiendas 3A (Taller 2)',
+      'Por etapa: acción del cliente, emoción y punto de dolor de hoy',
+      'Por etapa: la pantalla de la app que lo resuelve, con enlace',
+      'Curva de emoción antes vs. después',
+      'Conceptos del curso: momentos de la verdad, front-stage / back-stage',
     ],
   },
 ]

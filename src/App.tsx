@@ -6,6 +6,7 @@ import LoginPage from '@/features/auth/LoginPage'
 import CatalogoPage from '@/features/catalogo/CatalogoPage'
 import ClubPage from '@/features/club/ClubPage'
 import HomePage from '@/features/home/HomePage'
+import JourneyPage from '@/features/journey/JourneyPage'
 import PanelPage from '@/features/panel/PanelPage'
 import PedidoPage from '@/features/pedido/PedidoPage'
 import SeguimientoPage from '@/features/seguimiento/SeguimientoPage'
@@ -20,6 +21,7 @@ export default function App() {
         <Route index element={<HomePage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="catalogo" element={<CatalogoPage />} />
+        <Route path="journey" element={<JourneyPage />} />
         <Route element={<RequireRol rol="cliente" />}>
           <Route path="pedido" element={<PedidoPage />} />
           <Route path="seguimiento" element={<SeguimientoPage />} />

@@ -51,13 +51,22 @@ src/
     seguimiento/       Seguimiento y recojo
     club/              Club 3A y NPS
     panel/             Panel de tienda y asistente IA
+    journey/           Journey antes y después (presentación)
+    auth/              Login simulado
 ```
 
-Cada integrante trabaja **solo dentro de su carpeta** de `src/features/`. El reparto y las tareas están en [EQUIPO.md](EQUIPO.md) y el flujo de trabajo en [CONTRIBUTING.md](CONTRIBUTING.md).
+Cada integrante trabaja **solo dentro de su carpeta** de `src/features/`. El reparto y las tareas pendientes están en [EQUIPO.md](EQUIPO.md), el historial de lo asignado y lo hecho en [BITACORA.md](BITACORA.md) y el flujo de trabajo en [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Bitácora y tareas
+
+- **[EQUIPO.md](EQUIPO.md)** responde *qué falta*: cada integrante tiene su lista de tareas `[ ]` / `[x]`.
+- **[BITACORA.md](BITACORA.md)** responde *qué pasó*: una tabla por integrante con lo asignado, hecho, cambios y bloqueos, con fecha y referencia al PR o commit.
+
+Ambos se actualizan **en el mismo PR del cambio** y cada quien escribe **solo en su sección** (así no hay conflictos al hacer merge). Los agentes de IA lo hacen automáticamente porque está en sus instrucciones.
 
 ## Trabajar con agentes de IA
 
-Todas las instrucciones para agentes viven en un solo archivo: **[AGENTS.md](AGENTS.md)**. Contiene el contexto de negocio (caso, proceso crítico, perfil del cliente, puntos de dolor), los criterios de diseño y las reglas técnicas. Los demás archivos solo apuntan a él, para que todos los agentes sigan lo mismo:
+Todas las instrucciones para agentes viven en un solo archivo: **[AGENTS.md](AGENTS.md)**. Contiene el contexto de negocio (caso, proceso crítico, perfil del cliente, puntos de dolor), los criterios de diseño, las reglas técnicas y el seguimiento de tareas: el agente te identifica, te resume tus pendientes al empezar y actualiza la bitácora al terminar. Los demás archivos solo apuntan a él, para que todos los agentes sigan lo mismo:
 
 | Archivo | Lo lee | Qué hace |
 |---|---|---|
@@ -70,6 +79,6 @@ Si cambian las reglas, edita **solo `AGENTS.md`** (por PR, avisando al líder).
 
 **Cómo pedirle algo a tu agente.** Empieza indicando tu módulo, por ejemplo:
 
-> Soy responsable del módulo de catálogo. Lee AGENTS.md y EQUIPO.md e implementa las tareas pendientes de mi módulo en src/features/catalogo. No modifiques archivos fuera de esa carpeta y ejecuta npm run build al terminar.
+> Soy Ruth, responsable del catálogo. Dime qué tengo pendiente según EQUIPO.md y BITACORA.md, implementa la siguiente tarea en src/features/catalogo y actualiza la bitácora al terminar. No modifiques otras carpetas y ejecuta npm run build.
 
 Si tu agente no parece seguir las reglas (por ejemplo, edita otras carpetas), pégale esa misma instrucción al inicio de la conversación. Revisa siempre el código que genera antes de hacer commit.
