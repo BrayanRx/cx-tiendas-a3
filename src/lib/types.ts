@@ -64,6 +64,8 @@ export interface RespuestaNps {
   puntaje: number
   comentario?: string
   fecha: number
+  /** true si viene de los datos de demostración (src/data/demo.ts). */
+  demo?: boolean
 }
 
 export type RolSesion = 'cliente' | 'admin'

@@ -23,6 +23,8 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-29 | asignado | Proteger `main`, datos de demostración, componentes QR y aviso tipo WhatsApp | — |
 | 2026-10-29 | cambio | Ruth suma «Journey antes y después»; Edison pasa a mejorar el asistente IA (sus módulos ya tenían versión inicial de Rafael) | commit «Bitácora del equipo» |
 | 2026-10-29 | hecho | Ruta pública `/journey` y bitácora del equipo | commit «Bitácora del equipo» |
+| 2026-10-30 | hecho | Datos de demostración (`cargarDemo`, botón «Modo demostración» en Inicio) y componentes compartidos `CodigoQr` y `AvisoWhatsapp` | este PR |
+| 2026-10-30 | bloqueo | Proteger `main` se hace en GitHub (Settings → Branches) y requiere permisos de dueño del repositorio | — |
 
 ## Ruth · Catálogo + Journey
 

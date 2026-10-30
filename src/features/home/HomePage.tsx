@@ -13,6 +13,7 @@ const pasos = [
 export default function HomePage() {
   const tiendaId = useApp((s) => s.tiendaId)
   const setTienda = useApp((s) => s.setTienda)
+  const { pedidos, encuestas, cargarDemo, reiniciarDemo } = useApp()
 
   return (
     <div className="space-y-14">
@@ -98,6 +99,29 @@ export default function HomePage() {
               </Link>
             ))}
         </div>
+      </section>
+
+      {/* Para la presentación en vivo: llena el Panel, Seguimiento y Club con pedidos y encuestas de ejemplo. */}
+      <section aria-labelledby="h-demo">
+        <Card className="flex flex-wrap items-center justify-between gap-4 border-dashed">
+          <div>
+            <h2 id="h-demo" className="font-semibold">
+              Modo demostración
+            </h2>
+            <p className="mt-1 text-sm text-ink-muted">
+              Carga pedidos y encuestas de ejemplo para ver el panel, el seguimiento y el Club con datos. Ahora hay{' '}
+              {pedidos.length} pedidos y {encuestas.length} encuestas.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Button variante="secondary" onClick={cargarDemo}>
+              Cargar datos de ejemplo
+            </Button>
+            <Button variante="ghost" onClick={() => confirm('¿Borrar pedidos, encuestas y carrito de esta demo?') && reiniciarDemo()}>
+              Reiniciar
+            </Button>
+          </div>
+        </Card>
       </section>
     </div>
   )

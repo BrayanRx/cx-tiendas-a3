@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { avanceDemo, encuestasDemo, franjaDemo, pedidosDemo } from '@/data/demo'
 import { productos } from '@/data/productos'
 import { tiendas } from '@/data/tiendas'
 import type { EstadoPedido, ItemCarrito, MetodoPago, Pedido, RespuestaNps, Sesion } from './types'
@@ -51,6 +52,8 @@ interface AppState {
 
   // Utilidad para demos
   reiniciarDemo: () => void
+  /** Carga pedidos y encuestas de ejemplo (src/data/demo.ts). Se puede repetir: reemplaza los de ejemplo anteriores. */
+  cargarDemo: () => void
 }
 
 const inicial = {
@@ -136,6 +139,35 @@ export const useApp = create<AppState>()(
 
       // La sesión no se reinicia: la demo conserva quién está conectado.
       reiniciarDemo: () => set({ ...inicial }),
+      cargarDemo: () =>
+        set((s) => {
+          const ahora = Date.now()
+          const ids = new Set(pedidosDemo.map((d) => d.id))
+          const previos = new Set(s.pedidos.filter((p) => ids.has(p.id)).map((p) => p.id))
+          const demo: Pedido[] = pedidosDemo.map((d) => {
+            const creadoEn = ahora - d.hace * 60_000
+            const total = totalItems(d.items)
+            return {
+              id: d.id,
+              tiendaId: d.tiendaId,
+              items: d.items,
+              total,
+              franja: franjaDemo(creadoEn),
+              metodoPago: d.metodoPago,
+              estado: d.estado,
+              creadoEn,
+              actualizadoEn: Math.min(ahora, creadoEn + avanceDemo[d.estado] * 60_000),
+              puntosGanados: d.estado === 'cancelado' ? 0 : Math.floor(total * PUNTOS_POR_SOL),
+            }
+          })
+          // Solo suman puntos los pedidos de ejemplo que aún no estaban cargados.
+          const puntosNuevos = demo.filter((p) => !previos.has(p.id)).reduce((n, p) => n + p.puntosGanados, 0)
+          return {
+            pedidos: [...s.pedidos.filter((p) => !ids.has(p.id)), ...demo].sort((a, b) => b.creadoEn - a.creadoEn),
+            encuestas: [...s.encuestas.filter((e) => !e.demo), ...encuestasDemo(ahora).map((e) => ({ ...e, demo: true }))],
+            puntos: s.puntos + puntosNuevos,
+          }
+        }),
     }),
     { name: 'cx-pide-y-recoge', version: 1 },
   ),
