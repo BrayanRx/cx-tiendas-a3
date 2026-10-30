@@ -39,10 +39,12 @@ Versión inicial del catálogo hecha por Rafael (grilla, stock, filtros, búsque
 - [ ] Catálogo: textos en tono cercano para el cliente
 - [ ] Catálogo: aviso «avísame cuando llegue» en productos agotados
 - [ ] Catálogo: sugerir el mismo producto en otra tienda cercana con stock
-- [ ] Journey: las 7 etapas del customer journey (Taller 2) con acción, emoción y dolor de hoy
-- [ ] Journey: por etapa, la pantalla de la app que lo resuelve (con enlace)
-- [ ] Journey: curva de emoción antes vs. después
-- [ ] Journey: conceptos del curso (momentos de la verdad, front-stage / back-stage)
+- [x] Journey: las 7 etapas del customer journey (Taller 2) con acción, emoción y dolor de hoy
+- [x] Journey: por etapa, la pantalla de la app que lo resuelve (con enlace)
+- [x] Journey: curva de emoción antes vs. después
+- [x] Journey: conceptos del curso (momentos de la verdad, front-stage / back-stage)
+
+Las 4 tareas de Journey las hizo Rafael por encargo (PR de `feat/journey-pagina`). Las 7 etapas salen de los 7 puntos de dolor del cliente (`AGENTS.md`): Ruth debe contrastarlas con su Taller 2 y ajustar `src/features/journey/etapas.ts` si difieren.
 
 ### Nicole · Pedido y pago
 - [ ] Revisión del carrito: cantidades, quitar, total
