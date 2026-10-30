@@ -5,11 +5,11 @@ import Icono, { type NombreIcono } from '@/components/Icono'
 import { Badge, Button, SectionHeader } from '@/components/ui'
 import { canastas, type Canasta } from '@/data/canastas'
 import { encuestasDemo } from '@/data/demo'
-import { getProducto } from '@/data/productos'
+import { categorias, getProducto } from '@/data/productos'
 import { getTienda, stock, tiendas } from '@/data/tiendas'
 import { formatFecha, formatSoles } from '@/lib/format'
 import { totalItems, useApp } from '@/lib/store'
-import type { RespuestaNps } from '@/lib/types'
+import type { Categoria, RespuestaNps } from '@/lib/types'
 
 // Responsable: Brayan Rojas · rama feat/base
 // Dolor que resuelve: poca presencia digital (el cliente no descubre ni ubica la tienda).
@@ -31,10 +31,18 @@ const fondoCanasta: Record<string, string> = {
   bodeguero: 'bg-amber-50',
 }
 
-const fotosHero = ['arroz-5kg', 'huevos-15', 'papa-1kg', 'pollo-1kg']
 const masPedidos = ['arroz-5kg', 'huevos-15', 'pollo-1kg', 'fideos-500', 'atun-170', 'papa-1kg', 'queso-500', 'avena-900', 'azucar-1kg']
 
 const STOCK_BAJO = 8
+
+// Categorías que aparecen en «Lo más pedido», para los filtros tipo píldora.
+const categoriasPopulares = categorias.filter((c) => masPedidos.some((id) => getProducto(id)?.categoria === c.id))
+
+/** Ahorro del pack bodeguero frente a comprar lo mismo a precio normal. */
+const packBodeguero = canastas.find((c) => c.id === 'bodeguero')
+const ahorroBodeguero = packBodeguero
+  ? Math.round((packBodeguero.items.reduce((s, i) => s + (getProducto(i.productoId)?.precio ?? 0) * i.cantidad, 0) - totalItems(packBodeguero.items)) * 100) / 100
+  : 0
 
 /** Minutos que toma recoger en el mostrador «Pide y recoge» (el mismo valor que usa el Panel). */
 const RECOJO_MIN = 2
@@ -76,6 +84,7 @@ export default function HomePage() {
   const tienda = getTienda(tiendaId)
   const { hash } = useLocation()
   const [aviso, setAviso] = useState<{ canastaId: string; texto: string } | null>(null)
+  const [filtro, setFiltro] = useState<Categoria | 'todas'>('todas')
   // Aviso emergente al agregar un producto (se oculta solo a los 3 segundos).
   const [toast, setToast] = useState<string | null>(null)
   const temporizador = useRef<ReturnType<typeof setTimeout>>(undefined)
@@ -125,66 +134,71 @@ export default function HomePage() {
 
   return (
     <div className="space-y-16">
-      {/* Hero: propuesta de valor + sellos de confianza (cada sello responde a un dolor del journey) */}
-      <section className="relative overflow-hidden rounded-3xl bg-brand-soft p-6 sm:p-10 lg:p-14">
-        <div className="grid items-center gap-10 lg:grid-cols-[1.15fr_1fr]">
-          <div className="space-y-6">
-            <span className="inline-block rounded-full bg-surface/80 px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-brand">
-              Nuevo · Pide y recoge
-            </span>
-            <h1 className="text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
-              Barato en precio.
-              <br />
-              <span className="text-brand">Barato en tiempo.</span>
-            </h1>
-            <p className="max-w-md text-lg font-medium text-ink-muted">
-              Compra tu canasta desde el celular y recógela sin hacer cola en {tienda?.nombre ?? 'tu tienda'}.
-            </p>
-            <div className="grid gap-3 sm:flex">
-              <Link to="/catalogo">
-                <Button className="w-full px-7 py-3 sm:w-auto">
-                  Empezar mi pedido <Icono nombre="flecha" className="size-4" />
-                </Button>
-              </Link>
-              <a href="#canastas">
-                <Button variante="secondary" className="w-full px-7 py-3 sm:w-auto">
-                  Ver canastas
-                </Button>
-              </a>
-            </div>
-            <ul className="grid grid-cols-3 gap-3 border-t border-brand/15 pt-5">
-              {sellos.map((s) => (
-                <li key={s.titulo} className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-2.5">
-                  <span className="grid size-10 shrink-0 place-items-center rounded-full bg-surface text-brand shadow-sm">
-                    <Icono nombre={s.icono} />
-                  </span>
-                  <div>
-                    <p className="text-xs font-bold sm:text-sm">{s.titulo}</p>
-                    <p className="text-[11px] text-ink-muted sm:text-xs">{s.texto}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
+      {/* Hero dividido: mensaje a la izquierda y bloque de color con fotos en círculo a la derecha */}
+      <section className="relative overflow-hidden rounded-3xl bg-surface shadow-sm lg:grid lg:grid-cols-[1.1fr_1fr]">
+        <div className="relative z-10 space-y-6 p-6 sm:p-10 lg:p-14">
+          <p className="text-xl font-extrabold italic text-accent sm:text-2xl">Pide y recoge</p>
+          <h1 className="text-5xl font-black uppercase leading-[0.92] tracking-tight sm:text-6xl lg:text-7xl">
+            Barato en precio.
+            <span className="block text-brand">Barato en tiempo.</span>
+          </h1>
+          <p className="max-w-md text-lg font-medium text-ink-muted">
+            Compra tu canasta desde el celular y recógela sin hacer cola en {tienda?.nombre ?? 'tu tienda'}.
+          </p>
+          <div className="grid gap-3 sm:flex">
+            <Link to="/catalogo">
+              <Button className="w-full px-7 py-3 sm:w-auto">
+                Empezar mi pedido <Icono nombre="flecha" className="size-4" />
+              </Button>
+            </Link>
+            <a href="#canastas">
+              <Button variante="secondary" className="w-full px-7 py-3 sm:w-auto">
+                Ver canastas
+              </Button>
+            </a>
           </div>
+          <ul className="grid grid-cols-3 gap-3 border-t border-line pt-5">
+            {sellos.map((s) => (
+              <li key={s.titulo} className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-2.5">
+                <span className="grid size-10 shrink-0 place-items-center rounded-full bg-brand-soft text-brand">
+                  <Icono nombre={s.icono} />
+                </span>
+                <div>
+                  <p className="text-xs font-bold sm:text-sm">{s.titulo}</p>
+                  <p className="text-[11px] text-ink-muted sm:text-xs">{s.texto}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-          <div className="relative mx-auto hidden w-full max-w-md sm:block">
-            <div className="grid grid-cols-2 gap-3">
-              {fotosHero.map((id, i) => {
-                const p = getProducto(id)
-                return (
-                  <img
-                    key={id}
-                    src={p?.foto}
-                    alt={p ? `${p.nombre} ${p.presentacion}` : ''}
-                    className={`aspect-square w-full rounded-2xl bg-surface object-cover shadow-md ${i % 2 ? 'translate-y-6' : ''}`}
-                  />
-                )
-              })}
-            </div>
-            <div className="absolute -bottom-2 left-1/2 w-60 -translate-x-1/2 rounded-2xl border border-line bg-surface p-3 text-sm shadow-lg">
-              <p className="text-xs font-semibold text-ok">Tiendas 3A · Pide y recoge</p>
-              <p className="mt-0.5">¡Tu pedido está listo! ✅ Recógelo en el mostrador, sin fila.</p>
-            </div>
+        <div className="relative h-72 overflow-hidden bg-brand sm:h-96 lg:h-auto lg:rounded-tl-[6rem]" aria-hidden>
+          <span className="absolute -left-2 top-4 select-none whitespace-nowrap text-[6.5rem] font-black uppercase leading-none text-white/10 sm:text-[9rem]">
+            Ahorra
+          </span>
+          <span className="absolute -bottom-20 -right-20 size-72 rounded-full border-[28px] border-sun/70" />
+          <span className="absolute left-8 top-1/2 size-5 rounded-full bg-sun" />
+          <span className="absolute right-12 top-10 size-3 rounded-full bg-white/60" />
+          <img
+            src={getProducto('huevos-15')?.foto}
+            alt=""
+            className="absolute left-1/2 top-1/2 size-44 -translate-x-1/2 -translate-y-1/2 rounded-full border-8 border-white object-cover shadow-2xl sm:size-64"
+          />
+          <img
+            src={getProducto('papa-1kg')?.foto}
+            alt=""
+            className="absolute bottom-6 left-6 size-20 rounded-full border-4 border-white object-cover shadow-xl sm:size-28"
+          />
+          <img
+            src={getProducto('arroz-5kg')?.foto}
+            alt=""
+            className="absolute right-6 top-6 size-20 rounded-full border-4 border-white object-cover shadow-xl sm:size-24"
+          />
+          <div className="absolute bottom-5 right-5 hidden w-56 rounded-2xl bg-surface p-3 text-sm text-ink shadow-xl sm:block">
+            <p className="flex items-center gap-1 text-xs font-semibold text-ok">
+              <Icono nombre="check" className="size-3.5" /> Tiendas 3A · Pide y recoge
+            </p>
+            <p className="mt-0.5">¡Tu pedido está listo! Recógelo en el mostrador, sin fila.</p>
           </div>
         </div>
       </section>
@@ -206,9 +220,49 @@ export default function HomePage() {
         </ol>
       </section>
 
+      {/* Banners de promoción: bloques de color con datos reales del catálogo y de la tienda */}
+      <section aria-label="Promociones" className="grid gap-4 md:grid-cols-2">
+        <div className="relative overflow-hidden rounded-3xl bg-sun p-7 sm:p-9">
+          <span className="absolute -right-10 -top-10 size-40 rounded-full border-[18px] border-white/40" aria-hidden />
+          <img
+            src={getProducto('arroz-5kg')?.foto}
+            alt=""
+            className="absolute -bottom-6 -right-6 size-36 rounded-full border-[6px] border-white object-cover shadow-xl sm:size-44"
+          />
+          <div className="relative max-w-[60%]">
+            <p className="text-xs font-bold uppercase tracking-widest text-ink/70">Pack bodeguero</p>
+            <p className="mt-2 text-3xl font-black uppercase leading-none sm:text-4xl">
+              Ahorra <span className="text-brand-dark">{formatSoles(ahorroBodeguero)}</span>
+            </p>
+            <p className="mt-3 text-sm text-ink/80">Precio por volumen en arroz, aceite, azúcar y leche.</p>
+            <a href="#canastas" className="mt-5 inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-white hover:bg-ink/85">
+              Ver el pack <Icono nombre="flecha" className="size-4" />
+            </a>
+          </div>
+        </div>
+        <div className="relative overflow-hidden rounded-3xl bg-accent p-7 text-white sm:p-9">
+          <span className="absolute -right-10 -top-10 size-40 rounded-full border-[18px] border-white/10" aria-hidden />
+          <img
+            src={getProducto('pollo-1kg')?.foto}
+            alt=""
+            className="absolute -bottom-6 -right-6 size-36 rounded-full border-[6px] border-white object-cover shadow-xl sm:size-44"
+          />
+          <div className="relative max-w-[60%]">
+            <p className="text-xs font-bold uppercase tracking-widest text-white/70">Pide y recoge</p>
+            <p className="mt-2 text-3xl font-black uppercase leading-none sm:text-4xl">
+              {RECOJO_MIN} min, <span className="text-sun">no {tienda?.esperaCajaMin}</span>
+            </p>
+            <p className="mt-3 text-sm text-white/80">Es lo que tardas en recoger frente a la cola de hoy en caja.</p>
+            <Link to="/catalogo" className="mt-5 inline-flex items-center gap-2 rounded-full bg-surface px-5 py-2.5 text-sm font-semibold text-ink hover:bg-white/90">
+              Empezar <Icono nombre="flecha" className="size-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Canastas: el cliente compra semanal o quincenal y el bodeguero por volumen; un toque arma el carrito */}
       <section id="canastas" aria-labelledby="h-canastas" className="scroll-mt-24">
-        <SectionHeader id="h-canastas" centrado titulo="Canastas armadas" descripcion={`Un toque y tu compra está lista. Precios y stock de ${tienda?.nombre}.`} />
+        <SectionHeader id="h-canastas" centrado titulo="Canastas" resaltado="armadas" descripcion={`Un toque y tu compra está lista. Precios y stock de ${tienda?.nombre}.`} />
         <Carrusel etiqueta="Canastas armadas">
           {canastas.map((c) => {
             const total = totalItems(c.items)
@@ -273,11 +327,24 @@ export default function HomePage() {
 
       {/* Lo más pedido: tarjetas con foto que se elevan al pasar; el botón confirma con un aviso */}
       <section aria-labelledby="h-populares" className="bg-puntos -mx-4 px-4 py-12 sm:mx-0 sm:rounded-3xl sm:px-8">
-        <SectionHeader id="h-populares" centrado titulo="Lo más pedido" descripcion="Lo que más llevan tus vecinos esta semana." />
-        <Carrusel etiqueta="Lo más pedido">
+        <SectionHeader id="h-populares" centrado titulo="Lo más" resaltado="pedido" descripcion="Lo que más llevan tus vecinos esta semana." />
+        <div className="scrollbar-none -mx-4 mb-6 flex gap-2 overflow-x-auto px-4 sm:justify-center">
+          {[{ id: 'todas' as const, nombre: 'Todo' }, ...categoriasPopulares].map((c) => (
+            <button
+              key={c.id}
+              type="button"
+              aria-pressed={filtro === c.id}
+              onClick={() => setFiltro(c.id)}
+              className={`shrink-0 rounded-full border-2 px-5 py-1.5 text-sm font-semibold transition-colors ${filtro === c.id ? 'border-brand bg-brand text-white' : 'border-line bg-surface text-ink-muted hover:border-brand hover:text-brand'}`}
+            >
+              {c.nombre}
+            </button>
+          ))}
+        </div>
+        <Carrusel key={filtro} etiqueta="Lo más pedido">
           {masPedidos.map((id) => {
             const p = getProducto(id)
-            if (!p) return null
+            if (!p || (filtro !== 'todas' && p.categoria !== filtro)) return null
             const disponible = libre(p.id)
             const quedan = stock[tiendaId]?.[p.id] ?? 0
             return (
@@ -342,7 +409,7 @@ export default function HomePage() {
 
       {/* Ubícanos: la tienda elegida destacada y una fila para cambiarla */}
       <section id="ubicanos" aria-labelledby="h-ubicanos" className="scroll-mt-24">
-        <SectionHeader id="h-ubicanos" centrado titulo="Tu tienda" descripcion="Aquí recoges tu pedido. Mira cuánto tiempo te ahorras hoy." />
+        <SectionHeader id="h-ubicanos" centrado titulo="Tu" resaltado="tienda" descripcion="Aquí recoges tu pedido. Mira cuánto tiempo te ahorras hoy." />
         {tienda && (
           <div className="grid gap-6 rounded-3xl bg-accent p-6 text-white sm:grid-cols-[1fr_auto] sm:items-center sm:p-8">
             <div>
@@ -386,7 +453,7 @@ export default function HomePage() {
 
       {/* Opiniones: resumen NPS (concepto del curso) + comentarios de la encuesta que responden al recoger */}
       <section aria-labelledby="h-opiniones">
-        <SectionHeader id="h-opiniones" centrado titulo="Lo que dicen nuestros clientes" descripcion="Cada cliente califica su experiencia al recoger su pedido." />
+        <SectionHeader id="h-opiniones" centrado titulo="Lo que dicen" resaltado="nuestros clientes" descripcion="Cada cliente califica su experiencia al recoger su pedido." />
         <div className="grid gap-6 lg:grid-cols-[19rem_1fr] lg:items-start">
           <div className="rounded-3xl border border-line bg-surface p-6 shadow-sm">
             <p className="text-xs font-bold uppercase tracking-widest text-ink-muted">Net Promoter Score</p>

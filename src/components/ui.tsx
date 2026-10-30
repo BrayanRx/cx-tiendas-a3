@@ -59,12 +59,15 @@ export function PageHeader({ titulo, descripcion, children }: { titulo: string; 
 export function SectionHeader({
   id,
   titulo,
+  resaltado,
   descripcion,
   centrado = false,
   children,
 }: {
   id?: string
   titulo: string
+  /** Parte del título en naranja de marca (ej. titulo="Canastas" resaltado="armadas"). */
+  resaltado?: string
   descripcion?: string
   centrado?: boolean
   children?: ReactNode
@@ -77,10 +80,10 @@ export function SectionHeader({
           <span className="size-2 rotate-45 rounded-[2px] bg-brand" />
           <span className="h-px flex-1 bg-brand/30" />
         </div>
-        <h2 id={id} className="text-2xl font-extrabold tracking-tight sm:text-3xl">
-          {titulo}
+        <h2 id={id} className="text-3xl font-black uppercase leading-none tracking-tight sm:text-4xl">
+          {titulo} {resaltado && <span className="text-brand">{resaltado}</span>}
         </h2>
-        {descripcion && <p className="mx-auto mt-2 max-w-lg text-sm text-ink-muted sm:text-base">{descripcion}</p>}
+        {descripcion && <p className="mx-auto mt-3 max-w-lg text-sm text-ink-muted sm:text-base">{descripcion}</p>}
         {children && <div className="mt-3">{children}</div>}
       </div>
     )
@@ -89,7 +92,7 @@ export function SectionHeader({
     <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
       <div>
         <h2 id={id} className="text-xl font-bold tracking-tight sm:text-2xl">
-          {titulo}
+          {titulo} {resaltado && <span className="text-brand">{resaltado}</span>}
         </h2>
         {descripcion && <p className="mt-1 text-sm text-ink-muted sm:text-base">{descripcion}</p>}
       </div>
