@@ -25,6 +25,8 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-29 | hecho | Ruta pública `/journey` y bitácora del equipo | commit «Bitácora del equipo» |
 | 2026-10-30 | hecho | Datos de demostración (`cargarDemo`, botón «Modo demostración» en Inicio) y componentes compartidos `CodigoQr` y `AvisoWhatsapp` | este PR |
 | 2026-10-30 | bloqueo | Proteger `main` se hace en GitHub (Settings → Branches) y requiere permisos de dueño del repositorio | — |
+| 2026-10-30 | hecho | `main` protegida con ruleset: exige Pull Request y bloquea force push y borrado | — |
+| 2026-10-30 | hecho | Revisión de PRs: merge de #11, #6 y #9; en #10 se quitaron 9 fotos con marcas registradas reales antes del merge | PR #10 |
 
 ## Ruth · Catálogo + Journey
 
@@ -58,6 +60,8 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-29 | hecho | Versión inicial del panel de tienda (módulo de Edison) | 08c1ba6, PR #3 |
 | 2026-10-29 | hecho | Identidad visual, logo y login simulado con roles (subido directo a main) | 81782e9, bb80ae9, 0932ad8 |
 | 2026-10-29 | hecho | Página «Journey antes y después» (módulo de Ruth): 7 etapas con acción, emoción y dolor, pantalla que lo resuelve, curva de emoción y conceptos del curso | este PR |
+| 2026-10-29 | hecho | Fotos reales de los 18 productos del catálogo (Wikimedia Commons, con créditos y respaldo de emoji) | PR #4 |
+| 2026-10-29 | hecho | Catálogo (módulo de Ruth): pulido en celular, textos cercanos, «avísame cuando llegue» y sugerencia del producto en otra tienda cercana | este PR |
 
 ## Edison · Panel de tienda y asistente IA
 

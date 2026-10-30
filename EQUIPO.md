@@ -26,7 +26,7 @@ Marca `[x]` cuando una tarea esté en `main`. Cada responsable mantiene **solo s
 - [x] Proyecto, rutas, layout, tokens de diseño, componentes compartidos y datos simulados
 - [x] Página de inicio y selector de tienda
 - [x] Conectar Vercel al repositorio
-- [ ] Proteger `main` (exigir Pull Request)
+- [x] Proteger `main` (exigir Pull Request)
 - [x] Datos de demostración (pedidos y encuestas de ejemplo)
 - [x] Componentes compartidos: código QR y aviso tipo WhatsApp
 - [ ] Pedirle a Hemsy que use `@/components/CodigoQr` y `AvisoWhatsapp` en vez de sus copias locales, y a Nicole que use el QR para el pago
@@ -35,10 +35,12 @@ Marca `[x]` cuando una tarea esté en `main`. Cada responsable mantiene **solo s
 
 ### Ruth · Catálogo con stock + Journey antes y después
 Versión inicial del catálogo hecha por Rafael (grilla, stock, filtros, búsqueda, volumen, carrito). Ruth es la dueña del módulo desde aquí.
-- [ ] Catálogo: revisar y pulir en celular (360 px)
-- [ ] Catálogo: textos en tono cercano para el cliente
-- [ ] Catálogo: aviso «avísame cuando llegue» en productos agotados
-- [ ] Catálogo: sugerir el mismo producto en otra tienda cercana con stock
+- [x] Catálogo: revisar y pulir en celular (360 px)
+- [x] Catálogo: textos en tono cercano para el cliente
+- [x] Catálogo: aviso «avísame cuando llegue» en productos agotados
+- [x] Catálogo: sugerir el mismo producto en otra tienda cercana con stock
+
+Las 4 tareas de Catálogo las hizo Rafael por encargo (PR de `feat/catalogo-pulido`, apilado sobre las fotos del PR #4). «Avísame cuando llegue» es simulado y vive solo en la pantalla; la cercanía entre tiendas se define a mano en `src/features/catalogo/cercanas.ts`.
 - [x] Journey: las 7 etapas del customer journey (Taller 2) con acción, emoción y dolor de hoy
 - [x] Journey: por etapa, la pantalla de la app que lo resuelve (con enlace)
 - [x] Journey: curva de emoción antes vs. después
@@ -71,6 +73,7 @@ Las 4 tareas de Journey las hizo Rafael por encargo (PR de `feat/journey-pagina`
 - [x] Encuesta NPS de 0 a 10 con comentario
 - [x] Cómo ganar puntos
 - [x] Extra: login simulado con roles cliente / administrador
+- [x] Extra: fotos reales en el catálogo
 
 ### Edison · Panel de tienda y asistente IA
 Versión inicial del panel hecha por Rafael (cola de pedidos, alertas de stock, KPIs, sugerencias fijas y comparativo antes/después). Edison es el dueño del módulo desde aquí. El taller pide una transformación **con IA**: el asistente es lo que la demuestra.
