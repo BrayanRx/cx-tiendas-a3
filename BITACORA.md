@@ -51,6 +51,7 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-29 | asignado | Pedido y pago | f712024 |
 | 2026-10-30 | hecho | Pedido y pago: carrito, franja, método de pago, pago QR simulado, creación del pedido y tiempo ahorrado (registrado por el líder) | PR #6 |
 | 2026-10-30 | asignado | Ajustes de la revisión del PR #6 y usar el QR compartido `CodigoQr` | este PR |
+| 2026-10-31 | hecho | Ajustes de revisión: tildes, signos ¿?, franja 24 h (con margen de 20 min), RECOJO_MIN = 2, texto de tarjeta y uso de CodigoQr compartido | este PR |
 
 ## Hemsy · Seguimiento y recojo
 
