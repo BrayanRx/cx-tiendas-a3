@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import CodigoQr from '@/components/CodigoQr'
 import { Badge, Button, Card, PageHeader } from '@/components/ui'
@@ -11,7 +11,7 @@ import type { MetodoPago } from '@/lib/types'
 // Responsable: Nicole Auqui - rama feat/pedido
 // Dolor que resuelve: colas en caja ("Barato en precio, barato en tiempo")
 // Concepto del curso: blueprint front-stage (cliente elige y paga) / back-stage (tienda prepara)
-// Lee: carrito, tiendaId (useApp, @/lib/store), esperaCajaMin (tienda)
+// Lee: carrito, tiendaId (useApp, @/lib/store), esperaCajaMin, horario (tienda)
 // Escribe: cambiarCantidad, quitarDelCarrito, crearPedido -> navega a /seguimiento/:id
 
 type Paso = 'carrito' | 'pago' | 'qr'
@@ -22,23 +22,109 @@ const METODOS: { id: MetodoPago; etiqueta: string; icono: string; descripcion: s
   { id: 'efectivo-en-tienda', etiqueta: 'Efectivo en tienda', icono: '💵', descripcion: 'Pagas en caja solo al momento de recoger' },
 ]
 
-function generarFranjas(): string[] {
-  const ahora = new Date()
-  // Dejar al menos ~20 min de preparación para que la tienda arme el pedido
-  const minInicio = new Date(ahora.getTime() + 20 * 60_000)
-  const minutos = minInicio.getMinutes()
-  const bloque = Math.ceil(minutos / 30) * 30
-  const base = new Date(minInicio)
-  base.setMinutes(bloque, 0, 0)
+interface HorarioTienda {
+  aperturaMin: number
+  cierreMin: number
+  aperturaTexto: string
+  cierreTexto: string
+}
 
-  const pad2 = (n: number) => String(n).padStart(2, '0')
-  const fmtHora = (d: Date) => `${pad2(d.getHours())}:${pad2(d.getMinutes())}`
+function parseHorario(horarioStr?: string): HorarioTienda {
+  const fallback: HorarioTienda = {
+    aperturaMin: 7 * 60,
+    cierreMin: 22 * 60,
+    aperturaTexto: '07:00',
+    cierreTexto: '22:00',
+  }
+  if (!horarioStr) return fallback
 
-  return Array.from({ length: 6 }, (_, i) => {
-    const inicio = new Date(base.getTime() + i * 30 * 60_000)
-    const fin = new Date(inicio.getTime() + 30 * 60_000)
-    return `${fmtHora(inicio)} – ${fmtHora(fin)}`
-  })
+  const partes = horarioStr.split(/[–-]/).map((s) => s.trim())
+  if (partes.length < 2) return fallback
+
+  const aMinutosYTexto = (h: string, horaDefecto: number) => {
+    const [hh, mm] = h.split(':').map((n) => parseInt(n, 10))
+    const hora = isNaN(hh) ? horaDefecto : hh
+    const minuto = isNaN(mm) ? 0 : mm
+    const pad = (n: number) => String(n).padStart(2, '0')
+    return {
+      minutos: hora * 60 + minuto,
+      texto: `${pad(hora)}:${pad(minuto)}`,
+    }
+  }
+
+  const ap = aMinutosYTexto(partes[0], 7)
+  const ci = aMinutosYTexto(partes[1], 22)
+
+  return {
+    aperturaMin: ap.minutos,
+    cierreMin: ci.minutos,
+    aperturaTexto: ap.texto,
+    cierreTexto: ci.texto,
+  }
+}
+
+const pad2 = (n: number) => String(n).padStart(2, '0')
+const minAHora = (minTotal: number) => {
+  const h = Math.floor(minTotal / 60) % 24
+  const m = minTotal % 60
+  return `${pad2(h)}:${pad2(m)}`
+}
+
+/** Genera franjas de recojo respetando la hora de apertura y cierre de la tienda. */
+function generarFranjas(horarioStr?: string, ahora = new Date()): {
+  franjas: string[]
+  esParaManana: boolean
+  cerradoHoy: boolean
+  horario: HorarioTienda
+} {
+  const horario = parseHorario(horarioStr)
+  const ahoraMin = ahora.getHours() * 60 + ahora.getMinutes()
+  const margenPreparacion = 20
+
+  // Primer minuto en que el pedido podría estar listo hoy
+  const primerMinPosible = ahoraMin + margenPreparacion
+
+  // Si aún no abre la tienda hoy, el primer bloque arranca a la hora de apertura
+  const inicioEfectivo = Math.max(primerMinPosible, horario.aperturaMin)
+
+  // Redondear al siguiente bloque de 30 min (00 o 30)
+  const primerBloqueMin = Math.ceil(inicioEfectivo / 30) * 30
+
+  const franjasHoy: string[] = []
+  for (let b = primerBloqueMin; b + 30 <= horario.cierreMin && franjasHoy.length < 6; b += 30) {
+    franjasHoy.push(`${minAHora(b)} – ${minAHora(b + 30)}`)
+  }
+
+  // Si hoy quedan franjas, las usamos.
+  // Si quedan menos de 3 franjas hoy (ej. queda solo la última franja antes del cierre),
+  // añadimos también opciones de mañana para dar flexibilidad al cliente.
+  if (franjasHoy.length > 0) {
+    if (franjasHoy.length < 3) {
+      for (let b = horario.aperturaMin; b + 30 <= horario.cierreMin && franjasHoy.length < 6; b += 30) {
+        franjasHoy.push(`Mañana ${minAHora(b)} – ${minAHora(b + 30)}`)
+      }
+    }
+    return {
+      franjas: franjasHoy,
+      esParaManana: false,
+      cerradoHoy: false,
+      horario,
+    }
+  }
+
+  // No quedan franjas hoy (la tienda ya cerró o falta menos de 20 min para el cierre).
+  // Se ofrecen las primeras franjas de mañana a partir de la hora de apertura.
+  const franjasManana: string[] = []
+  for (let b = horario.aperturaMin; b + 30 <= horario.cierreMin && franjasManana.length < 6; b += 30) {
+    franjasManana.push(`Mañana ${minAHora(b)} – ${minAHora(b + 30)}`)
+  }
+
+  return {
+    franjas: franjasManana,
+    esParaManana: true,
+    cerradoHoy: ahoraMin >= horario.cierreMin || primerMinPosible + 30 > horario.cierreMin,
+    horario,
+  }
 }
 
 // 2 min con Pide y recoge (alineado con Panel de tienda)
@@ -48,10 +134,17 @@ export default function PedidoPage() {
   const navigate = useNavigate()
   const { tiendaId, carrito, cambiarCantidad, quitarDelCarrito, crearPedido } = useApp()
   const tienda = getTienda(tiendaId)
-  const franjas = generarFranjas()
+
+  const { franjas, esParaManana, cerradoHoy, horario } = useMemo(
+    () => generarFranjas(tienda?.horario),
+    [tienda?.horario],
+  )
 
   const [paso, setPaso] = useState<Paso>('carrito')
-  const [franja, setFranja] = useState(franjas[0])
+  const [franjaManual, setFranjaManual] = useState<string | null>(null)
+  const franja = (franjaManual && franjas.includes(franjaManual)) ? franjaManual : (franjas[0] ?? '')
+  const setFranja = (f: string) => setFranjaManual(f)
+
   const [metodo, setMetodo] = useState<MetodoPago>('qr')
   const [errorForm, setErrorForm] = useState('')
   const [pagando, setPagando] = useState(false)
@@ -242,8 +335,21 @@ export default function PedidoPage() {
         <div className="grid gap-6 lg:grid-cols-[1fr_22rem]">
           <div className="space-y-6">
             <section aria-labelledby="h-franja">
-              <h2 id="h-franja" className="mb-3 text-lg font-semibold">¿Cuándo recoges?</h2>
-              <p className="mb-3 text-sm text-ink-muted">Elige una franja de 30 minutos. Tu pedido te esperará listo en el mostrador.</p>
+              <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+                <h2 id="h-franja" className="text-lg font-semibold">¿Cuándo recoges?</h2>
+                {tienda && (
+                  <span className="text-xs text-ink-muted">
+                    Horario de atención: <strong className="font-medium text-ink">{tienda.horario}</strong>
+                  </span>
+                )}
+              </div>
+              <p className="mb-3 text-sm text-ink-muted">
+                {cerradoHoy
+                  ? `La tienda ya cerró por hoy (atendió hasta las ${horario.cierreTexto}). Elige una franja para recoger mañana:`
+                  : esParaManana
+                  ? 'Ya no hay franjas disponibles para hoy dentro del horario de atención. Elige tu recojo para mañana:'
+                  : 'Elige una franja de 30 minutos dentro del horario de la tienda. Tu pedido te esperará listo en el mostrador.'}
+              </p>
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {franjas.map((f) => (
                   <button
