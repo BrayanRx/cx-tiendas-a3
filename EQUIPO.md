@@ -33,6 +33,7 @@ Marca `[x]` cuando una tarea esté en `main`. Cada responsable mantiene **solo s
 - [ ] Revisar y aprobar los PR de cada módulo
 - [ ] Integración final y ensayo del recorrido completo
 - [ ] Presentación: introducción (proceso crítico) y cierre (demo en vivo del recorrido del cliente)
+- [x] Demo con dos pestañas: sesión por pestaña y sincronización de pedidos, encuestas y puntos entre pestañas
 - [x] Rediseño de la base: tipografía, botones y tarjetas, cabecera, pie de página con «Antes y después» e Inicio con canastas armadas y opiniones NPS
 
 ### Ruth · Catálogo con stock + Journey antes y después
@@ -60,6 +61,7 @@ Las 4 tareas de Journey las hizo Rafael por encargo (PR de `feat/journey-pagina`
 - [x] Mostrar el tiempo ahorrado frente a hacer cola (usa `esperaCajaMin` de la tienda)
 - [x] Ajustes de la revisión del PR #6: tildes y signos (¿Cuándo…?, catálogo, débito…), recojo de 2 min igual que el Panel, descripción de tarjeta coherente con Seguimiento, franja en formato 24 h y que empiece al menos 20 min después
 - [x] Usar el QR compartido `@/components/CodigoQr` en el pago (en vez de `PATRON_QR`)
+- [ ] Franjas de recojo solo dentro del horario de la tienda (hoy, si se pide de noche, ofrece recoger después del cierre)
 
 ### Hemsy · Seguimiento y recojo
 - [x] Línea de tiempo: recibido → preparando → listo → recogido
@@ -71,6 +73,7 @@ Las 4 tareas de Journey las hizo Rafael por encargo (PR de `feat/journey-pagina`
 - [x] Extra: «Antes / ahora» en Mis pedidos para dejar claro el dolor que resuelve
 - [x] Extra: el estado se actualiza solo si el Panel avanza el pedido en otra pestaña
 - [ ] Usar los componentes compartidos `@/components/CodigoQr` y `@/components/AvisoWhatsapp` en vez de las copias locales
+- [ ] Opcional: quitar `useSincronizarPedidos`, porque ahora el Layout sincroniza todas las páginas
 
 ### Rafael · Club 3A y NPS
 - [x] Saldo de puntos y nivel del cliente
@@ -127,7 +130,7 @@ Cada integrante prepara 1 a 2 diapositivas de su módulo con: dolor → solució
 
 ## Acceso simulado (login)
 
-No hay backend: el login valida contra dos cuentas de prueba (visibles en `/login` para probar rápido) y guarda `sesion` en `useApp`.
+No hay backend: el login valida contra dos cuentas de prueba (visibles en `/login` para probar rápido) y guarda `sesion` en `useApp`. La sesión es **por pestaña** (sessionStorage): se puede tener al cliente en una pestaña y al administrador en otra. Pedidos, encuestas y puntos se sincronizan al instante entre pestañas (`src/lib/sincronizar.ts`, usado en el Layout).
 
 | Cuenta | Correo | Contraseña |
 |---|---|---|

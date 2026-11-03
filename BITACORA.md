@@ -34,6 +34,8 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-30 | asignado | Presentación: introducción (proceso crítico) y cierre (demo en vivo) | PR #13 |
 | 2026-10-30 | cambio | Inicio con estilo de supermercado moderno: portada dividida con bloque naranja y fotos en círculo, titulares en dos colores, banners de promoción y filtros por categoría | PR #14 |
 | 2026-10-30 | cambio | Cabecera de página compartida con el estilo del Inicio (banda de color y título en dos colores) y «Guía visual» en EQUIPO.md para que cada módulo la aplique | este PR |
+| 2026-11-03 | hecho | Demo con dos pestañas: sesión por pestaña (sessionStorage) y sincronización de pedidos, encuestas y puntos en todas las páginas, sin bucles | este PR |
+| 2026-11-03 | hecho | Merge del PR #16 (ajustes de Nicole) y PR #17 con el panel de Edison que estaba sin PR | PR #16, PR #17 |
 
 ## Ruth · Catálogo + Journey
 
@@ -52,6 +54,7 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-30 | hecho | Pedido y pago: carrito, franja, método de pago, pago QR simulado, creación del pedido y tiempo ahorrado (registrado por el líder) | PR #6 |
 | 2026-10-30 | asignado | Ajustes de la revisión del PR #6 y usar el QR compartido `CodigoQr` | este PR |
 | 2026-10-31 | hecho | Ajustes de revisión: tildes, signos ¿?, franja 24 h (con margen de 20 min), RECOJO_MIN = 2, texto de tarjeta y uso de CodigoQr compartido | este PR |
+| 2026-11-03 | asignado | Franjas de recojo solo dentro del horario de la tienda (hallazgo del recorrido completo) | este PR |
 
 ## Hemsy · Seguimiento y recojo
 
@@ -61,6 +64,7 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-29 | hecho | Seguimiento: línea de tiempo, QR de recojo, aviso tipo WhatsApp, Mis pedidos, reclamo o cambio, cancelar e invitación a la encuesta NPS | 15309, PR #7 |
 | 2026-10-29 | hecho | Seguimiento: «Antes / ahora» con el dolor que resuelve y actualización en vivo cuando el Panel avanza el pedido en otra pestaña | este PR |
 | 2026-10-30 | asignado | Usar los componentes compartidos `CodigoQr` y `AvisoWhatsapp` | este PR |
+| 2026-11-03 | asignado | Opcional: quitar `useSincronizarPedidos` (ahora el Layout sincroniza todas las páginas) | este PR |
 
 ## Rafael · Club 3A y NPS
 

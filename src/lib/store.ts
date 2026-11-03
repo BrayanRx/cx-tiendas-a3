@@ -64,7 +64,27 @@ const inicial = {
   encuestas: [] as RespuestaNps[],
 }
 
-const sesionInicial = null as Sesion | null
+// La sesión es de cada pestaña (sessionStorage), no del navegador: así la demo puede tener al cliente
+// en una pestaña y al administrador en otra sin que una pise a la otra. Sobrevive a recargar la pestaña.
+const CLAVE_SESION = 'cx-pide-y-recoge-sesion'
+const leerSesion = (): Sesion | null => {
+  try {
+    const v = sessionStorage.getItem(CLAVE_SESION)
+    return v ? (JSON.parse(v) as Sesion) : null
+  } catch {
+    return null
+  }
+}
+const guardarSesion = (sesion: Sesion | null) => {
+  try {
+    if (sesion) sessionStorage.setItem(CLAVE_SESION, JSON.stringify(sesion))
+    else sessionStorage.removeItem(CLAVE_SESION)
+  } catch {
+    // Sin sessionStorage (modo privado estricto): la sesión vive solo en memoria.
+  }
+}
+
+const sesionInicial = leerSesion()
 
 export const useApp = create<AppState>()(
   persist(
@@ -134,8 +154,14 @@ export const useApp = create<AppState>()(
       },
       registrarNps: (r) => set((s) => ({ encuestas: [...s.encuestas, { ...r, fecha: Date.now() }] })),
 
-      iniciarSesion: (sesion) => set({ sesion }),
-      cerrarSesion: () => set({ sesion: null }),
+      iniciarSesion: (sesion) => {
+        guardarSesion(sesion)
+        set({ sesion })
+      },
+      cerrarSesion: () => {
+        guardarSesion(null)
+        set({ sesion: null })
+      },
 
       // La sesión no se reinicia: la demo conserva quién está conectado.
       reiniciarDemo: () => set({ ...inicial }),
@@ -169,6 +195,13 @@ export const useApp = create<AppState>()(
           }
         }),
     }),
-    { name: 'cx-pide-y-recoge', version: 1 },
+    {
+      name: 'cx-pide-y-recoge',
+      version: 1,
+      // La sesión no se guarda en localStorage (es por pestaña, ver arriba).
+      partialize: ({ sesion: _sesion, ...resto }) => resto,
+      // Si quedó una sesión guardada por una versión anterior, se ignora.
+      merge: (guardado, actual) => ({ ...actual, ...(guardado as Partial<AppState>), sesion: actual.sesion }),
+    },
   ),
 )
