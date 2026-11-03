@@ -92,3 +92,4 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-29 | asignado | Asistente IA en formato chat basado en los datos del panel (ver EQUIPO.md) | commit «Bitácora del equipo» |
 | 2026-10-30 | asignado | Recordatorio: asistente IA en formato chat, prioridad del equipo para la presentación | este PR |
 | 2026-11-03 | hecho | Panel y asistente IA: chat con texto libre y preguntas sugeridas basadas en cola, stock, NPS y pedidos; etapas del Service Blueprint; alertas de stock con filtros; simulador de pedidos; voz del cliente (NPS) y tabla antes vs. después (commit 8e9f0f0, PR abierto por el líder) | este PR |
+| 2026-11-03 | hecho | Aplicar la Guía visual al Panel (`PageHeader` con resaltado, `SectionHeader`, `Icono`, `AvisoWhatsapp`, `CodigoQr`, fotos circulares en alertas de stock, fuente de datos en cada recomendación IA y modo presentación guiado) | este PR |
