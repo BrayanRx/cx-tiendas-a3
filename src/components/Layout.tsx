@@ -1,5 +1,6 @@
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { getTienda, tiendas } from '@/data/tiendas'
+import { useSincronizarPestanas } from '@/lib/sincronizar'
 import { useApp } from '@/lib/store'
 import Logo from './Logo'
 
@@ -16,6 +17,8 @@ export default function Layout() {
   const tienda = getTienda(tiendaId)
   const enCarrito = useApp((s) => s.carrito.reduce((n, i) => n + i.cantidad, 0))
   const navigate = useNavigate()
+  // Demo con dos pestañas (cliente y Panel): los pedidos, encuestas y puntos se ven al instante en ambas.
+  useSincronizarPestanas()
 
   // Visitante: solo ve el catálogo; los demás módulos aparecen al ingresar como cliente.
   // «Antes y después» es material de presentación: vive en el pie de página, visible para todos los roles.
