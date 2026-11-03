@@ -84,7 +84,7 @@ Las 4 tareas de Journey las hizo Rafael por encargo (PR de `feat/journey-pagina`
 - [x] Extra: login simulado con roles cliente / administrador
 - [x] Extra: fotos reales en el catálogo
 - [x] Fotos genéricas sin marca para aceite, yogurt, gaseosa, agua, detergente y papel
-- [ ] Fotos genéricas sin marca para leche, lejía y pañales (Wikimedia Commons solo tiene fotos con marca visible: falta otra fuente o fotos propias)
+- [x] Fotos genéricas sin marca para leche, lejía y pañales (imágenes generadas con IA en Canva, porque Commons solo tiene fotos con marca visible)
 
 ### Edison · Panel de tienda y asistente IA
 Versión inicial del panel hecha por Rafael (cola de pedidos, alertas de stock, KPIs, sugerencias fijas y comparativo antes/después). Edison es el dueño del módulo desde aquí. El taller pide una transformación **con IA**: el asistente es lo que la demuestra.

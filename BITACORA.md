@@ -81,6 +81,7 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-30 | asignado | Fotos genéricas sin marca para 9 productos (se quitaron las que mostraban marcas reales en el PR #10) | este PR |
 | 2026-11-03 | hecho | Fotos genéricas sin marca para aceite, yogurt, gaseosa, agua, detergente y papel (Wikimedia Commons, con créditos) | este PR |
 | 2026-11-03 | bloqueo | Leche, lejía y pañales: en Commons solo hay fotos con marca visible; sigue el emoji hasta tener otra fuente o fotos propias | este PR |
+| 2026-11-03 | hecho | Leche, lejía y pañales con imágenes genéricas sin marca generadas con IA (Canva): completa las fotos del catálogo | este PR |
 
 ## Edison · Panel de tienda y asistente IA
 

@@ -17,7 +17,7 @@ export const productos: Producto[] = [
   { id: 'fideos-500', nombre: 'Fideos spaghetti', marca: 'Don Chef', marcaPropia: true, categoria: 'abarrotes', presentacion: '500 g', precio: 2.3, imagen: '🍝', foto: '/productos/fideos-500.jpg' },
   { id: 'atun-170', nombre: 'Filete de atún', marca: 'Mar Azul', marcaPropia: false, categoria: 'abarrotes', presentacion: '170 g', precio: 5.5, imagen: '🐟', foto: '/productos/atun-170.jpg' },
   { id: 'avena-900', nombre: 'Avena tradicional', marca: 'Don Chef', marcaPropia: true, categoria: 'abarrotes', presentacion: '900 g', precio: 6.4, imagen: '🥣', foto: '/productos/avena-900.jpg' },
-  { id: 'leche-400', nombre: 'Leche evaporada', marca: 'Bianca', marcaPropia: true, categoria: 'lacteos', presentacion: '400 g', precio: 3.6, precioVolumen: 3.2, volumenMin: 24, imagen: '🥛' },
+  { id: 'leche-400', nombre: 'Leche evaporada', marca: 'Bianca', marcaPropia: true, categoria: 'lacteos', presentacion: '400 g', precio: 3.6, precioVolumen: 3.2, volumenMin: 24, imagen: '🥛', foto: '/productos/leche-400.jpg' },
   { id: 'yogurt-1l', nombre: 'Yogurt bebible fresa', marca: 'Bianca', marcaPropia: true, categoria: 'lacteos', presentacion: '1 L', precio: 5.9, imagen: '🍓', foto: '/productos/yogurt-1l.jpg' },
   { id: 'queso-500', nombre: 'Queso fresco', marca: 'Andino', marcaPropia: false, categoria: 'lacteos', presentacion: '500 g', precio: 11.9, imagen: '🧀', foto: '/productos/queso-500.jpg' },
   { id: 'gaseosa-3l', nombre: 'Gaseosa sabor cola', marca: 'Kola Real', marcaPropia: false, categoria: 'bebidas', presentacion: '3 L', precio: 6.9, imagen: '🥤', foto: '/productos/gaseosa-3l.jpg' },
@@ -26,9 +26,9 @@ export const productos: Producto[] = [
   { id: 'papa-1kg', nombre: 'Papa amarilla', marca: 'Del campo', marcaPropia: false, categoria: 'frescos', presentacion: '1 kg', precio: 4.2, imagen: '🥔', foto: '/productos/papa-1kg.jpg' },
   { id: 'pollo-1kg', nombre: 'Pollo entero', marca: 'Granja', marcaPropia: false, categoria: 'frescos', presentacion: '1 kg aprox.', precio: 9.9, imagen: '🍗', foto: '/productos/pollo-1kg.jpg' },
   { id: 'detergente-2kg', nombre: 'Detergente en polvo', marca: 'Lavalu', marcaPropia: true, categoria: 'limpieza', presentacion: '2 kg', precio: 14.5, imagen: '🧺', foto: '/productos/detergente-2kg.jpg' },
-  { id: 'lejia-1l', nombre: 'Lejía tradicional', marca: 'Lavalu', marcaPropia: true, categoria: 'limpieza', presentacion: '1 L', precio: 2.7, imagen: '🧴' },
+  { id: 'lejia-1l', nombre: 'Lejía tradicional', marca: 'Lavalu', marcaPropia: true, categoria: 'limpieza', presentacion: '1 L', precio: 2.7, imagen: '🧴', foto: '/productos/lejia-1l.jpg' },
   { id: 'papel-12', nombre: 'Papel higiénico doble hoja', marca: 'Cloudy', marcaPropia: true, categoria: 'cuidado-personal', presentacion: '12 rollos', precio: 13.9, imagen: '🧻', foto: '/productos/papel-12.jpg' },
-  { id: 'panales-m', nombre: 'Pañales talla M', marca: 'Los Peques', marcaPropia: true, categoria: 'cuidado-personal', presentacion: '40 unid.', precio: 29.9, imagen: '👶' },
+  { id: 'panales-m', nombre: 'Pañales talla M', marca: 'Los Peques', marcaPropia: true, categoria: 'cuidado-personal', presentacion: '40 unid.', precio: 29.9, imagen: '👶', foto: '/productos/panales-m.jpg' },
 ]
 
 export const getProducto = (id: string) => productos.find((p) => p.id === id)
