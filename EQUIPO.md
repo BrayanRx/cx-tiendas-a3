@@ -83,7 +83,8 @@ Las 4 tareas de Journey las hizo Rafael por encargo (PR de `feat/journey-pagina`
 - [x] Cómo ganar puntos
 - [x] Extra: login simulado con roles cliente / administrador
 - [x] Extra: fotos reales en el catálogo
-- [ ] Fotos genéricas sin marca para los 9 productos que hoy usan emoji (aceite, leche, yogurt, gaseosa, agua, detergente, lejía, papel y pañales)
+- [x] Fotos genéricas sin marca para aceite, yogurt, gaseosa, agua, detergente y papel
+- [x] Fotos genéricas sin marca para leche, lejía y pañales (imágenes generadas con IA en Canva, porque Commons solo tiene fotos con marca visible)
 
 ### Edison · Panel de tienda y asistente IA
 Versión inicial del panel hecha por Rafael (cola de pedidos, alertas de stock, KPIs, sugerencias fijas y comparativo antes/después). Edison es el dueño del módulo desde aquí. El taller pide una transformación **con IA**: el asistente es lo que la demuestra.
