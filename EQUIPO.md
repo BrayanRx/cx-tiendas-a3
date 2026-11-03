@@ -84,11 +84,12 @@ Las 4 tareas de Journey las hizo Rafael por encargo (PR de `feat/journey-pagina`
 
 ### Edison · Panel de tienda y asistente IA
 Versión inicial del panel hecha por Rafael (cola de pedidos, alertas de stock, KPIs, sugerencias fijas y comparativo antes/después). Edison es el dueño del módulo desde aquí. El taller pide una transformación **con IA**: el asistente es lo que la demuestra.
-- [ ] Asistente en formato chat: el administrador pregunta y recibe respuestas
-- [ ] Respuestas basadas en los datos del panel (colas, stock, NPS, pedidos), sin claves de API
-- [ ] Preguntas sugeridas: «¿Qué hago ahora?», «¿Qué repongo?», «¿Abro otra caja?»
-- [ ] Mostrar qué datos usó la IA para cada recomendación
+- [x] Asistente en formato chat: el administrador pregunta y recibe respuestas
+- [x] Respuestas basadas en los datos del panel (colas, stock, NPS, pedidos), sin claves de API
+- [x] Preguntas sugeridas: «¿Qué hago ahora?», «¿Qué repongo?», «¿Abro otra caja?»
+- [x] Mostrar qué datos usó la IA para cada recomendación
 - [ ] Opcional: modo presentación (recorrido guiado de la demo)
+- [ ] Aplicar la «Guía visual» al Panel (el Panel se hizo antes del rediseño; hereda estilos pero conviene revisarlo)
 
 ## Contrato compartido
 
