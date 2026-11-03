@@ -22,8 +22,22 @@ Proyecto: prototipo frontend de experiencia de cliente «Pide y recoge» para un
 - Alias de importación: `@/` apunta a `src/`.
 - Idioma de la interfaz y de los comentarios: español.
 
+## Antes de empezar: identifica al integrante y sus tareas
+1. Averigua quién te está pidiendo el cambio y cuál es su módulo. Si no lo dijo, pregúntaselo antes de tocar código. La tabla de responsables está en `EQUIPO.md`.
+2. Lee su sección en `EQUIPO.md` (tareas `[ ]` pendientes) y en `BITACORA.md` (lo asignado, lo hecho y los bloqueos).
+3. Al inicio de la conversación, resúmele en 2 o 3 líneas qué tiene pendiente y propón por cuál empezar. Si lo que pide no está en sus tareas, avísale y pregunta si igual quiere hacerlo.
+4. No implementes tareas asignadas a otro integrante, aunque parezcan fáciles. Si algo de otro módulo te bloquea, regístralo como `bloqueo` en la bitácora.
+
+## Al terminar: actualiza la bitácora y las tareas
+En el mismo commit o PR del cambio:
+- En `EQUIPO.md`, marca con `[x]` las tareas completadas, **solo en la sección del integrante**. Si surgió una tarea nueva, agrégala como `[ ]`.
+- En `BITACORA.md`, agrega una fila **al final de la tabla del integrante** (nunca en la de otro), con fecha `AAAA-MM-DD`, tipo (`hecho`, `asignado`, `cambio` o `bloqueo`), detalle corto y referencia (número de PR o commit; si aún no existe, escribe «este PR»).
+- No reordenes ni edites filas anteriores de la bitácora: es un historial.
+- Al final de tu respuesta, recuérdale al integrante qué tareas le quedan pendientes.
+
 ## Reglas de trabajo
-- Cada integrante es dueño de una carpeta en `src/features/<modulo>/`. Modifica **solo** la carpeta del módulo que te pidieron, salvo instrucción explícita.
+- Cada integrante es dueño de una carpeta en `src/features/<modulo>/`. Modifica **solo** la carpeta del módulo que te pidieron, salvo instrucción explícita. Excepción: `EQUIPO.md` y `BITACORA.md`, en la sección de ese integrante.
+- Nunca hagas push directo a `main`: trabaja en la rama del módulo y abre un Pull Request.
 - Archivos compartidos (no modificar sin que lo pidan): `src/App.tsx`, `src/components/`, `src/lib/`, `src/data/`, `src/config/`, `src/index.css`.
 - El estado entre módulos va por `useApp` en `src/lib/store.ts`. No crees otro estado global ni otra clave de localStorage para datos compartidos. El estado local de una pantalla sí puede usar `useState`.
 - Tipos compartidos en `src/lib/types.ts`. Datos en `src/data/`.
@@ -38,4 +52,5 @@ Proyecto: prototipo frontend de experiencia de cliente «Pide y recoge» para un
 - `src/config/equipo.ts`: módulos, responsables y tareas pendientes de cada uno.
 - `src/data/productos.ts`, `src/data/tiendas.ts`: catálogo, tiendas y stock por tienda.
 - `src/lib/store.ts`: carrito, pedidos, puntos, encuestas NPS y sus acciones.
-- `EQUIPO.md`: reparto y contrato compartido entre módulos.
+- `EQUIPO.md`: reparto, tareas pendientes por integrante y contrato compartido entre módulos.
+- `BITACORA.md`: historial de lo asignado y lo hecho por cada integrante.

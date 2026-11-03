@@ -29,6 +29,8 @@ export interface Producto {
   volumenMin?: number
   /** Emoji como imagen provisional; se puede reemplazar por una ruta en /public. */
   imagen: string
+  /** Foto real en /public/productos (ver CREDITOS.md). Si falta o no carga, se usa el emoji. */
+  foto?: string
 }
 
 /** Stock por tienda: stock[tiendaId][productoId] = unidades. */
@@ -64,4 +66,14 @@ export interface RespuestaNps {
   puntaje: number
   comentario?: string
   fecha: number
+  /** true si viene de los datos de demostración (src/data/demo.ts). */
+  demo?: boolean
+}
+
+export type RolSesion = 'cliente' | 'admin'
+
+/** Sesión simulada (sin backend ni contraseñas). */
+export interface Sesion {
+  rol: RolSesion
+  nombre: string
 }

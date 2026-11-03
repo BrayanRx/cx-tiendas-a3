@@ -5,6 +5,9 @@ import { categorias, getProducto, productos } from '@/data/productos'
 import { getTienda, stock } from '@/data/tiendas'
 import { precioUnitario, totalItems, useApp } from '@/lib/store'
 import type { Categoria } from '@/lib/types'
+import { formatSoles } from '@/lib/format'
+import { alternativaCercana } from './cercanas'
+import ProductoFoto from './ProductoFoto'
 
 // Responsable: Ruth Amaya · rama feat/catalogo
 // Lee: productos, categorias (@/data/productos), stock y tiendaId (@/data/tiendas, useApp)
@@ -12,13 +15,16 @@ import type { Categoria } from '@/lib/types'
 const STOCK_BAJO = 8
 
 export default function CatalogoPage() {
-  const { tiendaId, carrito, agregarAlCarrito, cambiarCantidad } = useApp()
+  const { tiendaId, setTienda, carrito, agregarAlCarrito, cambiarCantidad } = useApp()
   const tienda = getTienda(tiendaId)
   const stockTienda = stock[tiendaId] ?? {}
 
   const [categoria, setCategoria] = useState<Categoria | 'todas'>('todas')
   const [soloPropia, setSoloPropia] = useState(false)
   const [busqueda, setBusqueda] = useState('')
+  // «Avísame cuando llegue»: simulado, vive solo en esta pantalla.
+  const [avisos, setAvisos] = useState<string[]>([])
+  const alternarAviso = (id: string) => setAvisos((a) => (a.includes(id) ? a.filter((x) => x !== id) : [...a, id]))
 
   const visibles = useMemo(() => {
     const q = busqueda.trim().toLowerCase()
@@ -34,28 +40,28 @@ export default function CatalogoPage() {
   const unidades = carrito.reduce((n, i) => n + i.cantidad, 0)
 
   return (
-    <div>
+    <div className={unidades > 0 ? 'pb-24 lg:pb-0' : ''}>
       <PageHeader
         titulo="Catálogo"
-        descripcion={`Stock en tiempo real de ${tienda?.nombre ?? 'tu tienda'}. Elige y recoge sin hacer cola.`}
+        descripcion={`Mira qué hay en ${tienda?.nombre ?? 'tu tienda'} antes de salir de casa. Elige tus productos y recógelos sin hacer cola.`}
       >
         <Link to="/" className="text-sm text-brand hover:underline">
           Cambiar tienda
         </Link>
       </PageHeader>
 
-      <div className="grid gap-6 lg:grid-cols-[1fr_20rem]">
-        <section aria-label="Productos">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_20rem]">
+        <section aria-label="Productos" className="min-w-0">
           <div className="mb-4 space-y-3">
             <input
               type="search"
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
-              placeholder="Buscar producto o marca"
+              placeholder="¿Qué buscas? Arroz, leche, detergente…"
               aria-label="Buscar producto"
               className="w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm"
             />
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
               <Chip activo={categoria === 'todas'} onClick={() => setCategoria('todas')}>
                 Todas
               </Chip>
@@ -73,7 +79,7 @@ export default function CatalogoPage() {
 
           {visibles.length === 0 ? (
             <Card>
-              <p className="text-sm text-ink-muted">No encontramos productos con esos filtros.</p>
+              <p className="text-sm text-ink-muted">No encontramos eso en esta tienda. Prueba con otra palabra o quita los filtros.</p>
             </Card>
           ) : (
             <div className="grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 xl:grid-cols-3">
@@ -82,36 +88,60 @@ export default function CatalogoPage() {
                 const enCarrito = cantidadEn(p.id)
                 const agotado = disponible === 0
                 const tope = enCarrito >= disponible
+                const alternativa = agotado ? alternativaCercana(p.id, tiendaId) : null
+                const avisar = avisos.includes(p.id)
                 return (
                   <Card key={p.id} className="flex flex-col gap-1">
-                    <div className="flex items-start justify-between">
-                      <span className="text-4xl" aria-hidden>
-                        {p.imagen}
-                      </span>
-                      {p.marcaPropia && <Badge tono="brand">Marca propia</Badge>}
+                    <div className="relative mb-2 overflow-hidden rounded-lg">
+                      <ProductoFoto producto={p} className={`aspect-[4/3] w-full ${agotado ? 'opacity-50 grayscale' : ''}`} emojiClase="text-6xl" />
+                      {p.marcaPropia && (
+                        <span className="absolute left-2 top-2">
+                          <Badge tono="brand">Marca propia</Badge>
+                        </span>
+                      )}
                     </div>
                     <p className="mt-1 font-medium leading-tight">{p.nombre}</p>
                     <p className="text-sm text-ink-muted">
                       {p.marca} · {p.presentacion}
                     </p>
-                    <p className="text-lg font-semibold">S/ {p.precio.toFixed(2)}</p>
+                    <p className="text-lg font-semibold">{formatSoles(p.precio)}</p>
                     {p.precioVolumen && p.volumenMin && (
                       <p className="text-xs text-ok">
-                        Bodegueros: S/ {p.precioVolumen.toFixed(2)} c/u desde {p.volumenMin} unid.
+                        Si eres bodeguero: {formatSoles(p.precioVolumen)} c/u desde {p.volumenMin} unid.
                       </p>
                     )}
                     <div className="mb-2 mt-1">
                       {agotado ? (
                         <Badge tono="bad">Agotado en esta tienda</Badge>
                       ) : disponible <= STOCK_BAJO ? (
-                        <Badge tono="warn">Quedan {disponible}</Badge>
+                        <Badge tono="warn">¡Quedan solo {disponible}!</Badge>
                       ) : (
                         <Badge tono="ok">{disponible} disponibles</Badge>
                       )}
                     </div>
-                    <Button className="mt-auto" disabled={agotado || tope} onClick={() => agregarAlCarrito(p.id)}>
-                      {agotado ? 'No disponible' : tope ? 'Máximo en stock' : enCarrito ? `Agregar otro (${enCarrito})` : 'Agregar al carrito'}
-                    </Button>
+                    {agotado ? (
+                      <div className="mt-auto space-y-2">
+                        {alternativa && (
+                          <div className="rounded-lg bg-brand-soft p-3 text-sm">
+                            <p>
+                              Aquí se agotó, pero en <span className="font-medium">{alternativa.tienda.nombre}</span> ({alternativa.tienda.distrito}) quedan{' '}
+                              {alternativa.unidades}.
+                            </p>
+                            <button type="button" onClick={() => setTienda(alternativa.tienda.id)} className="mt-1 font-medium text-brand hover:underline">
+                              Ver esa tienda
+                            </button>
+                          </div>
+                        )}
+                        <Button className="w-full" variante={avisar ? 'secondary' : 'primary'} aria-pressed={avisar} onClick={() => alternarAviso(p.id)}>
+                          {avisar ? 'Listo, te avisaremos ✓' : 'Avísame cuando llegue'}
+                        </Button>
+                        {avisar && <p className="text-xs text-ink-muted">Te escribiremos por WhatsApp apenas repongan. Toca de nuevo para cancelar.</p>}
+                      </div>
+                    ) : (
+                      <Button className="mt-auto" disabled={tope} onClick={() => agregarAlCarrito(p.id)}>
+                        {tope ? 'Ya tienes todo el stock' : enCarrito ? `Agregar otro · llevas ${enCarrito}` : 'Agregar al carrito'}
+                      </Button>
+                    )}
                   </Card>
                 )
               })}
@@ -123,7 +153,7 @@ export default function CatalogoPage() {
           <Card>
             <h2 className="text-lg font-semibold">Tu carrito</h2>
             {carrito.length === 0 ? (
-              <p className="mt-2 text-sm text-ink-muted">Aún no agregas productos.</p>
+              <p className="mt-2 text-sm text-ink-muted">Tu carrito está vacío. Agrega lo que necesites y lo recoges sin fila.</p>
             ) : (
               <ul className="mt-3 space-y-3">
                 {carrito.map((i) => {
@@ -134,17 +164,18 @@ export default function CatalogoPage() {
                   return (
                     <li key={p.id} className="text-sm">
                       <div className="flex justify-between gap-2">
-                        <span>
-                          {p.imagen} {p.nombre}
+                        <span className="flex min-w-0 items-center gap-2">
+                          <ProductoFoto producto={p} className="size-9 shrink-0 rounded-md" emojiClase="text-lg" />
+                          <span className="truncate">{p.nombre}</span>
                         </span>
-                        <span className="font-medium">S/ {(unit * i.cantidad).toFixed(2)}</span>
+                        <span className="font-medium">{formatSoles(unit * i.cantidad)}</span>
                       </div>
                       <div className="mt-1 flex items-center gap-2">
                         <button
                           type="button"
                           aria-label={`Quitar una unidad de ${p.nombre}`}
                           onClick={() => cambiarCantidad(p.id, i.cantidad - 1)}
-                          className="size-7 rounded-md border border-line hover:border-ink-muted"
+                          className="size-9 rounded-md border border-line hover:border-ink-muted lg:size-7"
                         >
                           −
                         </button>
@@ -154,7 +185,7 @@ export default function CatalogoPage() {
                           aria-label={`Agregar una unidad de ${p.nombre}`}
                           disabled={i.cantidad >= max}
                           onClick={() => cambiarCantidad(p.id, i.cantidad + 1)}
-                          className="size-7 rounded-md border border-line hover:border-ink-muted disabled:text-ink-muted disabled:opacity-50"
+                          className="size-9 rounded-md border border-line hover:border-ink-muted disabled:text-ink-muted disabled:opacity-50 lg:size-7"
                         >
                           +
                         </button>
@@ -167,7 +198,7 @@ export default function CatalogoPage() {
             )}
             <div className="mt-4 flex items-center justify-between border-t border-line pt-3">
               <span className="text-sm text-ink-muted">{unidades} unid.</span>
-              <span className="text-lg font-semibold">S/ {totalItems(carrito).toFixed(2)}</span>
+              <span className="text-lg font-semibold">{formatSoles(totalItems(carrito))}</span>
             </div>
             {carrito.length === 0 ? (
               <Button className="mt-3 w-full" disabled>
@@ -184,6 +215,18 @@ export default function CatalogoPage() {
           </Card>
         </aside>
       </div>
+
+      {unidades > 0 && (
+        <div className="fixed inset-x-0 bottom-0 z-20 flex items-center justify-between gap-3 border-t border-line bg-surface px-4 py-3 lg:hidden">
+          <div className="text-sm">
+            <p className="font-semibold">{formatSoles(totalItems(carrito))}</p>
+            <p className="text-xs text-ink-muted">{unidades} unid. en tu carrito</p>
+          </div>
+          <Link to="/pedido" className="rounded-lg bg-brand px-4 py-2.5 text-sm font-medium text-white hover:bg-brand-dark">
+            Continuar al pedido
+          </Link>
+        </div>
+      )}
     </div>
   )
 }
