@@ -15,6 +15,7 @@ export interface AlertaStock {
   marcaPropia: boolean
   esVolumen: boolean
   imagen: string
+  foto?: string
   unidades: number
 }
 
@@ -27,6 +28,7 @@ export const alertasStock = (tiendaId: string): AlertaStock[] =>
       marcaPropia: p.marcaPropia,
       esVolumen: Boolean(p.precioVolumen && p.volumenMin),
       imagen: p.imagen,
+      foto: p.foto,
       unidades: stock[tiendaId]?.[p.id] ?? 0,
     }))
     .filter((a) => a.unidades <= STOCK_BAJO)
@@ -70,6 +72,7 @@ export interface Sugerencia {
   id: string
   tono: 'bad' | 'warn' | 'ok'
   concepto: string
+  fuenteDatos: string
   texto: string
 }
 
@@ -88,6 +91,7 @@ export function generarSugerencias(tiendaId: string, pedidos: Pedido[], nps: num
       id: 'caja',
       tono: 'bad',
       concepto: 'Capacidad · 7P (Process)',
+      fuenteDatos: `Datos: esperaCajaMin = ${espera} min (umbral ≥ 12 min)`,
       texto: `La espera en caja es de ${espera} min: abre una segunda caja y deriva clientes con carrito chico al mostrador «Pide y recoge».`,
     })
   else if (espera >= 9)
@@ -95,6 +99,7 @@ export function generarSugerencias(tiendaId: string, pedidos: Pedido[], nps: num
       id: 'caja',
       tono: 'warn',
       concepto: 'Capacidad · Hora punta',
+      fuenteDatos: `Datos: esperaCajaMin = ${espera} min (alerta preventiva 9–11 min)`,
       texto: `Espera en caja de ${espera} min. Si sube de 12 min, habilita caja rápida de apoyo.`,
     })
 
@@ -103,6 +108,7 @@ export function generarSugerencias(tiendaId: string, pedidos: Pedido[], nps: num
       id: 'cola',
       tono: 'warn',
       concepto: 'Back-stage · SLA franja',
+      fuenteDatos: `Datos: ${recibidos.length} pedidos en estado «recibido»`,
       texto: `Hay ${recibidos.length} pedidos nuevos sin atender. Pasa a «preparando» los de franja más cercana primero.`,
     })
   else if (recibidos.length > 0)
@@ -110,6 +116,7 @@ export function generarSugerencias(tiendaId: string, pedidos: Pedido[], nps: num
       id: 'cola',
       tono: 'ok',
       concepto: 'Back-stage · Picking',
+      fuenteDatos: `Datos: ${recibidos.length} pedido(s) en «recibido» · meta recojo ${RECOJO_MIN} min`,
       texto: `Tienes ${recibidos.length} pedido(s) recibido(s). Inicia el armado para cumplir la promesa de recojo en ${RECOJO_MIN} min.`,
     })
 
@@ -118,6 +125,7 @@ export function generarSugerencias(tiendaId: string, pedidos: Pedido[], nps: num
       id: 'prep',
       tono: 'warn',
       concepto: 'Cuello de botella',
+      fuenteDatos: `Datos: ${preparando.length} pedidos simultáneos en «preparando»`,
       texto: `${preparando.length} pedidos en preparación simultánea. Asigna un colaborador adicional al armado.`,
     })
 
@@ -126,6 +134,7 @@ export function generarSugerencias(tiendaId: string, pedidos: Pedido[], nps: num
       id: 'listos',
       tono: 'warn',
       concepto: 'Front-stage · WhatsApp',
+      fuenteDatos: `Datos: ${listos.length} pedido(s) en estado «listo» en mostrador`,
       texto: `${listos.length} pedido(s) listo(s) en mostrador. Confirma que el cliente recibió el aviso con su código QR.`,
     })
 
@@ -134,6 +143,7 @@ export function generarSugerencias(tiendaId: string, pedidos: Pedido[], nps: num
       id: 'agotado',
       tono: 'bad',
       concepto: 'Garantía · Disponibilidad',
+      fuenteDatos: `Datos: stock[${tiendaId}] = 0 en ${agotados.length} SKU(s)`,
       texto: `Quiebre de stock (${agotados.length}): reponer de trastienda ${agotados.slice(0, 3).map((a) => a.nombre).join(', ')}${agotados.length > 3 ? ` y ${agotados.length - 3} más` : ''}.`,
     })
   if (bajos.length > 0)
@@ -141,6 +151,7 @@ export function generarSugerencias(tiendaId: string, pedidos: Pedido[], nps: num
       id: 'bajo',
       tono: 'warn',
       concepto: 'Prevención de quiebre',
+      fuenteDatos: `Datos: ${bajos.length} SKU(s) con stock ≤ ${STOCK_BAJO} unid.`,
       texto: `Stock bajo en ${bajos.length} producto(s). Adelanta reposición antes del pico de las 18:00.`,
     })
 
@@ -149,6 +160,7 @@ export function generarSugerencias(tiendaId: string, pedidos: Pedido[], nps: num
       id: 'nps',
       tono: 'bad',
       concepto: 'Voz del cliente · NPS',
+      fuenteDatos: `Datos: NPS sede = ${nps} (meta ≥ 50)`,
       texto: `El NPS está en ${nps}. Revisa los comentarios de detractores y prioriza la exactitud en el armado.`,
     })
 
@@ -157,6 +169,7 @@ export function generarSugerencias(tiendaId: string, pedidos: Pedido[], nps: num
       id: 'ok',
       tono: 'ok',
       concepto: 'Operación estable',
+      fuenteDatos: `Datos: espera ${espera} min · 0 quiebres · 0 atrasos`,
       texto: 'Todo en orden: flujo de caja controlado y sin pedidos atrasados.',
     })
   return out
@@ -171,10 +184,10 @@ export const etiquetaMetodoPago: Record<MetodoPago, string> = {
 }
 
 export const avisoFrontStage: Record<Pedido['estado'], string> = {
-  recibido: 'WhatsApp enviado: «Recibimos tu pedido, te avisamos cuando empecemos a armarlo.»',
-  preparando: 'WhatsApp enviado: «Estamos armando tu pedido en tienda.»',
-  listo: 'WhatsApp enviado: «¡Tu pedido está listo! Pasa por el mostrador Pide y recoge con tu QR.»',
-  recogido: 'WhatsApp enviado: «Gracias por tu compra. Ganaste puntos Club 3A, cuéntanos cómo te fue.»',
-  cancelado: 'WhatsApp enviado: «Tu pedido fue cancelado.»',
+  recibido: '¡Hola! Recibimos tu pedido en Tiendas 3A. Te avisaremos por aquí cuando empecemos a armarlo.',
+  preparando: 'Estamos armando tu pedido en tienda para tenerlo listo en tu franja de recojo.',
+  listo: '¡Tu pedido está listo! Pasa directo por el mostrador «Pide y recoge» y muestra tu código QR sin hacer cola.',
+  recogido: '¡Gracias por recoger tu pedido! Sumaste puntos en el Club 3A. Cuéntanos del 0 al 10 cómo te fue hoy.',
+  cancelado: 'Tu pedido fue cancelado. Si necesitas ayuda, escríbenos por este canal.',
 }
 

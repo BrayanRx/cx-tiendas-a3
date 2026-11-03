@@ -91,8 +91,8 @@ Versión inicial del panel hecha por Rafael (cola de pedidos, alertas de stock, 
 - [x] Respuestas basadas en los datos del panel (colas, stock, NPS, pedidos), sin claves de API
 - [x] Preguntas sugeridas: «¿Qué hago ahora?», «¿Qué repongo?», «¿Abro otra caja?»
 - [x] Mostrar qué datos usó la IA para cada recomendación
-- [ ] Opcional: modo presentación (recorrido guiado de la demo)
-- [ ] Aplicar la «Guía visual» al Panel (el Panel se hizo antes del rediseño; hereda estilos pero conviene revisarlo)
+- [x] Opcional: modo presentación (recorrido guiado de la demo)
+- [x] Aplicar la «Guía visual» al Panel (el Panel se hizo antes del rediseño; hereda estilos pero conviene revisarlo)
 
 ## Contrato compartido
 
