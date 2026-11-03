@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import CodigoQr from '@/components/CodigoQr'
 import { Badge, Button, Card, PageHeader } from '@/components/ui'
 import { getProducto } from '@/data/productos'
 import { getTienda } from '@/data/tiendas'
@@ -16,51 +17,47 @@ import type { MetodoPago } from '@/lib/types'
 type Paso = 'carrito' | 'pago' | 'qr'
 
 const METODOS: { id: MetodoPago; etiqueta: string; icono: string; descripcion: string }[] = [
-  { id: 'qr',               etiqueta: 'Pago QR',           icono: '📱', descripcion: 'Escanea con Yape, Plin o tu app bancaria' },
-  { id: 'tarjeta',          etiqueta: 'Tarjeta',            icono: '💳', descripcion: 'Debito o credito al recoger en tienda' },
+  { id: 'qr',                 etiqueta: 'Pago QR',            icono: '📱', descripcion: 'Escanea con Yape, Plin o tu app bancaria' },
+  { id: 'tarjeta',            etiqueta: 'Tarjeta',            icono: '💳', descripcion: 'Débito o crédito, pagas ahora desde tu celular' },
   { id: 'efectivo-en-tienda', etiqueta: 'Efectivo en tienda', icono: '💵', descripcion: 'Pagas en caja solo al momento de recoger' },
 ]
 
 function generarFranjas(): string[] {
   const ahora = new Date()
-  const minutos = ahora.getMinutes()
-  const bloque = Math.ceil((minutos + 1) / 30) * 30
-  const base = new Date(ahora)
+  // Dejar al menos ~20 min de preparación para que la tienda arme el pedido
+  const minInicio = new Date(ahora.getTime() + 20 * 60_000)
+  const minutos = minInicio.getMinutes()
+  const bloque = Math.ceil(minutos / 30) * 30
+  const base = new Date(minInicio)
   base.setMinutes(bloque, 0, 0)
-  const fmt = (d: Date) => d.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' })
+
+  const pad2 = (n: number) => String(n).padStart(2, '0')
+  const fmtHora = (d: Date) => `${pad2(d.getHours())}:${pad2(d.getMinutes())}`
+
   return Array.from({ length: 6 }, (_, i) => {
     const inicio = new Date(base.getTime() + i * 30 * 60_000)
-    const fin   = new Date(inicio.getTime() + 30 * 60_000)
-    return `${fmt(inicio)} - ${fmt(fin)}`
+    const fin = new Date(inicio.getTime() + 30 * 60_000)
+    return `${fmtHora(inicio)} – ${fmtHora(fin)}`
   })
 }
 
-const PATRON_QR = [
-  1,1,1,0,1,1,1,
-  1,0,1,0,1,0,1,
-  1,1,1,0,1,1,1,
-  0,1,0,1,0,1,0,
-  1,1,0,0,0,1,1,
-  0,0,1,0,1,0,0,
-  1,0,1,1,1,0,1,
-]
-
-const RECOJO_MIN = 3
+// 2 min con Pide y recoge (alineado con Panel de tienda)
+const RECOJO_MIN = 2
 
 export default function PedidoPage() {
   const navigate = useNavigate()
   const { tiendaId, carrito, cambiarCantidad, quitarDelCarrito, crearPedido } = useApp()
-  const tienda  = getTienda(tiendaId)
+  const tienda = getTienda(tiendaId)
   const franjas = generarFranjas()
 
-  const [paso,      setPaso]     = useState<Paso>('carrito')
-  const [franja,    setFranja]   = useState(franjas[0])
-  const [metodo,    setMetodo]   = useState<MetodoPago>('qr')
+  const [paso, setPaso] = useState<Paso>('carrito')
+  const [franja, setFranja] = useState(franjas[0])
+  const [metodo, setMetodo] = useState<MetodoPago>('qr')
   const [errorForm, setErrorForm] = useState('')
-  const [pagando,   setPagando]  = useState(false)
-  const [codigoQr]  = useState(() => 'QR-' + Math.random().toString(36).slice(2, 8).toUpperCase())
+  const [pagando, setPagando] = useState(false)
+  const [codigoQr] = useState(() => 'QR-' + Math.random().toString(36).slice(2, 8).toUpperCase())
 
-  const total     = totalItems(carrito)
+  const total = totalItems(carrito)
   const ahorroMin = tienda ? Math.max(tienda.esperaCajaMin - RECOJO_MIN, 0) : 0
 
   function irAPago() {
@@ -70,7 +67,10 @@ export default function PedidoPage() {
   }
 
   function irAQrOConfirmar() {
-    if (!franja) { setErrorForm('Elige una franja de recojo.'); return }
+    if (!franja) {
+      setErrorForm('Elige una franja de recojo.')
+      return
+    }
     setErrorForm('')
     if (metodo === 'qr') {
       setPaso('qr')
@@ -92,16 +92,16 @@ export default function PedidoPage() {
   if (!carrito.length && paso === 'carrito') {
     return (
       <div>
-        <PageHeader titulo="Tu pedido" descripcion="Arma tu canasta desde el catalogo y recoge sin hacer cola." />
+        <PageHeader titulo="Tu pedido" descripcion="Arma tu canasta desde el catálogo y recoge sin hacer cola." />
         <Card className="py-10 text-center">
           <p className="text-5xl" aria-hidden>🛒</p>
-          <p className="mt-3 text-lg font-semibold">Tu carrito esta vacio</p>
-          <p className="mt-1 text-sm text-ink-muted">Agrega productos y vuelve aca para pagar.</p>
+          <p className="mt-3 text-lg font-semibold">Tu carrito está vacío</p>
+          <p className="mt-1 text-sm text-ink-muted">Agrega productos y vuelve acá para pagar.</p>
           <Link
             to="/catalogo"
             className="mt-5 inline-flex items-center justify-center rounded-lg bg-brand px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-dark"
           >
-            Ver catalogo
+            Ver catálogo
           </Link>
         </Card>
       </div>
@@ -110,8 +110,8 @@ export default function PedidoPage() {
 
   const PASOS: { id: Paso; label: string }[] = [
     { id: 'carrito', label: 'Carrito' },
-    { id: 'pago',    label: 'Pago' },
-    { id: 'qr',      label: 'Confirmar QR' },
+    { id: 'pago', label: 'Pago' },
+    { id: 'qr', label: 'Confirmar QR' },
   ]
   const idxActual = PASOS.findIndex((p) => p.id === paso)
 
@@ -119,7 +119,7 @@ export default function PedidoPage() {
     <div>
       <PageHeader
         titulo="Tu pedido"
-        descripcion={`${tienda?.nombre ?? 'Tu tienda'} - ${tienda?.horario ?? ''}`}
+        descripcion={`${tienda?.nombre ?? 'Tu tienda'} · ${tienda?.horario ?? ''}`}
       >
         {ahorroMin > 0 && (
           <Badge tono="ok">Ahorras ~{ahorroMin} min frente a la cola</Badge>
@@ -128,16 +128,14 @@ export default function PedidoPage() {
 
       <ol aria-label="Pasos del pedido" className="mb-6 flex items-center gap-2 text-xs font-medium">
         {PASOS.map((p, i) => {
-          const activo     = i === idxActual
+          const activo = i === idxActual
           const completado = i < idxActual
           return (
             <li key={p.id} className="flex items-center gap-2">
               {i > 0 && <span className="text-ink-muted" aria-hidden>&rsaquo;</span>}
               <span
                 className={
-                  activo    ? 'text-brand'    :
-                  completado ? 'text-ok'      :
-                  'text-ink-muted'
+                  activo ? 'text-brand' : completado ? 'text-ok' : 'text-ink-muted'
                 }
               >
                 {completado ? '✓ ' : ''}{p.label}
@@ -225,7 +223,7 @@ export default function PedidoPage() {
               {tienda && (
                 <div className="mt-3 rounded-lg bg-brand-soft p-3 text-sm text-brand-dark">
                   <p className="font-medium">Sin Pide y recoge</p>
-                  <p>Esperarias ~{tienda.esperaCajaMin} min en caja en hora punta.</p>
+                  <p>Esperarías ~{tienda.esperaCajaMin} min en caja en hora punta.</p>
                   <p className="mt-1">Con tu pedido anticipado, recoges en solo ~{RECOJO_MIN} min.</p>
                 </div>
               )}
@@ -244,8 +242,8 @@ export default function PedidoPage() {
         <div className="grid gap-6 lg:grid-cols-[1fr_22rem]">
           <div className="space-y-6">
             <section aria-labelledby="h-franja">
-              <h2 id="h-franja" className="mb-3 text-lg font-semibold">Cuando recoges?</h2>
-              <p className="mb-3 text-sm text-ink-muted">Elige una franja de 30 minutos. Tu pedido te esperara listo en el mostrador.</p>
+              <h2 id="h-franja" className="mb-3 text-lg font-semibold">¿Cuándo recoges?</h2>
+              <p className="mb-3 text-sm text-ink-muted">Elige una franja de 30 minutos. Tu pedido te esperará listo en el mostrador.</p>
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {franjas.map((f) => (
                   <button
@@ -266,7 +264,7 @@ export default function PedidoPage() {
             </section>
 
             <section aria-labelledby="h-metodo">
-              <h2 id="h-metodo" className="mb-3 text-lg font-semibold">Como pagas?</h2>
+              <h2 id="h-metodo" className="mb-3 text-lg font-semibold">¿Cómo pagas?</h2>
               <div className="space-y-3">
                 {METODOS.map((m) => (
                   <button
@@ -343,19 +341,8 @@ export default function PedidoPage() {
             <p className="font-semibold">Escanea este QR con Yape, Plin o tu app bancaria</p>
             <p className="mt-1 text-sm text-ink-muted">No cierres esta pantalla hasta confirmar el pago.</p>
 
-            <div
-              role="img"
-              aria-label="Codigo QR de pago simulado"
-              className="mx-auto my-6 flex size-52 items-center justify-center rounded-2xl border-4 border-brand bg-white p-4"
-            >
-              <div className="grid grid-cols-7 gap-1">
-                {PATRON_QR.map((celda, i) => (
-                  <div
-                    key={i}
-                    className={`size-4 rounded-sm ${celda ? 'bg-ink' : 'bg-white'}`}
-                  />
-                ))}
-              </div>
+            <div className="mx-auto my-6 flex size-52 items-center justify-center rounded-2xl border-4 border-brand bg-white p-4">
+              <CodigoQr codigo={codigoQr} className="size-44" etiqueta="Código QR de pago simulado" />
             </div>
 
             <p className="font-mono text-xl font-bold tracking-widest text-brand-dark">{codigoQr}</p>
@@ -391,7 +378,7 @@ export default function PedidoPage() {
               Volver
             </button>
             <p className="mt-4 text-xs text-ink-muted">
-              Prototipo academico - Pago simulado, sin transaccion real
+              Prototipo académico · Pago simulado, sin transacción real
             </p>
           </Card>
         </div>

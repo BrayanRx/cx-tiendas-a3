@@ -58,8 +58,8 @@ Las 4 tareas de Journey las hizo Rafael por encargo (PR de `feat/journey-pagina`
 - [x] Simular pago QR (código y confirmación)
 - [x] Crear el pedido con `crearPedido()` y redirigir a `/seguimiento/:id`
 - [x] Mostrar el tiempo ahorrado frente a hacer cola (usa `esperaCajaMin` de la tienda)
-- [ ] Ajustes de la revisión del PR #6: tildes y signos (¿Cuándo…?, catálogo, débito…), recojo de 2 min igual que el Panel, descripción de tarjeta coherente con Seguimiento, franja en formato 24 h y que empiece al menos 20 min después
-- [ ] Usar el QR compartido `@/components/CodigoQr` en el pago (en vez de `PATRON_QR`)
+- [x] Ajustes de la revisión del PR #6: tildes y signos (¿Cuándo…?, catálogo, débito…), recojo de 2 min igual que el Panel, descripción de tarjeta coherente con Seguimiento, franja en formato 24 h y que empiece al menos 20 min después
+- [x] Usar el QR compartido `@/components/CodigoQr` en el pago (en vez de `PATRON_QR`)
 
 ### Hemsy · Seguimiento y recojo
 - [x] Línea de tiempo: recibido → preparando → listo → recogido
