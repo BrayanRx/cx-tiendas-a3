@@ -45,7 +45,9 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-29 | cambio | Rafael entregó la versión inicial del catálogo; Ruth sigue como dueña y lo pule | bc1b880 |
 | 2026-10-29 | asignado | Pulir catálogo y crear la página «Journey antes y después» (ver EQUIPO.md) | commit «Bitácora del equipo» |
 | 2026-10-30 | asignado | Validar las 7 etapas del Journey con el Taller 2 | este PR |
-| 2026-11-04 | hecho | Journey validado con el Customer Journey Map del Taller 2 (lámina 7): etapas, acciones, dolores y emoción de «Hoy» con las palabras del Taller; la curva se recalculó y el texto de postventa ya no promete que el reclamo llegue al Panel | este PR |
+| 2026-11-04 | hecho | Journey validado con el Customer Journey Map del Taller 2 (lámina 7). Las etapas no coincidían (Rafael las había armado desde los dolores de AGENTS.md): se reemplazaron por las 7 del Taller con sus acciones, dolores y emoción de «Hoy». La etapa de postventa ya no promete que el reclamo llegue al Panel | este PR |
+| 2026-11-04 | cambio | Emociones de «Hoy» según el color de la lámina 7 (naranja negativa, gris neutral, contorno blanco positiva): Duda 3 y Alivio 4. Promedio de 3,1 hoy a 4,7 con la app (+1,6) | este PR |
+| 2026-11-04 | bloqueo | Las etapas 2 y 6 del Journey dependen de dos cosas que el prototipo aún no hace: el stock no baja con los pedidos (Brayan, store.ts) y el reclamo no llega al Panel (Hemsy y Edison) | este PR |
 
 ## Nicole · Pedido y pago
 
