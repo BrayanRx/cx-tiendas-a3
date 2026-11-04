@@ -65,6 +65,7 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-29 | hecho | Seguimiento: «Antes / ahora» con el dolor que resuelve y actualización en vivo cuando el Panel avanza el pedido en otra pestaña | este PR |
 | 2026-10-30 | asignado | Usar los componentes compartidos `CodigoQr` y `AvisoWhatsapp` | este PR |
 | 2026-11-03 | asignado | Opcional: quitar `useSincronizarPedidos` (ahora el Layout sincroniza todas las páginas) | este PR |
+| 2026-11-03 | hecho | Seguimiento usa `CodigoQr` y `AvisoWhatsapp` compartidos, sin `useSincronizarPedidos` ni pedido de ejemplo, con la Guía visual aplicada | este PR |
 
 ## Rafael · Club 3A y NPS
 

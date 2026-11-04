@@ -57,20 +57,3 @@ export const MOTIVOS_RECLAMO = [
   'El cobro no es correcto',
   'Otro motivo',
 ]
-
-/** Productos de un pedido de ejemplo para probar el módulo sin pasar por Pedido. */
-export const ITEMS_DEMO = [
-  { productoId: 'arroz-5kg', cantidad: 1 },
-  { productoId: 'aceite-1l', cantidad: 2 },
-  { productoId: 'leche-400', cantidad: 6 },
-  { productoId: 'huevos-15', cantidad: 1 },
-]
-
-/** Próxima franja de 30 minutos a partir de ahora, ej. "18:30 – 19:00". */
-export function proximaFranja(ahora = new Date()): string {
-  const inicio = new Date(ahora)
-  inicio.setMinutes(ahora.getMinutes() < 30 ? 30 : 60, 0, 0)
-  const fin = new Date(inicio.getTime() + 30 * 60_000)
-  const f = (d: Date) => `${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`
-  return `${f(inicio)} – ${f(fin)}`
-}
