@@ -51,7 +51,6 @@ src/
     seguimiento/       Seguimiento y recojo
     club/              Club 3A y NPS
     panel/             Panel de tienda y asistente IA
-    journey/           Journey antes y después (presentación)
     auth/              Login simulado
 ```
 

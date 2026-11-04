@@ -3,7 +3,7 @@
 **Proceso crítico:** compra y pago en tienda en hora punta.
 **Experiencia propuesta:** «Pide y recoge»: ver stock → pedir → pagar con QR → recoger sin fila, con un panel de tienda y un asistente IA en el back-stage.
 
-Cada módulo responde a un punto de dolor del customer journey (Taller 2). Esa relación es la que se muestra en la presentación.
+Cada módulo responde a un punto de dolor del customer journey (Taller 2). Esa relación se explica en la presentación, no dentro de la app: el material está en `docs/presentacion/` y en la presentación de Canva.
 
 | Módulo | Responsable | Rama | Carpeta | Ruta | Dolor que resuelve |
 |---|---|---|---|---|---|
@@ -13,7 +13,6 @@ Cada módulo responde a un punto de dolor del customer journey (Taller 2). Esa r
 | Seguimiento y recojo | Hemsy Cárdenas | `feat/seguimiento` | `features/seguimiento` | `/seguimiento` | Sin información ni postventa |
 | Club 3A y NPS | Rafael Chu-lau | `feat/club` | `features/club` | `/club` | Fidelización solo por precio |
 | Panel de tienda y asistente IA | Edison Rosales | `feat/panel` | `features/panel` | `/panel` | Atención desigual, quiebres de stock |
-| Journey antes y después | Ruth Amaya | `feat/journey` | `features/journey` | `/journey` | El valor no se ve sin comparar con hoy |
 
 > Si cambia un responsable, actualicen esta tabla y `src/config/equipo.ts`.
 > El historial de qué se asignó y qué se hizo está en [BITACORA.md](BITACORA.md).
@@ -34,6 +33,7 @@ Marca `[x]` cuando una tarea esté en `main`. Cada responsable mantiene **solo s
 - [ ] Integración final y ensayo del recorrido completo
 - [ ] Presentación: introducción (proceso crítico) y cierre (demo en vivo del recorrido del cliente)
 - [x] Demo con dos pestañas: sesión por pestaña y sincronización de pedidos, encuestas y puntos entre pestañas
+- [x] Retirar de la app el material de presentación (Journey, antes y después, dolor, blueprint) y exportarlo a `docs/presentacion/` y a Canva
 - [x] Rediseño de la base: tipografía, botones y tarjetas, cabecera, pie de página con «Antes y después» e Inicio con canastas armadas y opiniones NPS
 
 ### Ruth · Catálogo con stock + Journey antes y después
@@ -50,7 +50,7 @@ Las 4 tareas de Catálogo las hizo Rafael por encargo (PR de `feat/catalogo-puli
 - [x] Journey: conceptos del curso (momentos de la verdad, front-stage / back-stage)
 
 Las 4 tareas de Journey las hizo Rafael por encargo (PR de `feat/journey-pagina`). Las 7 etapas salen de los 7 puntos de dolor del cliente (`AGENTS.md`): Ruth debe contrastarlas con su Taller 2 y ajustar `src/features/journey/etapas.ts` si difieren.
-- [ ] Journey: validar las 7 etapas y emociones con el Taller 2 (se defiende en vivo)
+- [ ] Journey: validar las 7 etapas y emociones con el Taller 2 (se defiende en vivo). La página `/journey` se retiró de la app el 2026-11-04 por acuerdo del equipo; su contenido está en `docs/presentacion/journey-antes-y-despues.html` y en la presentación de Canva
 
 ### Nicole · Pedido y pago
 - [x] Revisión del carrito: cantidades, quitar, total

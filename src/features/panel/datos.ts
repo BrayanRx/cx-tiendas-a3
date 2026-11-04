@@ -90,16 +90,16 @@ export function generarSugerencias(tiendaId: string, pedidos: Pedido[], nps: num
     out.push({
       id: 'caja',
       tono: 'bad',
-      concepto: 'Capacidad · 7P (Process)',
-      fuenteDatos: `Datos: esperaCajaMin = ${espera} min (umbral ≥ 12 min)`,
+      concepto: 'Caja',
+      fuenteDatos: `Datos: espera en caja de ${espera} min (se alerta desde 12 min)`,
       texto: `La espera en caja es de ${espera} min: abre una segunda caja y deriva clientes con carrito chico al mostrador «Pide y recoge».`,
     })
   else if (espera >= 9)
     out.push({
       id: 'caja',
       tono: 'warn',
-      concepto: 'Capacidad · Hora punta',
-      fuenteDatos: `Datos: esperaCajaMin = ${espera} min (alerta preventiva 9–11 min)`,
+      concepto: 'Caja',
+      fuenteDatos: `Datos: espera en caja de ${espera} min (aviso preventivo de 9 a 11 min)`,
       texto: `Espera en caja de ${espera} min. Si sube de 12 min, habilita caja rápida de apoyo.`,
     })
 
@@ -107,7 +107,7 @@ export function generarSugerencias(tiendaId: string, pedidos: Pedido[], nps: num
     out.push({
       id: 'cola',
       tono: 'warn',
-      concepto: 'Back-stage · SLA franja',
+      concepto: 'Pedidos',
       fuenteDatos: `Datos: ${recibidos.length} pedidos en estado «recibido»`,
       texto: `Hay ${recibidos.length} pedidos nuevos sin atender. Pasa a «preparando» los de franja más cercana primero.`,
     })
@@ -115,7 +115,7 @@ export function generarSugerencias(tiendaId: string, pedidos: Pedido[], nps: num
     out.push({
       id: 'cola',
       tono: 'ok',
-      concepto: 'Back-stage · Picking',
+      concepto: 'Pedidos',
       fuenteDatos: `Datos: ${recibidos.length} pedido(s) en «recibido» · meta recojo ${RECOJO_MIN} min`,
       texto: `Tienes ${recibidos.length} pedido(s) recibido(s). Inicia el armado para cumplir la promesa de recojo en ${RECOJO_MIN} min.`,
     })
@@ -124,7 +124,7 @@ export function generarSugerencias(tiendaId: string, pedidos: Pedido[], nps: num
     out.push({
       id: 'prep',
       tono: 'warn',
-      concepto: 'Cuello de botella',
+      concepto: 'Pedidos',
       fuenteDatos: `Datos: ${preparando.length} pedidos simultáneos en «preparando»`,
       texto: `${preparando.length} pedidos en preparación simultánea. Asigna un colaborador adicional al armado.`,
     })
@@ -133,7 +133,7 @@ export function generarSugerencias(tiendaId: string, pedidos: Pedido[], nps: num
     out.push({
       id: 'listos',
       tono: 'warn',
-      concepto: 'Front-stage · WhatsApp',
+      concepto: 'Mostrador',
       fuenteDatos: `Datos: ${listos.length} pedido(s) en estado «listo» en mostrador`,
       texto: `${listos.length} pedido(s) listo(s) en mostrador. Confirma que el cliente recibió el aviso con su código QR.`,
     })
@@ -142,16 +142,16 @@ export function generarSugerencias(tiendaId: string, pedidos: Pedido[], nps: num
     out.push({
       id: 'agotado',
       tono: 'bad',
-      concepto: 'Garantía · Disponibilidad',
-      fuenteDatos: `Datos: stock[${tiendaId}] = 0 en ${agotados.length} SKU(s)`,
+      concepto: 'Stock',
+      fuenteDatos: `Datos: ${agotados.length} producto(s) con 0 unidades en esta tienda`,
       texto: `Quiebre de stock (${agotados.length}): reponer de trastienda ${agotados.slice(0, 3).map((a) => a.nombre).join(', ')}${agotados.length > 3 ? ` y ${agotados.length - 3} más` : ''}.`,
     })
   if (bajos.length > 0)
     out.push({
       id: 'bajo',
       tono: 'warn',
-      concepto: 'Prevención de quiebre',
-      fuenteDatos: `Datos: ${bajos.length} SKU(s) con stock ≤ ${STOCK_BAJO} unid.`,
+      concepto: 'Stock',
+      fuenteDatos: `Datos: ${bajos.length} producto(s) con ${STOCK_BAJO} unidades o menos`,
       texto: `Stock bajo en ${bajos.length} producto(s). Adelanta reposición antes del pico de las 18:00.`,
     })
 
@@ -159,8 +159,8 @@ export function generarSugerencias(tiendaId: string, pedidos: Pedido[], nps: num
     out.push({
       id: 'nps',
       tono: 'bad',
-      concepto: 'Voz del cliente · NPS',
-      fuenteDatos: `Datos: NPS sede = ${nps} (meta ≥ 50)`,
+      concepto: 'Clientes',
+      fuenteDatos: `Datos: NPS de la tienda ${nps} (meta: 50 o más)`,
       texto: `El NPS está en ${nps}. Revisa los comentarios de detractores y prioriza la exactitud en el armado.`,
     })
 
@@ -168,7 +168,7 @@ export function generarSugerencias(tiendaId: string, pedidos: Pedido[], nps: num
     out.push({
       id: 'ok',
       tono: 'ok',
-      concepto: 'Operación estable',
+      concepto: 'Tienda',
       fuenteDatos: `Datos: espera ${espera} min · 0 quiebres · 0 atrasos`,
       texto: 'Todo en orden: flujo de caja controlado y sin pedidos atrasados.',
     })

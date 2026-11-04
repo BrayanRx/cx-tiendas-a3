@@ -4,7 +4,6 @@ import AvisoWhatsapp from '@/components/AvisoWhatsapp'
 import CodigoQr from '@/components/CodigoQr'
 import Icono, { type NombreIcono } from '@/components/Icono'
 import { Badge, Button, Card, PageHeader, SectionHeader } from '@/components/ui'
-import { getModulo } from '@/config/equipo'
 import { getTienda, tiendas } from '@/data/tiendas'
 import { formatFecha, formatHora, formatSoles } from '@/lib/format'
 import { useApp } from '@/lib/store'
@@ -28,46 +27,45 @@ import {
 // Lee: pedidos, encuestas, tiendaId (useApp), stock y tiendas (@/data/tiendas)
 // Escribe: avanzarPedido, cancelarPedido, setTienda, cargarDemo (simula el back-stage de la tienda)
 // Asistente IA: simulado en el frontend (reglas o respuestas preparadas). Nunca pongas claves de API en el código.
-const moduloPanel = getModulo('panel')
 
 const columnas: {
   estado: EstadoPedido
   titulo: string
   icono: NombreIcono
-  etapaBlueprint: string
+  subtitulo: string
   siguiente?: string
 }[] = [
-  { estado: 'recibido', titulo: 'Recibidos', icono: 'carrito', etapaBlueprint: 'Orden entrante (QR/App)', siguiente: 'Empezar a preparar' },
-  { estado: 'preparando', titulo: 'Preparando', icono: 'caja', etapaBlueprint: 'Back-stage: picking en tienda', siguiente: 'Marcar listo' },
-  { estado: 'listo', titulo: 'Listos en mostrador', icono: 'reloj', etapaBlueprint: 'Línea de visibilidad: aviso WhatsApp', siguiente: 'Entregar al cliente' },
-  { estado: 'recogido', titulo: 'Recogidos', icono: 'check', etapaBlueprint: 'Front-stage: entrega en 2 min' },
+  { estado: 'recibido', titulo: 'Recibidos', icono: 'carrito', subtitulo: 'Pedidos nuevos (QR o app)', siguiente: 'Empezar a preparar' },
+  { estado: 'preparando', titulo: 'Preparando', icono: 'caja', subtitulo: 'Armando la bolsa en tienda', siguiente: 'Marcar listo' },
+  { estado: 'listo', titulo: 'Listos en mostrador', icono: 'reloj', subtitulo: 'Cliente avisado por WhatsApp', siguiente: 'Entregar al cliente' },
+  { estado: 'recogido', titulo: 'Recogidos', icono: 'check', subtitulo: 'Entregados en mostrador' },
 ]
 
 const pasosPresentacion = [
   {
     id: 'h-kpis',
-    titulo: '1. Dolor y KPIs',
-    guion: 'Mostramos el dolor (atención desigual y quiebres sin aviso) y comparamos los 14 min de cola en caja frente a 2 min en mostrador.',
+    titulo: '1. Indicadores de hoy',
+    guion: 'Mostramos la espera en caja de hoy frente a los 2 min de recojo en mostrador, los pedidos del día y el NPS de la sede.',
   },
   {
     id: 'h-cola',
-    titulo: '2. Service Blueprint',
-    guion: 'Avanzamos un pedido en el back-stage y vemos cómo dispara al instante el aviso WhatsApp y el QR en el front-stage del cliente.',
+    titulo: '2. Cola de pedidos',
+    guion: 'Avanzamos un pedido y vemos cómo llega al instante el aviso por WhatsApp y el QR de recojo al cliente.',
   },
   {
     id: 'h-stock',
-    titulo: '3. Garantía de stock',
-    guion: 'Revisamos los quiebres y productos de marca propia o formato bodeguero antes de que el cliente encuentre la góndola vacía.',
+    titulo: '3. Alertas de stock',
+    guion: 'Revisamos los quiebres y el stock bajo antes de que el cliente encuentre la góndola vacía.',
   },
   {
     id: 'h-ia',
     titulo: '4. Copiloto IA',
-    guion: 'Consultamos al asistente IA qué priorizar, si abrir otra caja en hora punta y qué datos en vivo sustentan su recomendación.',
+    guion: 'Consultamos al asistente qué priorizar, si abrir otra caja en hora punta y qué datos en vivo sustentan su recomendación.',
   },
   {
-    id: 'h-comp',
-    titulo: '5. Antes vs. Después',
-    guion: 'Cerramos con el impacto en KPIs, Garantía, Service Blueprint, 7P y fidelización (NPS).',
+    id: 'h-voc',
+    titulo: '5. Voz del cliente',
+    guion: 'Cerramos con las calificaciones NPS y los comentarios que dejan los clientes al recoger.',
   },
 ] as const
 
@@ -121,7 +119,7 @@ export default function PanelPage() {
       const sig = orden[orden.indexOf(actual.estado) + 1]
       if (sig) {
         setUltimoAviso({
-          titulo: `Pedido ${pedidoId} pasó a «${sig.toUpperCase()}» en el back-stage.`,
+          titulo: `Pedido ${pedidoId} pasó a «${sig.toUpperCase()}».`,
           whatsapp: { mensaje: `Pedido ${pedidoId}: ${avisoFrontStage[sig]}` },
         })
       }
@@ -164,7 +162,7 @@ export default function PanelPage() {
       <PageHeader
         titulo="Panel de tienda y"
         resaltado="asistente IA"
-        descripcion={`Back-stage operativo de ${tienda?.nombre ?? 'la tienda'}: gestiona la cola por franja, anticipa quiebres y decide con el copiloto IA en hora punta.`}
+        descripcion={`Gestiona los pedidos de ${tienda?.nombre ?? 'la tienda'} por franja de recojo, anticipa quiebres de stock y decide con el copiloto IA en hora punta.`}
       >
         <div className="flex flex-wrap items-center gap-2">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-surface px-3 py-1.5 text-xs font-semibold text-ink shadow-sm">
@@ -260,14 +258,9 @@ export default function PanelPage() {
         <Card className="border-brand/30 bg-brand-soft/60">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="max-w-3xl">
-              <div className="flex flex-wrap items-center gap-2">
-                <Badge tono="brand">Dolor que resuelve</Badge>
-                <Badge tono="neutral">Service Blueprint · Back-stage y Front-stage</Badge>
-                <Badge tono="neutral">Utilidad y Garantía</Badge>
-              </div>
-              <p className="mt-2 text-lg font-extrabold text-brand-dark">«{moduloPanel.dolor}»</p>
+              <p className="text-lg font-extrabold text-brand-dark">Hoy en {tienda?.nombre ?? 'tu tienda'}</p>
               <p className="mt-1 text-sm text-ink-muted">
-                Transformamos una operación reactiva en hora punta en un flujo predecible: el personal prepara pedidos según la franja de recojo y el copiloto IA alerta antes de que el cliente encuentre la góndola vacía.
+                Prepara cada pedido según su franja de recojo. El copiloto te avisa antes de que se acabe un producto o se forme cola en caja.
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -298,7 +291,7 @@ export default function PanelPage() {
                 <AvisoWhatsapp
                   mensaje={ultimoAviso.whatsapp.mensaje}
                   hora={ultimoAviso.whatsapp.hora}
-                  titulo="Así le llega el aviso automático al WhatsApp del cliente (Front-stage):"
+                  titulo="Así le llega el aviso automático al WhatsApp del cliente:"
                 />
               )}
             </div>
@@ -309,10 +302,10 @@ export default function PanelPage() {
         </Card>
       )}
 
-      <section aria-label="Indicadores clave (KPIs)" className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <section aria-label="Indicadores de la tienda" className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Kpi
           icono="reloj"
-          etiqueta="Tiempo en cola (KPI)"
+          etiqueta="Espera en caja"
           valor={`${espera} min`}
           nota={`Caja tradicional vs. ${RECOJO_MIN} min en mostrador Pide y recoge (ahorras ${Math.max(espera - RECOJO_MIN, 0)} min)`}
           alerta={espera >= 12 ? 'bad' : espera >= 9 ? 'warn' : 'ok'}
@@ -322,9 +315,9 @@ export default function PanelPage() {
           icono="caja"
           etiqueta="Pedidos hoy en tienda"
           valor={String(hoy.length)}
-          nota={`${deTienda.length} acumulados · ${deTienda.filter((p) => p.estado !== 'recogido').length} activos en back-stage`}
+          nota={`${deTienda.length} acumulados · ${deTienda.filter((p) => p.estado !== 'recogido').length} activos`}
           alerta="ok"
-          badgeTexto="Capacidad"
+          badgeTexto="Hoy"
         />
         <Kpi
           icono="usuario"
@@ -353,10 +346,10 @@ export default function PanelPage() {
           id="h-cola"
           titulo="Cola de pedidos en"
           resaltado="tiempo real"
-          descripcion="Service Blueprint: cada avance en el back-stage actualiza el seguimiento del cliente y envía un aviso por WhatsApp."
+          descripcion="Cada avance actualiza el seguimiento del cliente y le envía un aviso por WhatsApp."
         >
           <Link to="/seguimiento" className="inline-flex items-center gap-1.5 text-xs font-bold text-brand hover:underline">
-            Ver pantalla del cliente (Front-stage) <Icono nombre="flecha" className="size-3.5" />
+            Ver como cliente <Icono nombre="flecha" className="size-3.5" />
           </Link>
         </SectionHeader>
 
@@ -397,7 +390,7 @@ export default function PanelPage() {
                         {lista.length}
                       </Badge>
                     </div>
-                    <p className="mt-1 text-xs text-ink-muted">{c.etapaBlueprint}</p>
+                    <p className="mt-1 text-xs text-ink-muted">{c.subtitulo}</p>
                   </div>
 
                   <ul className="space-y-3">
@@ -477,7 +470,7 @@ export default function PanelPage() {
             id="h-stock"
             titulo="Alertas de"
             resaltado="stock"
-            descripcion={`Garantía de disponibilidad en ${tienda?.nombre ?? 'tienda'}: ${quiebresCount} en quiebre y ${alertas.length - quiebresCount} con stock bajo.`}
+            descripcion={`En ${tienda?.nombre ?? 'la tienda'}: ${quiebresCount} en quiebre y ${alertas.length - quiebresCount} con stock bajo.`}
           >
             <div className="flex flex-wrap gap-1.5">
               {(
@@ -613,62 +606,6 @@ export default function PanelPage() {
         )}
       </section>
 
-      <section aria-labelledby="h-comp">
-        <SectionHeader
-          id="h-comp"
-          centrado
-          titulo="Antes y después de"
-          resaltado="Pide y recoge"
-          descripcion={`Resumen ejecutivo para la sustentación: impacto en ${tienda?.nombre ?? 'la tienda'} según los conceptos de Ingeniería de Sistemas de Servicio.`}
-        />
-        <Card className="overflow-x-auto p-0">
-          <table className="w-full min-w-[38rem] text-sm">
-            <thead className="bg-brand-soft/70 text-left text-ink">
-              <tr>
-                <th className="p-3.5 font-bold">Dimensión / Concepto</th>
-                <th className="p-3.5 font-bold">Indicador</th>
-                <th className="p-3.5 font-bold">Antes (compra tradicional)</th>
-                <th className="p-3.5 font-bold">Después (Pide y recoge + IA)</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-line">
-              <Fila
-                concepto="KPI de Tiempo"
-                indicador="Espera en hora punta"
-                antes={`${espera} min haciendo fila en caja`}
-                despues={`${RECOJO_MIN} min en mostrador (ahorro de ${Math.max(espera - RECOJO_MIN, 0)} min)`}
-              />
-              <Fila
-                concepto="Garantía (Disponibilidad)"
-                indicador="Visibilidad de stock"
-                antes="Incierta: descubre el quiebre en el pasillo"
-                despues={`Stock en vivo en web + ${quiebresCount} quiebre(s) detectados por IA`}
-              />
-              <Fila
-                concepto="Service Blueprint"
-                indicador="Coordinación Back / Front"
-                antes="Atención desigual según la fila que toque"
-                despues="Cola priorizada por franja de 30 min y aviso WhatsApp"
-              />
-              <Fila
-                concepto="7P (People & Process)"
-                indicador="Toma de decisiones en tienda"
-                antes="Intuitiva, el cajero se satura en hora punta"
-                despues="Copiloto IA sugiere abrir caja y qué marca propia reponer"
-              />
-              <Fila
-                concepto="Utilidad y Fidelización"
-                indicador="Relación con el cliente"
-                antes="Solo por precio bajo, sin postventa ni voz"
-                despues="Barato en precio y en tiempo + puntos Club 3A y NPS en vivo"
-              />
-            </tbody>
-          </table>
-        </Card>
-        <p className="mt-2 text-center text-xs text-ink-muted">
-          Cifras simuladas en tiempo real para la presentación académica; cambia de sede arriba para comparar tiempos de espera y quiebres por distrito.
-        </p>
-      </section>
     </div>
   )
 }
@@ -727,28 +664,3 @@ function Kpi({
     </Card>
   )
 }
-
-function Fila({
-  concepto,
-  indicador,
-  antes,
-  despues,
-}: {
-  concepto: string
-  indicador: string
-  antes: string
-  despues: string
-}) {
-  return (
-    <tr className="transition-colors hover:bg-canvas/50">
-      <td className="p-3.5">
-        <Badge tono="brand">{concepto}</Badge>
-      </td>
-      <td className="p-3.5 font-bold text-ink">{indicador}</td>
-      <td className="p-3.5 text-ink-muted">{antes}</td>
-      <td className="p-3.5 font-semibold text-ok">{despues}</td>
-    </tr>
-  )
-}
-
-

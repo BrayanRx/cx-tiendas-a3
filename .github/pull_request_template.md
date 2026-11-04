@@ -1,6 +1,6 @@
 ## Módulo
 
-<!-- catálogo, pedido, seguimiento, club, panel, journey o base -->
+<!-- catálogo, pedido, seguimiento, club, panel o base -->
 
 ## Qué hice
 

@@ -21,7 +21,6 @@ export default function Layout() {
   useSincronizarPestanas()
 
   // Visitante: solo ve el catálogo; los demás módulos aparecen al ingresar como cliente.
-  // «Antes y después» es material de presentación: vive en el pie de página, visible para todos los roles.
   const enlaces = sesion?.rol === 'admin' ? enlacesAdmin : sesion ? enlacesCliente : enlacesCliente.slice(0, 1)
 
   const salir = () => {
@@ -106,7 +105,7 @@ export default function Layout() {
         <Outlet />
       </main>
       <footer className="mt-10 bg-accent-dark text-white/80">
-        <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 text-sm sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 text-sm sm:grid-cols-3">
           <div className="space-y-3">
             <Logo className="h-9" />
             <p>Tu canasta básica al precio de siempre, sin hacer cola. Pide desde tu celular y recoge en minutos.</p>
@@ -127,13 +126,6 @@ export default function Layout() {
             <Link to="/#ubicanos" className="mt-2 inline-block font-semibold text-white hover:underline">
               Cambiar tienda
             </Link>
-          </div>
-          <div>
-            <h2 className="mb-3 text-xs font-bold uppercase tracking-wider text-white">El proyecto</h2>
-            <ul className="space-y-2">
-              <li><Link to="/journey" className="hover:text-white">Antes y después (customer journey)</Link></li>
-              <li><Link to="/#del-dolor" className="hover:text-white">Del dolor a la solución</Link></li>
-            </ul>
           </div>
         </div>
         <div className="border-t border-white/15 px-4 py-4 text-center text-xs">

@@ -11,10 +11,11 @@ Proyecto: prototipo frontend de experiencia de cliente «Pide y recoge» para un
 - **Propuesta:** «Barato en precio, barato en tiempo»: ver stock → pedir → pagar con QR → recoger sin fila, más un panel de tienda con asistente IA en el back-stage.
 
 ## Criterios de diseño y contenido
-- Cada pantalla debe dejar claro **qué dolor resuelve** (el campo `dolor` de su módulo en `src/config/equipo.ts`). Eso es lo que se evalúa.
+- Cada pantalla debe **resolver** un dolor (el campo `dolor` de su módulo en `src/config/equipo.ts`), pero **sin explicarlo en la interfaz**: la app se ve como un producto real que usaría el cliente o el administrador. Nada de tarjetas «Dolor que resuelve», «Antes / Ahora», tablas de antes y después ni etiquetas académicas.
+- La explicación (dolor, customer journey, blueprint, conceptos del curso) va en la presentación: `docs/presentacion/` y la presentación de Canva. Las herramientas de demo sí se quedan (cargar datos de ejemplo, simular pedidos, modo presentación del Panel), porque es un prototipo demostrativo.
 - Textos en español peruano, cercanos y simples: tutea al cliente, frases cortas, sin tecnicismos. Precios en soles con `formatSoles`.
 - Pensado primero para celular (el cliente compra desde su teléfono); el panel de tienda puede priorizar escritorio.
-- Cuando aplique, conecta la pantalla con un concepto del curso: customer journey, blueprint (front-stage / back-stage), 7P, NPS, KPI, utilidad y garantía.
+- Los conceptos del curso (customer journey, blueprint, 7P, NPS, KPI, utilidad y garantía) se aplican en el diseño de la pantalla, no se rotulan en ella. Ej.: el Panel muestra la espera en caja y el NPS como indicadores de tienda, sin escribir «KPI» ni «back-stage».
 - Los datos son simulados y deben verse realistas (precios, tiempos y stock plausibles), sin usar logotipos ni marcas registradas reales de la cadena.
 
 ## Stack

@@ -518,20 +518,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Del dolor a la solución: un solo banner que lleva a la comparación completa */}
-      <section id="del-dolor" className="scroll-mt-24">
-        <Link
-          to="/journey"
-          className="flex flex-wrap items-center justify-between gap-4 rounded-3xl bg-ink p-6 text-white transition-opacity hover:opacity-95 sm:p-8"
-        >
-          <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-brand-light">Del dolor a la solución</p>
-            <p className="mt-2 max-w-xl text-xl font-extrabold sm:text-2xl">7 dolores del cliente de hoy, 7 pantallas que los resuelven.</p>
-          </div>
-          <span className="rounded-full bg-surface px-5 py-2.5 text-sm font-semibold text-ink">Ver antes y después →</span>
-        </Link>
-      </section>
-
       {/* Para la presentación en vivo: llena el Panel, Seguimiento y Club con pedidos y encuestas de ejemplo. */}
       <section aria-label="Modo demostración" className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-ink-muted">
         <span>
