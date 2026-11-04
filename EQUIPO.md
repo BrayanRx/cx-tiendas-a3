@@ -72,8 +72,9 @@ Las 4 tareas de Journey las hizo Rafael por encargo (PR de `feat/journey-pagina`
 - [x] Al recoger, invitar a la encuesta NPS
 - [x] Extra: «Antes / ahora» en Mis pedidos para dejar claro el dolor que resuelve
 - [x] Extra: el estado se actualiza solo si el Panel avanza el pedido en otra pestaña
-- [ ] Usar los componentes compartidos `@/components/CodigoQr` y `@/components/AvisoWhatsapp` en vez de las copias locales
-- [ ] Opcional: quitar `useSincronizarPedidos`, porque ahora el Layout sincroniza todas las páginas
+- [x] Usar los componentes compartidos `@/components/CodigoQr` y `@/components/AvisoWhatsapp` en vez de las copias locales
+- [x] Opcional: quitar `useSincronizarPedidos`, porque ahora el Layout sincroniza todas las páginas
+- [x] Aplicar la «Guía visual» a Seguimiento y quitar el botón de pedido de ejemplo
 
 ### Rafael · Club 3A y NPS
 - [x] Saldo de puntos y nivel del cliente
