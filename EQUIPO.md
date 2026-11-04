@@ -50,7 +50,7 @@ Las 4 tareas de Catálogo las hizo Rafael por encargo (PR de `feat/catalogo-puli
 - [x] Journey: conceptos del curso (momentos de la verdad, front-stage / back-stage)
 
 Las 4 tareas de Journey las hizo Rafael por encargo (PR de `feat/journey-pagina`). Las 7 etapas salen de los 7 puntos de dolor del cliente (`AGENTS.md`): Ruth debe contrastarlas con su Taller 2 y ajustar `src/features/journey/etapas.ts` si difieren.
-- [ ] Journey: validar las 7 etapas y emociones con el Taller 2 (se defiende en vivo)
+- [x] Journey: validar las 7 etapas y emociones con el Taller 2 (se defiende en vivo)
 
 ### Nicole · Pedido y pago
 - [x] Revisión del carrito: cantidades, quitar, total

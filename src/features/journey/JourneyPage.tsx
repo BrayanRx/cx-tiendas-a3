@@ -44,7 +44,9 @@ export default function JourneyPage() {
         <h2 id="h-etapas" className="mb-1 text-xl font-semibold">
           Las 7 etapas: antes y después
         </h2>
-        <p className="mb-4 text-ink-muted">Cada dolor de hoy tiene una pantalla de la app que lo resuelve.</p>
+        <p className="mb-4 text-ink-muted">
+          Las etapas, los dolores y la emoción de «Hoy» son los de nuestro Customer Journey Map (Taller 2). Cada dolor tiene una pantalla de la app que lo resuelve.
+        </p>
         <ol className="space-y-4">
           {etapas.map((e) => (
             <li key={e.id}>
@@ -60,8 +62,8 @@ export default function JourneyPage() {
                   <div className="rounded-lg bg-red-50 p-4">
                     <p className="flex items-center justify-between text-xs font-medium uppercase tracking-wide text-bad">
                       Hoy
-                      <span className="normal-case tracking-normal" title={EMOCIONES[e.emocionAntes].etiqueta}>
-                        {EMOCIONES[e.emocionAntes].emoji} {EMOCIONES[e.emocionAntes].etiqueta}
+                      <span className="normal-case tracking-normal" title={`${e.emocionHoy} (Customer Journey Map, Taller 2)`}>
+                        {EMOCIONES[e.emocionAntes].emoji} {e.emocionHoy}
                       </span>
                     </p>
                     <p className="mt-2 text-sm">{e.dolor}</p>

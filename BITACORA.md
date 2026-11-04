@@ -45,6 +45,7 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-29 | cambio | Rafael entregó la versión inicial del catálogo; Ruth sigue como dueña y lo pule | bc1b880 |
 | 2026-10-29 | asignado | Pulir catálogo y crear la página «Journey antes y después» (ver EQUIPO.md) | commit «Bitácora del equipo» |
 | 2026-10-30 | asignado | Validar las 7 etapas del Journey con el Taller 2 | este PR |
+| 2026-11-04 | hecho | Journey validado con el Customer Journey Map del Taller 2 (lámina 7): etapas, acciones, dolores y emoción de «Hoy» con las palabras del Taller; la curva se recalculó y el texto de postventa ya no promete que el reclamo llegue al Panel | este PR |
 
 ## Nicole · Pedido y pago
 
