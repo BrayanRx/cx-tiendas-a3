@@ -36,6 +36,7 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-30 | cambio | Cabecera de página compartida con el estilo del Inicio (banda de color y título en dos colores) y «Guía visual» en EQUIPO.md para que cada módulo la aplique | este PR |
 | 2026-11-03 | hecho | Demo con dos pestañas: sesión por pestaña (sessionStorage) y sincronización de pedidos, encuestas y puntos en todas las páginas, sin bucles | este PR |
 | 2026-11-03 | hecho | Merge del PR #16 (ajustes de Nicole) y PR #17 con el panel de Edison que estaba sin PR | PR #16, PR #17 |
+| 2026-11-04 | cambio | Por acuerdo del equipo, la app queda como producto real: se retira la página Journey, la tabla antes y después y las notas de dolor, blueprint y conceptos del Panel, Seguimiento e Inicio. Todo se exporta a `docs/presentacion/` (HTML e imágenes) y a una presentación de Canva. Se mantienen las herramientas de demo | este PR |
 
 ## Ruth · Catálogo + Journey
 
@@ -45,6 +46,7 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-29 | cambio | Rafael entregó la versión inicial del catálogo; Ruth sigue como dueña y lo pule | bc1b880 |
 | 2026-10-29 | asignado | Pulir catálogo y crear la página «Journey antes y después» (ver EQUIPO.md) | commit «Bitácora del equipo» |
 | 2026-10-30 | asignado | Validar las 7 etapas del Journey con el Taller 2 | este PR |
+| 2026-11-04 | cambio | La página `/journey` sale de la app por acuerdo del equipo; su contenido pasa a `docs/presentacion/` y a la presentación de Canva | este PR |
 
 ## Nicole · Pedido y pago
 
@@ -67,6 +69,7 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-30 | asignado | Usar los componentes compartidos `CodigoQr` y `AvisoWhatsapp` | este PR |
 | 2026-11-03 | asignado | Opcional: quitar `useSincronizarPedidos` (ahora el Layout sincroniza todas las páginas) | este PR |
 | 2026-11-03 | hecho | Seguimiento usa `CodigoQr` y `AvisoWhatsapp` compartidos, sin `useSincronizarPedidos` ni pedido de ejemplo, con la Guía visual aplicada | este PR |
+| 2026-11-04 | cambio | Se quita el bloque «Antes / Ahora» de Mis pedidos (material de presentación), por acuerdo del equipo | este PR |
 
 ## Rafael · Club 3A y NPS
 
@@ -95,3 +98,4 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-30 | asignado | Recordatorio: asistente IA en formato chat, prioridad del equipo para la presentación | este PR |
 | 2026-11-03 | hecho | Panel y asistente IA: chat con texto libre y preguntas sugeridas basadas en cola, stock, NPS y pedidos; etapas del Service Blueprint; alertas de stock con filtros; simulador de pedidos; voz del cliente (NPS) y tabla antes vs. después (commit 8e9f0f0, PR abierto por el líder) | este PR |
 | 2026-11-03 | hecho | Aplicar la Guía visual al Panel (`PageHeader` con resaltado, `SectionHeader`, `Icono`, `AvisoWhatsapp`, `CodigoQr`, fotos circulares en alertas de stock, fuente de datos en cada recomendación IA y modo presentación guiado) | este PR |
+| 2026-11-04 | cambio | Se quitan del Panel la tarjeta de dolor, la tabla antes y después y las etiquetas de blueprint y conceptos; los textos quedan en lenguaje de tienda. Se mantienen el modo presentación (pasos actualizados), el simulador y los datos de cada recomendación | este PR |

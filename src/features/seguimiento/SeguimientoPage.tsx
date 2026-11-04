@@ -1,7 +1,6 @@
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import Icono from '@/components/Icono'
 import { Badge, Button, Card, PageHeader } from '@/components/ui'
-import { getModulo } from '@/config/equipo'
 import { getTienda } from '@/data/tiendas'
 import { formatFecha, formatHora, formatSoles } from '@/lib/format'
 import { useApp } from '@/lib/store'
@@ -46,7 +45,6 @@ function MisPedidos() {
     <div>
       <PageHeader titulo="Mis pedidos" descripcion="Sigue tu pedido paso a paso, recógelo sin fila y avísanos si algo salió mal." />
 
-      <AntesAhora />
 
       {pedidos.length === 0 ? (
         <Card className="text-center">
@@ -63,22 +61,6 @@ function MisPedidos() {
           {anteriores.length > 0 && <ListaPedidos titulo="Anteriores" lista={anteriores} />}
         </div>
       )}
-    </div>
-  )
-}
-
-// Deja claro en pantalla qué dolor del customer journey resuelve este módulo.
-function AntesAhora() {
-  return (
-    <div className="mb-6 grid gap-3 text-sm sm:grid-cols-2">
-      <div className="rounded-xl border border-line bg-surface p-4">
-        <p className="text-xs font-semibold tracking-wide text-bad uppercase">Antes</p>
-        <p className="mt-1 text-ink-muted">{getModulo('seguimiento').dolor} Ibas a la tienda sin saber si tu compra estaba lista, y si algo fallaba no tenías a quién decirle.</p>
-      </div>
-      <div className="rounded-xl border border-line bg-surface p-4">
-        <p className="text-xs font-semibold tracking-wide text-ok uppercase">Ahora</p>
-        <p className="mt-1 text-ink-muted">Te avisamos por WhatsApp en cada paso, recoges con tu código sin hacer fila y puedes reclamar desde aquí mismo.</p>
-      </div>
     </div>
   )
 }

@@ -52,7 +52,7 @@ export default function Asistente({ tiendaId, pedidos, nps, onAvanzarPrioritario
       if (!alertas.length) {
         return {
           a: 'No hay alertas de stock en esta tienda. Toda la canasta básica está cubierta.',
-          datosUsados: `Stock de sede ${tiendaId}: 0 alertas`,
+          datosUsados: `Stock de la tienda: 0 alertas`,
         }
       }
       const urgentes = agotados.length
@@ -62,8 +62,8 @@ export default function Asistente({ tiendaId, pedidos, nps, onAvanzarPrioritario
         ? `Stock bajo: ${bajos.slice(0, 4).map((x) => `${x.nombre} (${x.unidades} unid.)`).join(', ')}.`
         : ''
       return {
-        a: `${urgentes}${preventivos} Prioriza marcas propias para sostener la garantía de disponibilidad.`,
-        datosUsados: `Inventario ${tiendaId}: ${agotados.length} quiebre(s) y ${bajos.length} con stock bajo`,
+        a: `${urgentes}${preventivos} Prioriza las marcas propias para que no falten en góndola.`,
+        datosUsados: `Inventario de la tienda: ${agotados.length} quiebre(s) y ${bajos.length} con stock bajo`,
       }
     }
 
@@ -93,13 +93,13 @@ export default function Asistente({ tiendaId, pedidos, nps, onAvanzarPrioritario
         a: volAlertas.length
           ? `Atención con el segmento bodegueros: ${volAlertas.map((x) => `${x.nombre} (${x.unidades} unid.)`).join(', ')} tienen descuento por volumen y poco stock. Separa cajas completas en trastienda.`
           : 'Los productos con precio por volumen (arroz, aceite, azúcar, leche) tienen buen stock para atender pedidos de bodegueros sin afectar a las familias.',
-        datosUsados: `SKUs formato bodeguero en alerta: ${volAlertas.length}`,
+        datosUsados: `Productos de formato bodeguero en alerta: ${volAlertas.length}`,
       }
     }
 
     return {
-      a: `Resumen operativo: espera en caja de ${espera} min, ${activos.length} pedido(s) activo(s) en back-stage y ${agotados.length} producto(s) en quiebre. Usa los botones rápidos para ver acciones puntuales.`,
-      datosUsados: `KPIs en vivo: espera ${espera} min · ${activos.length} activos · ${agotados.length} quiebres`,
+      a: `Resumen operativo: espera en caja de ${espera} min, ${activos.length} pedido(s) activo(s) y ${agotados.length} producto(s) en quiebre. Usa los botones rápidos para ver acciones puntuales.`,
+      datosUsados: `Indicadores en vivo: espera ${espera} min · ${activos.length} activos · ${agotados.length} quiebres`,
     }
   }
 
@@ -126,7 +126,7 @@ export default function Asistente({ tiendaId, pedidos, nps, onAvanzarPrioritario
             </span>
             <div>
               <h3 className="text-lg font-bold tracking-tight">Copiloto IA de tienda</h3>
-              <p className="text-xs text-ink-muted">Decisiones de back-stage basadas en datos en vivo</p>
+              <p className="text-xs text-ink-muted">Recomendaciones con los datos en vivo de tu tienda</p>
             </div>
           </div>
           <Badge tono="brand">IA · Reglas en vivo</Badge>
