@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Taller · CJM del servicio · Tiendas 3A</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Presentación del taller: láminas 16:9 (1920 × 1080) con la paleta del curso. */
+  @page { size: 1920px 1080px; margin: 0; }
+  :root {
+    --navy: #1e2a5e; --naranja: #f58a3c; --naranja-osc: #d44307; --naranja-suave: #fff1e6;
+    --azul: #3b63d6; --azul-suave: #e9eefc; --verde: #15803d; --verde-suave: #eaf7ee;
+    --rojo: #c0392b; --rojo-suave: #fdecea; --morado: #7c3aed; --morado-suave: #f1eafe;
+    --tinta: #1f2430; --gris: #6b7280; --linea: #e5e7eb; --fondo: #f4f5f7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #d9dce3; }
+  body { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; color: var(--tinta); -webkit-font-smoothing: antialiased; }
+  .lamina { width: 1920px; height: 1080px; margin: 0 auto 24px; background: #fff; position: relative; overflow: hidden; padding: 48px 64px 0; page-break-after: always; break-after: page; }
+  .lamina:last-child { page-break-after: auto; break-after: auto; }
+  .lamina.imagen { padding: 0; }
+  .lamina.imagen img { width: 1920px; height: 1080px; display: block; }
+  .lamina:not(.imagen)::before { content: ''; position: absolute; right: -120px; top: -120px; width: 340px; height: 340px; border-radius: 50%; border: 40px solid rgba(245, 138, 60, .12); }
+  @media print { html, body { background: #fff; } .lamina { margin: 0; } }
+
+  .pastilla { display: inline-block; background: var(--naranja); color: #fff; font-size: 13px; font-weight: 800; letter-spacing: .14em; padding: 6px 14px; border-radius: 999px; }
+  h1 { margin-top: 12px; font-size: 46px; line-height: 1.05; font-weight: 800; color: var(--navy); letter-spacing: -.02em; }
+  h1 span { color: var(--naranja-osc); }
+  .bajada { margin-top: 8px; font-size: 19px; color: var(--gris); max-width: 1300px; }
+  .franja { position: absolute; left: 0; right: 0; bottom: 0; height: 72px; background: var(--fondo); border-top: 1px solid var(--linea); display: flex; align-items: center; justify-content: space-between; padding: 0 64px; }
+  .franja .idea { font-size: 18px; font-weight: 800; color: var(--navy); }
+  .franja .idea span { color: var(--naranja-osc); }
+  .franja .pie { font-size: 12px; color: #9aa0ab; }
+  .ico { display: inline-grid; place-items: center; }
+
+  /* ---------- Lámina 2: estructura del CJM ---------- */
+  .estructura { margin-top: 28px; display: grid; grid-template-columns: 170px repeat(3, 1fr); gap: 14px 18px; }
+  .fase { text-align: center; }
+  .fase b { display: block; font-size: 20px; color: var(--navy); }
+  .fase small { display: inline-block; margin-top: 6px; font-size: 12.5px; font-weight: 700; color: var(--naranja-osc); background: var(--naranja-suave); border-radius: 999px; padding: 3px 12px; }
+  .linea-fases { grid-column: 2 / -1; height: 4px; border-radius: 4px; background: linear-gradient(90deg, var(--naranja), var(--azul)); position: relative; margin: 2px 0 4px; }
+  .linea-fases i { position: absolute; top: 50%; width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 4px solid var(--navy); transform: translate(-50%, -50%); }
+  .area { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border-radius: 18px; font-weight: 800; font-size: 15px; }
+  .area .circ { width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; color: #fff; font-size: 22px; font-weight: 800; }
+  .area small { font-size: 12px; font-weight: 600; color: var(--gris); text-align: center; line-height: 1.3; }
+  .bloque { border-radius: 18px; padding: 16px 18px; border: 1.5px solid var(--linea); background: #fff; position: relative; }
+  .bloque::after { content: ''; position: absolute; right: -14px; top: 50%; width: 14px; height: 14px; border-top: 2px solid #c5cad6; border-right: 2px solid #c5cad6; transform: translateY(-50%) rotate(45deg); }
+  .bloque.ult::after { display: none; }
+  .bloque h3 { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
+  .bloque ul { list-style: none; display: grid; gap: 5px; }
+  .bloque li { font-size: 13.5px; line-height: 1.35; display: flex; gap: 8px; }
+  .bloque li::before { content: ''; flex: none; width: 7px; height: 7px; border-radius: 50%; margin-top: 6px; background: currentColor; opacity: .55; }
+  .mk .circ { background: var(--naranja); } .mk h3, .mk li { color: var(--tinta); } .mk h3 { color: var(--naranja-osc); } .mk.bloque { border-color: #fbd2b4; background: #fffaf6; }
+  .op .circ { background: var(--azul); } .op h3 { color: var(--azul); } .op.bloque { border-color: #c9d5f6; background: #f8faff; }
+  .rh .circ { background: var(--morado); } .rh h3 { color: var(--morado); } .rh.bloque { border-color: #ddd0fb; background: #fbf9ff; }
+  .coordina { grid-column: 2 / -1; display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: center; border: 2px solid var(--navy); border-radius: 18px; padding: 16px 22px; margin-top: 4px; }
+  .coordina .ico { width: 52px; height: 52px; border-radius: 50%; background: var(--navy); color: #fff; }
+  .coordina b { font-size: 17px; color: var(--navy); }
+  .coordina p { font-size: 14.5px; line-height: 1.45; margin-top: 3px; }
+
+  /* ---------- Lámina 3: touchpoints ---------- */
+  .tps { margin-top: 26px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .col-fase { border-radius: 20px; background: var(--fondo); padding: 16px; }
+  .col-fase > header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; padding: 0 4px; }
+  .col-fase > header b { font-size: 20px; color: var(--navy); }
+  .col-fase > header small { font-size: 12.5px; font-weight: 700; color: var(--naranja-osc); }
+  .tp { display: grid; grid-template-columns: 46px 1fr auto; gap: 12px; align-items: start; background: #fff; border: 1.5px solid var(--linea); border-radius: 14px; padding: 11px 12px; margin-bottom: 9px; }
+  .tp.verdad { border-color: var(--naranja); box-shadow: 0 0 0 3px rgba(245, 138, 60, .14); }
+  .tp .ico { width: 46px; height: 46px; border-radius: 12px; }
+  .tp .dig { background: var(--azul-suave); color: var(--azul); }
+  .tp .fis { background: var(--naranja-suave); color: var(--naranja-osc); }
+  .tp .hum { background: var(--morado-suave); color: var(--morado); }
+  .tp b { display: block; font-size: 15px; }
+  .tp p { font-size: 12.8px; color: var(--gris); line-height: 1.35; margin-top: 2px; }
+  .tp .tags { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+  .tag { font-size: 11px; font-weight: 800; border-radius: 999px; padding: 2px 9px; white-space: nowrap; }
+  .t-mk { background: var(--naranja-suave); color: var(--naranja-osc); } .t-op { background: var(--azul-suave); color: var(--azul); } .t-rh { background: var(--morado-suave); color: var(--morado); }
+  .t-nuevo { background: var(--verde-suave); color: var(--verde); } .t-verdad { background: var(--naranja); color: #fff; }
+  .leyenda { display: flex; gap: 22px; font-size: 13px; font-weight: 600; color: var(--gris); }
+  .leyenda span { display: flex; align-items: center; gap: 7px; }
+  .leyenda i { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
+
+  /* ---------- Lámina 4: formulario ---------- */
+  .form-cab { display: flex; justify-content: space-between; align-items: flex-end; gap: 30px; }
+  .ficha { display: flex; gap: 14px; align-items: center; border: 2px solid var(--azul); border-radius: 16px; padding: 12px 18px; max-width: 560px; }
+  .ficha .ico { width: 48px; height: 48px; border-radius: 50%; background: var(--azul-suave); color: var(--azul); flex: none; }
+  .ficha b { font-size: 15px; color: var(--navy); display: block; }
+  .ficha p { font-size: 13px; color: var(--gris); line-height: 1.4; }
+  .preguntas { margin-top: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 22px; }
+  .preg { display: grid; grid-template-columns: 44px 1fr; gap: 14px; border: 1.5px solid var(--linea); border-radius: 16px; padding: 12px 16px 12px 12px; background: #fff; }
+  .preg .n { width: 44px; height: 44px; border-radius: 12px; background: var(--navy); color: #fff; font-size: 19px; font-weight: 800; display: grid; place-items: center; }
+  .preg .q { font-size: 15.5px; font-weight: 700; line-height: 1.3; color: var(--tinta); }
+  .resp { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
+  .op-r { font-size: 12px; font-weight: 600; border: 1.5px solid #d6d9e0; border-radius: 999px; padding: 2px 10px; color: #4b5160; }
+  .escala { display: flex; gap: 4px; margin-top: 7px; }
+  .escala span { width: 26px; height: 26px; border-radius: 8px; border: 1.5px solid #d6d9e0; display: grid; place-items: center; font-size: 12px; font-weight: 700; color: #4b5160; }
+  .escala.nps span { width: 24px; }
+  .escala span.bueno { border-color: #9fd3ae; background: var(--verde-suave); color: var(--verde); }
+  .escala span.malo { border-color: #f1b7b0; background: var(--rojo-suave); color: var(--rojo); }
+  .abierta { margin-top: 7px; height: 26px; border: 1.5px dashed #c9cdd6; border-radius: 8px; font-size: 12px; color: #9aa0ab; display: flex; align-items: center; padding: 0 10px; }
+  .meta-p { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .t-f { background: var(--verde-suave); color: var(--verde); } .t-d { background: var(--rojo-suave); color: var(--rojo); } .t-e { background: var(--fondo); color: #4b5160; }
+
+  /* Ajustes de escala para llenar la lámina y dejar el círculo decorativo al fondo. */
+  .lamina > :not(.franja) { position: relative; z-index: 1; }
+  .franja { z-index: 1; }
+  .estructura { margin-top: 40px; gap: 20px 22px; }
+  .fase b { font-size: 23px; }
+  .fase small { font-size: 14px; }
+  .bloque { padding: 20px 22px; }
+  .bloque h3 { font-size: 19px; margin-bottom: 10px; }
+  .bloque ul { gap: 7px; }
+  .bloque li { font-size: 15.5px; }
+  .area { font-size: 17px; }
+  .area .circ { width: 64px; height: 64px; font-size: 26px; }
+  .area small { font-size: 13px; }
+  .coordina { padding: 20px 26px; margin-top: 8px; }
+  .coordina b { font-size: 19px; }
+  .coordina p { font-size: 16px; }
+  .tps { margin-top: 34px; gap: 26px; }
+  .col-fase { padding: 20px; }
+  .col-fase > header b { font-size: 23px; }
+  .col-fase > header small { font-size: 14px; }
+  .tp { padding: 15px 14px; margin-bottom: 12px; grid-template-columns: 52px 1fr auto; }
+  .tp .ico { width: 52px; height: 52px; }
+  .tp b { font-size: 17px; }
+  .tp p { font-size: 14px; }
+  .tag { font-size: 12px; padding: 3px 10px; }
+  .leyenda { font-size: 14px; }
+  .preguntas { margin-top: 30px; gap: 16px 24px; }
+  .preg { padding: 16px 20px 16px 16px; grid-template-columns: 50px 1fr; }
+  .preg .n { width: 50px; height: 50px; font-size: 21px; }
+  .preg .q { font-size: 18px; }
+  .op-r { font-size: 13.5px; padding: 3px 12px; }
+  .resp, .escala, .meta-p { margin-top: 9px; }
+  .escala span { width: 30px; height: 30px; font-size: 13px; }
+  .escala.nps span { width: 30px; }
+  .abierta { height: 30px; font-size: 13px; }
+  /* Lámina 2: un poco más compacta para que el recuadro de coordinación no toque la franja. */
+  .estructura { margin-top: 26px; gap: 14px 22px; }
+  .bloque { padding: 15px 20px; }
+  .bloque h3 { font-size: 18px; margin-bottom: 8px; }
+  .bloque ul { gap: 5px; }
+  .bloque li { font-size: 15px; }
+  .coordina { padding: 16px 24px; margin-top: 4px; }
+  .coordina p { font-size: 15px; }
+  /* Lámina 3: más aire entre touchpoints. */
+  .tp { margin-bottom: 16px; padding: 17px 14px; }
+</style>
+</head>
+<body>
+
+<!-- 1. Customer Journey Map -->
+<section class="lamina imagen">
+  <img src="customer-journey-map.png" alt="Customer Journey Map: comprar en Tiendas 3A hoy vs. con Pide y recoge">
+</section>
+
+<!-- 2. Estructura del CJM del servicio -->
+<section class="lamina">
+  <span class="pastilla">TALLER · ESTRUCTURA DEL CJM</span>
+  <h1>Estructura del CJM del <span>servicio</span></h1>
+  <p class="bajada">Las 7 etapas del journey se agrupan en 3 fases. En cada fase, Marketing, Operaciones y RRHH cumplen un rol para que la experiencia «Pide y recoge» sea coherente.</p>
+
+  <div class="estructura">
+    <div></div>
+    <div class="fase"><b>Pre-servicio</b><small>1 Descubrir · 2 Saber si hay stock · 3 Armar la compra</small></div>
+    <div class="fase"><b>Servicio</b><small>4 Pagar · 5 Recoger</small></div>
+    <div class="fase"><b>Post-servicio</b><small>6 Reclamar o cambiar · 7 Volver a comprar</small></div>
+    <div></div>
+    <div class="linea-fases"><i style="left:16.6%"></i><i style="left:50%"></i><i style="left:83.3%"></i></div>
+
+    <div class="area mk"><span class="circ">M</span>Marketing<small>Atrae y fideliza</small></div>
+    <div class="bloque mk"><h3>Conecta con el cliente</h3><ul>
+      <li>Web «Ubícanos»: tiendas cercanas, horario y espera en caja de hoy</li>
+      <li>Ofertas semanales por WhatsApp y volantes en el barrio</li>
+      <li>Canastas armadas (semanal, quincenal, bodeguero)</li></ul></div>
+    <div class="bloque mk"><h3>Comunica valor</h3><ul>
+      <li>Mismo precio que en tienda y precios claros en la app</li>
+      <li>Marca propia destacada y precio por volumen para bodegueros</li>
+      <li>Mensaje de marca: «barato en precio, barato en tiempo»</li></ul></div>
+    <div class="bloque mk ult"><h3>Fomenta lealtad y referencias</h3><ul>
+      <li>Club 3A: puntos por pedido y cupones de marca propia</li>
+      <li>Encuesta NPS al recoger: «¿nos recomendarías?»</li>
+      <li>Promociones según lo que más compra cada cliente</li></ul></div>
+
+    <div class="area op"><span class="circ">O</span>Operaciones<small>Prepara y entrega</small></div>
+    <div class="bloque op"><h3>Prepara y diseña la experiencia</h3><ul>
+      <li>Stock por tienda actualizado en el catálogo</li>
+      <li>Franjas de recojo de 30 min según horario de cada tienda</li>
+      <li>Mostrador «Pide y recoge» separado de la caja</li></ul></div>
+    <div class="bloque op"><h3>Entrega el servicio</h3><ul>
+      <li>Pago con QR (Yape, Plin) y pedido directo al panel de tienda</li>
+      <li>Armado del pedido por franja y aviso automático por WhatsApp</li>
+      <li>Entrega con código QR en 2 min, sin fila</li></ul></div>
+    <div class="bloque op ult"><h3>Asegura seguimiento y mejora</h3><ul>
+      <li>Reclamo o cambio sobre el mismo pedido, respuesta en 24 h</li>
+      <li>Panel con quiebres de stock, espera en caja y NPS en vivo</li>
+      <li>Copiloto IA: abrir caja, qué reponer y qué pedido priorizar</li></ul></div>
+
+    <div class="area rh"><span class="circ">R</span>RRHH<small>Personas y talento</small></div>
+    <div class="bloque rh"><h3>Atrae y alinea talento</h3><ul>
+      <li>Perfil de «anfitrión de hora punta»: orienta, repone y abre caja</li>
+      <li>Inducción con el mismo estándar de atención en todas las tiendas</li></ul></div>
+    <div class="bloque rh"><h3>Desarrolla y activa equipos</h3><ul>
+      <li>Capacitación digital estandarizada: panel, armado y entrega</li>
+      <li>Roles claros en hora punta: caja, armado y mostrador</li></ul></div>
+    <div class="bloque rh ult"><h3>Reconoce y retiene talento</h3><ul>
+      <li>Reconocimiento por NPS de tienda y entregas a tiempo</li>
+      <li>Metas por tienda visibles en el panel para todo el equipo</li></ul></div>
+
+    <div class="coordina">
+      <span class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M10.8 7.2 6.2 15.8M13.2 7.2l4.6 8.6M7.5 18h9"/></svg></span>
+      <div><b>Cómo coordinan para ofrecer una experiencia coherente al cliente</b>
+      <p>El <b>panel de tienda</b> es el punto común: Marketing publica stock, ofertas y canastas; Operaciones prepara cada pedido según su franja y responde reclamos; RRHH asegura personal capacitado en hora punta. Cada semana revisan juntos los mismos tres indicadores: <b>tiempo en cola, NPS por tienda y recompra del Club 3A</b>.</p></div>
+    </div>
+  </div>
+
+  <footer class="franja"><p class="idea">Una sola experiencia: <span>tres áreas, un mismo panel</span></p><p class="pie">Taller CX · Ingeniería de Sistemas de Servicio · Caso Tiendas 3A</p></footer>
+</section>
+
+<!-- 3. Touchpoints -->
+<section class="lamina">
+  <span class="pastilla">TALLER · TOUCHPOINTS</span>
+  <h1>Puntos de <span>contacto</span> del cliente</h1>
+  <p class="bajada">14 touchpoints en las 3 fases. Los resaltados son momentos de la verdad: ahí el cliente decide si la tienda cumple.</p>
+
+  <div class="tps">
+    <div class="col-fase"><header><b>Pre-servicio</b><small>5 touchpoints</small></header>
+      <div class="tp"><span class="ico fis">ICO_volante</span><div><b>Volantes y boca a boca</b><p>Se entera de la tienda por el barrio.</p></div><div class="tags"><span class="tag t-mk">Marketing</span></div></div>
+      <div class="tp"><span class="ico dig">ICO_pin</span><div><b>Web «Ubícanos»</b><p>Tiendas cercanas, horario y espera en caja de hoy.</p></div><div class="tags"><span class="tag t-mk">Marketing</span><span class="tag t-nuevo">Nuevo</span></div></div>
+      <div class="tp"><span class="ico dig">ICO_whatsapp</span><div><b>Ofertas por WhatsApp</b><p>Catálogo semanal y avisos de reposición.</p></div><div class="tags"><span class="tag t-mk">Marketing</span><span class="tag t-nuevo">Nuevo</span></div></div>
+      <div class="tp verdad"><span class="ico dig">ICO_caja</span><div><b>Catálogo con stock</b><p>Sabe qué hay antes de salir; si se agotó, ve otra tienda cercana.</p></div><div class="tags"><span class="tag t-op">Operaciones</span><span class="tag t-verdad">★ Verdad</span></div></div>
+      <div class="tp"><span class="ico dig">ICO_carrito</span><div><b>Canastas armadas</b><p>Su compra semanal o quincenal en un toque.</p></div><div class="tags"><span class="tag t-mk">Marketing</span><span class="tag t-nuevo">Nuevo</span></div></div>
+    </div>
+    <div class="col-fase"><header><b>Servicio</b><small>6 touchpoints</small></header>
+      <div class="tp"><span class="ico fis">ICO_etiqueta</span><div><b>Góndolas y precios en tienda</b><p>Señalética clara y precios iguales a la app.</p></div><div class="tags"><span class="tag t-mk">Marketing</span></div></div>
+      <div class="tp verdad"><span class="ico dig">ICO_qr</span><div><b>Pago con QR · Yape, Plin</b><p>Elige su franja de 30 min y paga sin hacer fila.</p></div><div class="tags"><span class="tag t-op">Operaciones</span><span class="tag t-verdad">★ Verdad</span></div></div>
+      <div class="tp"><span class="ico fis">ICO_caja_reg</span><div><b>Caja tradicional</b><p>Sigue para quien no usa la app; se descongestiona.</p></div><div class="tags"><span class="tag t-op">Operaciones</span></div></div>
+      <div class="tp"><span class="ico dig">ICO_whatsapp</span><div><b>Aviso de estado por WhatsApp</b><p>Recibido, preparando y «listo para recoger».</p></div><div class="tags"><span class="tag t-op">Operaciones</span><span class="tag t-nuevo">Nuevo</span></div></div>
+      <div class="tp verdad"><span class="ico fis">ICO_bolsa</span><div><b>Mostrador «Pide y recoge»</b><p>Muestra su QR y recoge en 2 min.</p></div><div class="tags"><span class="tag t-op">Operaciones</span><span class="tag t-verdad">★ Verdad</span></div></div>
+      <div class="tp"><span class="ico hum">ICO_persona</span><div><b>Anfitrión de hora punta</b><p>Orienta, repone y abre caja si se forma cola.</p></div><div class="tags"><span class="tag t-rh">RRHH</span><span class="tag t-nuevo">Nuevo</span></div></div>
+    </div>
+    <div class="col-fase"><header><b>Post-servicio</b><small>3 touchpoints</small></header>
+      <div class="tp"><span class="ico dig">ICO_chat</span><div><b>Reclamo o cambio en su pedido</b><p>Reporta desde el celular; respuesta en 24 h.</p></div><div class="tags"><span class="tag t-op">Operaciones</span><span class="tag t-nuevo">Nuevo</span></div></div>
+      <div class="tp"><span class="ico dig">ICO_estrella</span><div><b>Encuesta NPS al recoger</b><p>Califica de 0 a 10 y deja un comentario.</p></div><div class="tags"><span class="tag t-mk">Marketing</span><span class="tag t-nuevo">Nuevo</span></div></div>
+      <div class="tp"><span class="ico dig">ICO_corazon</span><div><b>Club 3A</b><p>Puntos por pedido y cupones en marca propia.</p></div><div class="tags"><span class="tag t-mk">Marketing</span><span class="tag t-nuevo">Nuevo</span></div></div>
+      <div style="margin-top:14px;padding:16px;border-radius:14px;background:#fff;border:1.5px dashed #c9cdd6">
+        <b style="font-size:15px;color:var(--navy)">Resumen</b>
+        <p style="font-size:13.5px;line-height:1.5;margin-top:6px;color:var(--tinta)"><b>14</b> touchpoints: <b>9 digitales</b>, <b>4 físicos</b> y <b>1 humano</b>.<br><b>11 son nuevos</b> con Pide y recoge (los 3 momentos de la verdad también).<br><b>3 momentos de la verdad</b>: stock, pago y recojo.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="franja">
+    <div class="leyenda">
+      <span><i style="background:var(--azul-suave);border:1.5px solid var(--azul)"></i>Digital</span>
+      <span><i style="background:var(--naranja-suave);border:1.5px solid var(--naranja-osc)"></i>Físico</span>
+      <span><i style="background:var(--morado-suave);border:1.5px solid var(--morado)"></i>Humano</span>
+      <span><i style="background:var(--verde-suave);border:1.5px solid var(--verde)"></i>Nuevo con Pide y recoge</span>
+      <span><i style="background:var(--naranja)"></i>Momento de la verdad</span>
+    </div>
+    <p class="pie">Taller CX · Ingeniería de Sistemas de Servicio · Caso Tiendas 3A</p>
+  </footer>
+</section>
+
+<!-- 4. Formulario -->
+<section class="lamina">
+  <div class="form-cab">
+    <div>
+      <span class="pastilla">TALLER · FORMULARIO</span>
+      <h1>¿Cómo fue tu compra en <span>Tiendas 3A</span>?</h1>
+      <p class="bajada">10 preguntas, una por proceso del journey, para recoger puntos fuertes y puntos de dolor.</p>
+    </div>
+    <div class="ficha">
+      <span class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span>
+      <div><b>Se envía al recoger el pedido</b><p>Por WhatsApp o con el QR de la boleta. Toma 2 minutos.<br>Respuestas de 4 a 5 = fortaleza · de 1 a 2 = dolor.</p></div>
+    </div>
+  </div>
+
+  <div class="preguntas">
+    <div class="preg"><span class="n">1</span><div><p class="q">¿Cómo te enteraste de la tienda donde compras?</p>
+      <div class="resp"><span class="op-r">Por el barrio</span><span class="op-r">Volante</span><span class="op-r">Redes sociales</span><span class="op-r">Web «Ubícanos»</span><span class="op-r">WhatsApp</span></div>
+      <div class="meta-p"><span class="tag t-e">Descubrir</span><span class="tag t-mk">Marketing</span><span class="tag t-f">Fortaleza / dolor: presencia digital</span></div></div></div>
+
+    <div class="preg"><span class="n">2</span><div><p class="q">Antes de salir, ¿pudiste saber si estaban los productos que buscabas?</p>
+      <div class="resp"><span class="op-r">Sí, siempre</span><span class="op-r">A veces</span><span class="op-r">No, fui sin saber</span><span class="op-r">Fui y no había</span></div>
+      <div class="meta-p"><span class="tag t-e">Saber si hay stock</span><span class="tag t-op">Operaciones</span><span class="tag t-d">Detecta quiebres de stock</span></div></div></div>
+
+    <div class="preg"><span class="n">3</span><div><p class="q">Del 1 al 5, ¿qué tan claros te parecieron los precios y las ofertas?</p>
+      <div class="escala"><span class="malo">1</span><span class="malo">2</span><span>3</span><span class="bueno">4</span><span class="bueno">5</span></div>
+      <div class="meta-p"><span class="tag t-e">Armar la compra</span><span class="tag t-mk">Marketing</span><span class="tag t-f">Fortaleza o dolor: señalética</span></div></div></div>
+
+    <div class="preg"><span class="n">4</span><div><p class="q">¿Cuánto tiempo esperaste para pagar o recoger?</p>
+      <div class="resp"><span class="op-r">Menos de 2 min</span><span class="op-r">2 a 5 min</span><span class="op-r">5 a 10 min</span><span class="op-r">Más de 10 min</span></div>
+      <div class="meta-p"><span class="tag t-e">Pagar</span><span class="tag t-op">Operaciones</span><span class="tag t-d">Mide el tiempo en cola</span></div></div></div>
+
+    <div class="preg"><span class="n">5</span><div><p class="q">¿Cómo pagaste y qué tan cómodo fue? (1 a 5)</p>
+      <div class="resp"><span class="op-r">QR · Yape, Plin</span><span class="op-r">Tarjeta</span><span class="op-r">Efectivo en tienda</span></div>
+      <div class="escala"><span class="malo">1</span><span class="malo">2</span><span>3</span><span class="bueno">4</span><span class="bueno">5</span></div>
+      <div class="meta-p"><span class="tag t-e">Pagar</span><span class="tag t-op">Operaciones</span><span class="tag t-f">Adopción del pago QR</span></div></div></div>
+
+    <div class="preg"><span class="n">6</span><div><p class="q">¿Tu pedido estuvo listo y completo en la franja que elegiste?</p>
+      <div class="resp"><span class="op-r">Sí, listo y completo</span><span class="op-r">Listo, pero incompleto</span><span class="op-r">Tuve que esperar</span><span class="op-r">No estaba listo</span></div>
+      <div class="meta-p"><span class="tag t-e">Recoger</span><span class="tag t-op">Operaciones</span><span class="tag t-d">Cumplimiento de la franja</span></div></div></div>
+
+    <div class="preg"><span class="n">7</span><div><p class="q">Del 1 al 5, ¿cómo te atendió el personal de la tienda?</p>
+      <div class="escala"><span class="malo">1</span><span class="malo">2</span><span>3</span><span class="bueno">4</span><span class="bueno">5</span></div>
+      <div class="meta-p"><span class="tag t-e">Recoger</span><span class="tag t-rh">RRHH</span><span class="tag t-f">Atención igual en todas las tiendas</span></div></div></div>
+
+    <div class="preg"><span class="n">8</span><div><p class="q">Si tuviste un problema con tu compra, ¿lo resolvimos?</p>
+      <div class="resp"><span class="op-r">No tuve problemas</span><span class="op-r">Sí, rápido</span><span class="op-r">Sí, pero tardó</span><span class="op-r">No lo resolvieron</span></div>
+      <div class="meta-p"><span class="tag t-e">Reclamar o cambiar</span><span class="tag t-op">Operaciones</span><span class="tag t-d">Calidad de la postventa</span></div></div></div>
+
+    <div class="preg"><span class="n">9</span><div><p class="q">Del 0 al 10, ¿qué tan probable es que recomiendes Tiendas 3A a un familiar o vecino?</p>
+      <div class="escala nps"><span class="malo">0</span><span class="malo">1</span><span class="malo">2</span><span class="malo">3</span><span class="malo">4</span><span class="malo">5</span><span class="malo">6</span><span>7</span><span>8</span><span class="bueno">9</span><span class="bueno">10</span></div>
+      <div class="meta-p"><span class="tag t-e">Volver a comprar</span><span class="tag t-mk">Marketing</span><span class="tag t-f">NPS: promotores − detractores</span></div></div></div>
+
+    <div class="preg"><span class="n">10</span><div><p class="q">¿Qué fue lo mejor de tu compra y qué deberíamos mejorar?</p>
+      <div class="abierta">Lo mejor fue…</div><div class="abierta">Deberían mejorar…</div>
+      <div class="meta-p"><span class="tag t-e">Todo el journey</span><span class="tag t-f">Fortaleza</span><span class="tag t-d">Dolor</span></div></div></div>
+  </div>
+
+  <footer class="franja"><p class="idea">Cada respuesta alimenta el <span>panel de tienda</span>: NPS, tiempo en cola y quiebres</p><p class="pie">Taller CX · Ingeniería de Sistemas de Servicio · Caso Tiendas 3A</p></footer>
+</section>
+
+<script>
+  // Íconos de línea (mismo estilo que el CJM).
+  const ico = {
+    volante: '<path d="M4 4h12l4 4v12H4z"/><path d="M8 10h8M8 14h8M8 18h5"/>',
+    pin: '<path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>',
+    whatsapp: '<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M9 9.5c.5 2 2.5 4 4.5 4.5l1-1 1.5.8"/>',
+    caja: '<path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/>',
+    carrito: '<circle cx="9" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M2.5 3h2.2l2.4 11.2a1.8 1.8 0 0 0 1.8 1.4h8.8a1.8 1.8 0 0 0 1.7-1.3L21 7H5.6"/>',
+    etiqueta: '<path d="M12.6 2.6A2 2 0 0 0 11.2 2H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.7 8.7a2.4 2.4 0 0 0 3.4 0l6.6-6.6a2.4 2.4 0 0 0 0-3.4z"/><circle cx="7.5" cy="7.5" r="1.2"/>',
+    qr: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/>',
+    caja_reg: '<rect x="3" y="11" width="18" height="9" rx="2"/><path d="M7 11V5h10v6M10 8h4M7 15h2M11 15h2M15 15h2"/>',
+    bolsa: '<path d="M6 7h12l1 14H5z"/><path d="M9 7a3 3 0 0 1 6 0"/>',
+    persona: '<circle cx="12" cy="7" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+    chat: '<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8 11h8M8 14h5"/>',
+    estrella: '<path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9z"/>',
+    corazon: '<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
+  }
+  document.querySelectorAll('.tp .ico').forEach((el) => {
+    const n = el.textContent.trim().replace('ICO_', '')
+    el.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ico[n] ?? ''}</svg>`
+  })
+</script>
+</body>
+</html>
