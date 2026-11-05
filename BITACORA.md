@@ -37,6 +37,7 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-11-03 | hecho | Demo con dos pestañas: sesión por pestaña (sessionStorage) y sincronización de pedidos, encuestas y puntos en todas las páginas, sin bucles | este PR |
 | 2026-11-03 | hecho | Merge del PR #16 (ajustes de Nicole) y PR #17 con el panel de Edison que estaba sin PR | PR #16, PR #17 |
 | 2026-11-04 | cambio | Por acuerdo del equipo, la app queda como producto real: se retira la página Journey, la tabla antes y después y las notas de dolor, blueprint y conceptos del Panel, Seguimiento e Inicio. Todo se exporta a `docs/presentacion/` (HTML e imágenes) y a una presentación de Canva. Se mantienen las herramientas de demo | este PR |
+| 2026-11-05 | hecho | Customer Journey Map en una lámina 16:9 (HTML, PNG y PDF) en `docs/presentacion/` para la exposición | este PR |
 
 ## Ruth · Catálogo + Journey
 

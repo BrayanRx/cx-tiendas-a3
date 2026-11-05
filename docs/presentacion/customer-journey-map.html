@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Customer Journey Map · Pide y recoge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Lámina 16:9 (1920 × 1080) con la paleta de la presentación del curso. */
+  :root {
+    --navy: #1e2a5e;
+    --naranja: #f58a3c;
+    --naranja-osc: #d44307;
+    --naranja-suave: #fff1e6;
+    --azul: #3b63d6;
+    --azul-suave: #e9eefc;
+    --verde: #15803d;
+    --verde-suave: #eaf7ee;
+    --rojo: #c0392b;
+    --rojo-suave: #fdecea;
+    --tinta: #1f2430;
+    --gris: #6b7280;
+    --linea: #e5e7eb;
+    --fondo: #f4f5f7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #d9dce3; }
+  body { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; color: var(--tinta); -webkit-font-smoothing: antialiased; }
+  .lamina { width: 1920px; height: 1080px; margin: 0 auto; background: #fff; position: relative; overflow: hidden; padding: 44px 56px 0; }
+  .lamina::before { content: ''; position: absolute; right: -120px; top: -120px; width: 340px; height: 340px; border-radius: 50%; border: 40px solid rgba(245, 138, 60, .12); }
+
+  /* Cabecera */
+  .cabecera { display: flex; justify-content: space-between; align-items: flex-start; gap: 40px; position: relative; }
+  .pastilla { display: inline-block; background: var(--naranja); color: #fff; font-size: 13px; font-weight: 800; letter-spacing: .14em; padding: 6px 14px; border-radius: 999px; }
+  h1 { margin-top: 12px; font-size: 46px; line-height: 1.05; font-weight: 800; color: var(--navy); letter-spacing: -.02em; }
+  h1 span { color: var(--naranja-osc); }
+  .bajada { margin-top: 8px; font-size: 18px; color: var(--gris); }
+  .persona { display: flex; gap: 16px; align-items: center; border: 2px solid var(--azul); border-radius: 18px; padding: 14px 20px; width: 560px; background: #fff; }
+  .avatar { flex: none; width: 64px; height: 64px; border-radius: 50%; background: var(--azul-suave); color: var(--azul); display: grid; place-items: center; }
+  .persona b { display: block; font-size: 17px; color: var(--navy); }
+  .persona p { font-size: 14px; color: var(--gris); line-height: 1.4; }
+  .persona .meta { margin-top: 4px; font-size: 13px; font-weight: 700; color: var(--azul); }
+
+  /* Matriz del journey */
+  .mapa { margin-top: 22px; display: grid; grid-template-columns: 150px repeat(7, 1fr); column-gap: 10px; }
+  .etiqueta { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--navy); padding-right: 6px; }
+  .etiqueta i { flex: none; width: 6px; align-self: stretch; border-radius: 4px; }
+
+  /* Etapas en flechas */
+  .etapa { position: relative; height: 88px; background: var(--navy); color: #fff; clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 50%, calc(100% - 22px) 100%, 0 100%, 14px 50%); display: flex; align-items: center; gap: 10px; padding: 0 26px 0 28px; }
+  .etapa:nth-child(2) { clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 50%, calc(100% - 22px) 100%, 0 100%); border-radius: 14px 0 0 14px; }
+  .etapa .num { flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--naranja); display: grid; place-items: center; }
+  .etapa small { display: block; font-size: 11px; font-weight: 700; letter-spacing: .12em; color: #ffd2b0; }
+  .etapa b { display: block; font-size: 17px; line-height: 1.15; }
+  .etapa.verdad { background: linear-gradient(90deg, var(--navy), #2d3d86); }
+
+  .celda { font-size: 14px; line-height: 1.38; padding: 12px 4px 0; }
+  .fila-sep { grid-column: 1 / -1; height: 1px; background: var(--linea); margin-top: 12px; }
+
+  /* Puntos de contacto */
+  .contacto { display: flex; flex-direction: column; gap: 6px; padding-top: 12px; }
+  .contacto span { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; border-radius: 999px; padding: 4px 10px; width: fit-content; }
+  .contacto .hoy { background: var(--fondo); color: var(--gris); }
+  .contacto .app { background: var(--azul-suave); color: var(--azul); }
+
+  /* Curva de emoción */
+  .emocion { grid-column: 2 / -1; position: relative; height: 214px; margin-top: 10px; }
+  .emocion svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .caras { display: flex; flex-direction: column; justify-content: space-between; height: 214px; margin-top: 10px; padding: 12px 0 30px; font-size: 22px; }
+  .caras .tit { font-size: 12px; font-weight: 800; letter-spacing: .1em; color: var(--navy); margin-bottom: -6px; }
+  .caras div { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: .08em; color: var(--gris); text-transform: uppercase; }
+
+  /* Dolor y solución */
+  .tarjeta { margin-top: 12px; border-radius: 14px; padding: 11px 12px 12px; font-size: 13.5px; line-height: 1.38; height: calc(100% - 12px); }
+  .tarjeta .cab { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 5px; }
+  .dolor { background: var(--rojo-suave); border: 1.5px solid #f5c2bc; }
+  .dolor .cab { color: var(--rojo); }
+  .solucion { background: var(--verde-suave); border: 1.5px solid #bfe3c9; }
+  .solucion .cab { color: var(--verde); }
+  .pantalla { display: inline-flex; align-items: center; gap: 5px; margin-top: 7px; font-size: 12px; font-weight: 700; color: var(--naranja-osc); background: #fff; border: 1.5px solid #fbd2b4; border-radius: 999px; padding: 2px 9px; }
+
+  /* Franja inferior */
+  .franja { position: absolute; left: 0; right: 0; bottom: 0; height: 78px; background: var(--fondo); display: flex; align-items: center; justify-content: space-between; padding: 0 56px; border-top: 1px solid var(--linea); }
+  .franja .idea { font-size: 19px; font-weight: 800; color: var(--navy); }
+  .franja .idea span { color: var(--naranja-osc); }
+  .indicadores { display: flex; gap: 34px; }
+  .ind { display: flex; align-items: center; gap: 10px; }
+  .ind .ico { width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--naranja); color: var(--naranja); display: grid; place-items: center; }
+  .ind b { display: block; font-size: 18px; color: var(--navy); line-height: 1.1; }
+  .ind small { font-size: 12px; color: var(--gris); }
+  .leyenda { display: flex; gap: 18px; font-size: 13px; color: var(--gris); font-weight: 600; }
+  .leyenda span { display: flex; align-items: center; gap: 6px; }
+  .nota { position: absolute; right: 56px; bottom: 86px; font-size: 11px; color: #9aa0ab; }
+</style>
+</head>
+<body>
+<div class="lamina">
+  <header class="cabecera">
+    <div>
+      <span class="pastilla">CUSTOMER JOURNEY MAP</span>
+      <h1>Comprar en Tiendas 3A: <span>hoy</span> vs. <span>con Pide y recoge</span></h1>
+      <p class="bajada">Proceso crítico: la compra de la canasta básica en hora punta, de principio a fin.</p>
+    </div>
+    <div class="persona">
+      <div class="avatar">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+      </div>
+      <div>
+        <b>Rosa, 36 años · ama de casa en San Juan de Lurigancho</b>
+        <p>Compra quincenal para 4 personas, cuida cada sol, trabaja medio tiempo y usa WhatsApp todo el día.</p>
+        <p class="meta">Meta: comprar su canasta barata sin perder la tarde en la cola.</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="mapa" id="mapa"></section>
+
+  <p class="nota">★ Momento de la verdad · Emoción de 1 (frustrada) a 5 (encantada) · Prototipo académico con datos simulados</p>
+  <footer class="franja">
+    <p class="idea">De fidelizar solo por precio → a fidelizar <span>también por la experiencia</span></p>
+    <div class="indicadores">
+      <div class="ind"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-3-6.2"/><path d="M8.5 13.5 12 9l3 3"/></svg></span><div><b>1.7 → 4.3</b><small>emoción promedio</small></div></div>
+      <div class="ind"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><b>14 → 2 min</b><small>espera para pagar y recoger</small></div></div>
+      <div class="ind"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9z"/></svg></span><div><b>3 de 7</b><small>momentos de la verdad mejorados</small></div></div>
+    </div>
+    <div class="leyenda">
+      <span><svg width="26" height="6"><line x1="0" y1="3" x2="26" y2="3" stroke="#c0392b" stroke-width="3" stroke-dasharray="5 4"/></svg>Hoy</span>
+      <span><svg width="26" height="6"><line x1="0" y1="3" x2="26" y2="3" stroke="#15803d" stroke-width="4"/></svg>Con Pide y recoge</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // Datos del journey (las mismas 7 etapas que se usaron en el prototipo).
+  const etapas = [
+    { nombre: 'Descubrir la tienda', icono: 'pin', verdad: false,
+      accion: 'Busca dónde comprar su canasta; se entera por el barrio o al pasar por la puerta.',
+      hoy: 'Boca a boca, volantes', app: 'Web «Ubícanos»',
+      dolor: 'Poca presencia digital: no sabe qué tiendas hay cerca ni su horario.',
+      solucion: 'Ve las tiendas cercanas con su horario y cuánto demora la caja hoy.', pantalla: 'Inicio',
+      antes: 2, despues: 4 },
+    { nombre: 'Saber si hay stock', icono: 'caja', verdad: true,
+      accion: 'Se pregunta si encontrará lo que necesita antes de gastar pasaje y tiempo.',
+      hoy: 'Ir a la tienda a ver', app: 'Catálogo con stock',
+      dolor: 'Va a la tienda y a veces regresa sin el producto.',
+      solucion: 'Ve cuántas unidades quedan y, si se agotó, la tienda cercana que sí tiene.', pantalla: 'Catálogo',
+      antes: 1, despues: 4 },
+    { nombre: 'Armar la compra', icono: 'carrito', verdad: false,
+      accion: 'Recorre pasillos comparando precios y marcas para que le alcance.',
+      hoy: 'Góndolas y carteles', app: 'Canastas armadas',
+      dolor: 'Precios y señalización confusos: no ve cuánto ahorra con la marca propia.',
+      solucion: 'Precios claros, marca propia, precio bodeguero y canastas en un toque.', pantalla: 'Canastas',
+      antes: 2, despues: 4 },
+    { nombre: 'Pagar', icono: 'qr', verdad: true,
+      accion: 'Hace fila para pagar justo en hora punta, cuando menos tiempo tiene.',
+      hoy: 'Caja tradicional', app: 'Pago QR · Yape, Plin',
+      dolor: '14 minutos de cola en caja: pierde tiempo y se va de mal humor.',
+      solucion: 'Elige su franja de recojo de 30 min y paga con QR desde casa.', pantalla: 'Pedido y pago',
+      antes: 1, despues: 5 },
+    { nombre: 'Recoger', icono: 'bolsa', verdad: true,
+      accion: 'Llega a retirar su compra o pide ayuda al personal.',
+      hoy: 'Mostrador sin información', app: 'WhatsApp + QR de recojo',
+      dolor: 'Atención desigual entre tiendas y no sabe cómo va su pedido.',
+      solucion: 'Le avisan por WhatsApp; muestra su QR y recoge en 2 min, sin fila.', pantalla: 'Seguimiento',
+      antes: 2, despues: 4 },
+    { nombre: 'Reclamar o cambiar', icono: 'chat', verdad: false,
+      accion: 'Algo salió mal con un producto o con el cobro y quiere solución.',
+      hoy: 'Volver a la tienda', app: 'Botón en su pedido',
+      dolor: 'Sin canal de reclamos: tiene que regresar y explicar todo de nuevo.',
+      solucion: 'Reclama desde el celular sobre el mismo pedido; responden en 24 h.', pantalla: 'Postventa',
+      antes: 1, despues: 4 },
+    { nombre: 'Volver a comprar', icono: 'corazon', verdad: false,
+      accion: 'Decide si regresa en su próxima compra quincenal.',
+      hoy: 'Volantes de ofertas', app: 'Club 3A',
+      dolor: 'Fidelización solo por precio: se va si otra tienda baja un sol.',
+      solucion: 'Suma puntos, canjea cupones de marca propia y califica su experiencia.', pantalla: 'Club 3A',
+      antes: 3, despues: 5 },
+  ]
+
+  const ico = {
+    pin: '<path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>',
+    caja: '<path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/>',
+    carrito: '<circle cx="9" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M2.5 3h2.2l2.4 11.2a1.8 1.8 0 0 0 1.8 1.4h8.8a1.8 1.8 0 0 0 1.7-1.3L21 7H5.6"/>',
+    qr: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/>',
+    bolsa: '<path d="M6 7h12l1 14H5z"/><path d="M9 7a3 3 0 0 1 6 0"/>',
+    chat: '<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/>',
+    corazon: '<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
+    alerta: '<circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/>',
+    check: '<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',
+    celular: '<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>',
+    tienda: '<path d="M4 10h16M5 10l1-5h12l1 5M6 10v10h12V10"/>',
+  }
+  const svg = (n, s = 18, w = 2) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round">${ico[n]}</svg>`
+
+  const etiqueta = (texto, color) => `<div class="etiqueta"><i style="background:${color}"></i>${texto}</div>`
+  let html = '<div></div>'
+  html += etapas.map((e, i) => `<div class="etapa ${e.verdad ? 'verdad' : ''}"><span class="num">${svg(e.icono, 20, 2.2)}</span><div><small>ETAPA ${i + 1}${e.verdad ? ' · ★' : ''}</small><b>${e.nombre}</b></div></div>`).join('')
+  html += '<div class="fila-sep"></div>'
+  html += etiqueta('Qué hace', 'var(--navy)') + etapas.map((e) => `<div class="celda">${e.accion}</div>`).join('')
+  html += '<div class="fila-sep"></div>'
+  html += etiqueta('Punto de contacto', 'var(--azul)') + etapas.map((e) => `<div class="contacto"><span class="hoy">${svg('tienda', 14)}${e.hoy}</span><span class="app">${svg('celular', 14)}${e.app}</span></div>`).join('')
+  html += '<div class="fila-sep"></div>'
+  html += `<div class="caras"><div class="tit">Emoción</div><div>😄 5</div><div>🙂 4</div><div>😐 3</div><div>😕 2</div><div>😠 1</div></div><div class="emocion"><svg id="curva"></svg></div>`
+  html += '<div class="fila-sep"></div>'
+  html += etiqueta('Dolor de hoy', 'var(--rojo)') + etapas.map((e) => `<div class="tarjeta dolor"><div class="cab">${svg('alerta', 14, 2.4)}Hoy</div>${e.dolor}</div>`).join('')
+  html += etiqueta('Con Pide y recoge', 'var(--verde)') + etapas.map((e) => `<div class="tarjeta solucion"><div class="cab">${svg('check', 14, 2.4)}Ahora</div>${e.solucion}<br><span class="pantalla">${svg('celular', 12, 2.4)}${e.pantalla}</span></div>`).join('')
+  document.getElementById('mapa').innerHTML = html
+
+  // Curva de emoción: dos líneas suaves (hoy y con la app) con la mejora sombreada entre ambas.
+  const caja = document.querySelector('.emocion')
+  const W = caja.clientWidth, H = caja.clientHeight, MT = 24, MB = 44
+  const col = W / etapas.length
+  const x = (i) => col * i + col / 2
+  const y = (v) => MT + ((5 - v) * (H - MT - MB)) / 4
+  const suave = (vals) => vals.map((v, i) => {
+    if (i === 0) return `M ${x(0)} ${y(v)}`
+    const x0 = x(i - 1), y0 = y(vals[i - 1]), x1 = x(i), y1 = y(v), dx = (x1 - x0) / 2
+    return `C ${x0 + dx} ${y0}, ${x1 - dx} ${y1}, ${x1} ${y1}`
+  }).join(' ')
+  const antes = etapas.map((e) => e.antes), despues = etapas.map((e) => e.despues)
+  // Área de mejora: la curva de «con la app» y de vuelta por la de «hoy», al revés.
+  const ptsAntesRev = antes.map((v, i) => [x(i), y(v)]).reverse()
+  let areaD = suave(despues)
+  ptsAntesRev.forEach(([px, py], k) => {
+    if (k === 0) { areaD += ` L ${px} ${py}`; return }
+    const [qx, qy] = ptsAntesRev[k - 1], dx = (px - qx) / 2
+    areaD += ` C ${qx + dx} ${qy}, ${px - dx} ${py}, ${px} ${py}`
+  })
+  areaD += ' Z'
+  const caras = { 1: '😠', 2: '😕', 3: '😐', 4: '🙂', 5: '😄' }
+  let s = ''
+  etapas.forEach((e, i) => { if (e.verdad) s += `<rect x="${x(i) - col / 2 + 6}" y="0" width="${col - 12}" height="${H}" rx="14" fill="#fff6ee"/>` })
+  for (let v = 1; v <= 5; v++) s += `<line x1="0" x2="${W}" y1="${y(v)}" y2="${y(v)}" stroke="#eceef2" stroke-width="1.2" stroke-dasharray="2 6"/>`
+  s += `<defs><linearGradient id="mejora" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#15803d" stop-opacity=".16"/><stop offset="1" stop-color="#15803d" stop-opacity=".03"/></linearGradient></defs>`
+  s += `<path d="${areaD}" fill="url(#mejora)"/>`
+  s += `<path d="${suave(antes)}" fill="none" stroke="#c0392b" stroke-width="3.5" stroke-dasharray="9 7" stroke-linecap="round"/>`
+  s += `<path d="${suave(despues)}" fill="none" stroke="#15803d" stroke-width="5" stroke-linecap="round"/>`
+  etapas.forEach((e, i) => {
+    s += `<line x1="${x(i)}" x2="${x(i)}" y1="${y(e.antes) - 18}" y2="${y(e.despues) + 22}" stroke="#15803d" stroke-width="1.5" stroke-dasharray="2 4" opacity=".5"/>`
+    s += `<circle cx="${x(i)}" cy="${y(e.antes)}" r="17" fill="#fff" stroke="#c0392b" stroke-width="2.5"/><text x="${x(i)}" y="${y(e.antes) + 7}" text-anchor="middle" font-size="19">${caras[e.antes]}</text>`
+    s += `<circle cx="${x(i)}" cy="${y(e.despues)}" r="20" fill="#fff" stroke="#15803d" stroke-width="3"/><text x="${x(i)}" y="${y(e.despues) + 8}" text-anchor="middle" font-size="22">${caras[e.despues]}</text>`
+    s += `<text x="${x(i) + 26}" y="${(y(e.antes) + y(e.despues)) / 2 + 5}" font-size="13" font-weight="800" fill="#15803d">+${e.despues - e.antes}</text>`
+    if (e.verdad) s += `<text x="${x(i)}" y="${H - 6}" text-anchor="middle" font-size="12" font-weight="800" fill="#d44307" letter-spacing="1">★ MOMENTO DE LA VERDAD</text>`
+  })
+  document.getElementById('curva').innerHTML = s
+</script>
+</body>
+</html>
