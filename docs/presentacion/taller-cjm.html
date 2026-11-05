@@ -149,9 +149,65 @@
   .coordina p { font-size: 15px; }
   /* Lámina 3: más aire entre touchpoints. */
   .tp { margin-bottom: 16px; padding: 17px 14px; }
+  /* Carátula */
+  .caratula { display: grid; grid-template-columns: 1fr 820px; padding: 0; }
+  .lamina.caratula::before { display: none; }
+  .caratula .izq { padding: 110px 0 0 96px; display: flex; flex-direction: column; }
+  .caratula h1 { font-size: 76px; margin-top: 20px; line-height: 1.02; }
+  .caratula .caso { margin-top: 18px; font-size: 26px; color: var(--gris); }
+  .caratula .tema { margin-top: 34px; display: inline-flex; align-items: center; gap: 14px; font-size: 22px; font-weight: 800; color: var(--navy); }
+  .caratula .tema i { width: 10px; height: 46px; border-radius: 6px; background: var(--naranja); }
+  .caratula .tema small { display: block; font-size: 16px; font-weight: 600; color: var(--gris); }
+  .integrantes { margin-top: 56px; }
+  .integrantes h2 { font-size: 14px; font-weight: 800; letter-spacing: .16em; color: var(--gris); margin-bottom: 14px; }
+  .integrantes ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, auto); grid-auto-flow: column; gap: 14px 40px; max-width: 900px; }
+  .integrantes li { font-size: 21px; line-height: 1.3; display: flex; gap: 12px; align-items: center; }
+  .integrantes li span { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--naranja-suave); color: var(--naranja-osc); font-size: 13px; font-weight: 800; display: grid; place-items: center; }
+  .integrantes li b { font-weight: 700; }
+  .caratula .pie-c { margin-top: auto; margin-bottom: 64px; font-size: 15px; color: #9aa0ab; }
+  .caratula .der { position: relative; background: var(--naranja); border-radius: 0 0 0 120px; overflow: hidden; }
+  .caratula .der .marca { position: absolute; left: -10px; top: 70px; font-size: 150px; font-weight: 800; line-height: .9; color: rgba(255,255,255,.13); letter-spacing: -.03em; }
+  .caratula .der .anillo { position: absolute; right: -150px; bottom: -150px; width: 520px; height: 520px; border-radius: 50%; border: 60px solid rgba(255, 194, 51, .55); }
+  .caratula .der img { position: absolute; border-radius: 50%; object-fit: cover; border: 10px solid #fff; box-shadow: 0 24px 50px rgba(0,0,0,.25); }
+  .caratula .der .f1 { width: 360px; height: 360px; left: 230px; top: 330px; }
+  .caratula .der .f2 { width: 200px; height: 200px; left: 90px; top: 640px; border-width: 8px; }
+  .caratula .der .f3 { width: 210px; height: 210px; left: 540px; top: 170px; border-width: 8px; }
+  .caratula .der .f4 { width: 170px; height: 170px; left: 560px; top: 700px; border-width: 8px; }
+  .caratula .der .frase { position: absolute; left: 64px; right: 64px; bottom: 56px; color: #fff; font-size: 30px; font-weight: 800; line-height: 1.15; }
 </style>
 </head>
 <body>
+
+<!-- 0. Carátula -->
+<section class="lamina caratula">
+  <div class="izq">
+    <div><span class="pastilla">TALLER · CJM DEL SERVICIO</span></div>
+    <h1>Ing. Sistemas<br>de <span>Servicio</span></h1>
+    <p class="caso">Caso de estudio: Tiendas 3A · «Pide y recoge»</p>
+    <p class="tema"><i></i><span>Customer Journey Map, touchpoints y formulario<small>Estructura del CJM por fases y áreas · Noviembre 2026</small></span></p>
+    <div class="integrantes">
+      <h2>INTEGRANTES</h2>
+      <ul>
+        <li><span>RA</span><b>Amaya Huacache, Ruth Yasmin</b></li>
+        <li><span>NA</span><b>Auqui Castilla, Nicole Ximena</b></li>
+        <li><span>HC</span><b>Cardenas Arzapalo, Hemsy Lucía</b></li>
+        <li><span>RC</span><b>Chu-lau Yllescas, Rafael Andrés</b></li>
+        <li><span>BR</span><b>Rojas Torres, Brayan Jesús Alexander</b></li>
+        <li><span>ER</span><b>Rosales Avila, Edison Edwin</b></li>
+      </ul>
+    </div>
+    <p class="pie-c">Prototipo académico con datos simulados · no afiliado a ninguna cadena comercial</p>
+  </div>
+  <div class="der" aria-hidden="true">
+    <span class="marca">PIDE Y<br>RECOGE</span>
+    <span class="anillo"></span>
+    <img class="f1" src="../../public/productos/huevos-15.jpg" alt="">
+    <img class="f2" src="../../public/productos/papa-1kg.jpg" alt="">
+    <img class="f3" src="../../public/productos/arroz-5kg.jpg" alt="">
+    <img class="f4" src="../../public/productos/fideos-500.jpg" alt="">
+    <p class="frase">Barato en precio.<br>Barato en tiempo.</p>
+  </div>
+</section>
 
 <!-- 1. Customer Journey Map -->
 <section class="lamina imagen">

@@ -6,7 +6,7 @@ Contenido que se retiró del prototipo el 2026-11-04, por acuerdo del equipo, pa
 - **Customer Journey Map** (lámina 16:9, mismo estilo de la presentación del curso):
   - `customer-journey-map.png` (3840 × 2160, para pegar en Canva), `customer-journey-map.pdf` y `customer-journey-map.html` (editable: los datos están al final del archivo, en `etapas`).
   - Incluye a la persona (Rosa, 36 años, SJL), las 7 etapas, qué hace, puntos de contacto de hoy y con la app, curva de emoción hoy vs. con Pide y recoge, momentos de la verdad, dolores y soluciones con su pantalla.
-- **Entrega del taller «CJM del servicio»** (`taller-cjm.pdf`, 4 láminas 16:9; fuente editable en `taller-cjm.html`):
+- **Entrega del taller «CJM del servicio»** (`taller-cjm.pdf`, carátula con los integrantes y 4 láminas 16:9; fuente editable en `taller-cjm.html`):
   1. Customer Journey Map.
   2. Estructura del CJM: pre-servicio, servicio y post-servicio por área (Marketing, Operaciones, RRHH) y cómo coordinan.
   3. Touchpoints: 14 puntos de contacto por fase, tipo (digital, físico, humano), área responsable y momentos de la verdad.
