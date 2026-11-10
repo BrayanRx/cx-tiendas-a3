@@ -12,6 +12,9 @@ Contenido que se retiró del prototipo el 2026-11-04, por acuerdo del equipo, pa
   3. Touchpoints: 14 puntos de contacto por fase, tipo (digital, físico, humano), área responsable y momentos de la verdad.
   4. Formulario de 10 preguntas, una por proceso, para recoger fortalezas y puntos de dolor.
   Para regenerar el PDF después de editar el HTML: imprimir a PDF desde Chrome con tamaño 1920 × 1080 y márgenes en cero.
+- **Capturas de la app publicada** (`capturas/`, tomadas de cx-tiendas-a3.vercel.app el 2026-11-10 con los datos de ejemplo, tienda Canto Grande y hora fija 11:30 a. m.):
+  - `celular-01` a `celular-16`: recorrido del cliente en el celular (390 px, 2×): inicio, canastas, catálogo, carrito, franja, pago QR, seguimiento, QR de recojo, aviso de WhatsApp, encuesta NPS y Club 3A.
+  - `pc-01` a `pc-11`: panel de tienda en computadora (1440 px, 2×): indicadores, cola de pedidos, aviso de pedido listo, copiloto IA con los datos que usó, alertas de stock, voz del cliente y modo presentación.
 - **HTML autocontenido** (se abre en cualquier navegador, sin la app):
   - `journey-antes-y-despues.html`: la página Journey completa (7 etapas, curva de emoción y conceptos del curso).
   - `panel-antes-y-despues.html`: la tabla de impacto antes vs. después del Panel.
