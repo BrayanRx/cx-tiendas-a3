@@ -34,6 +34,7 @@ Marca `[x]` cuando una tarea esté en `main`. Cada responsable mantiene **solo s
 - [ ] Presentación: introducción (proceso crítico) y cierre (demo en vivo del recorrido del cliente)
 - [x] Demo con dos pestañas: sesión por pestaña y sincronización de pedidos, encuestas y puntos entre pestañas
 - [x] Retirar de la app el material de presentación (Journey, antes y después, dolor, blueprint) y exportarlo a `docs/presentacion/` y a Canva
+- [x] Quitar los botones de demo (simular, cargar datos, modo presentación); los datos de ejemplo se cargan solos
 - [x] Rediseño de la base: tipografía, botones y tarjetas, cabecera, pie de página con «Antes y después» e Inicio con canastas armadas y opiniones NPS
 
 ### Ruth · Catálogo con stock + Journey antes y después
@@ -50,7 +51,7 @@ Las 4 tareas de Catálogo las hizo Rafael por encargo (PR de `feat/catalogo-puli
 - [x] Journey: conceptos del curso (momentos de la verdad, front-stage / back-stage)
 
 Las 4 tareas de Journey las hizo Rafael por encargo (PR de `feat/journey-pagina`). Las 7 etapas salen de los 7 puntos de dolor del cliente (`AGENTS.md`): Ruth debe contrastarlas con su Taller 2 y ajustar `src/features/journey/etapas.ts` si difieren.
-- [ ] Journey: validar las 7 etapas y emociones con el Taller 2 (se defiende en vivo). La página `/journey` se retiró de la app el 2026-11-04 por acuerdo del equipo; su contenido está en `docs/presentacion/journey-antes-y-despues.html` y en la presentación de Canva
+- [x] Journey: validar las 7 etapas y emociones con el Taller 2 (se defiende en vivo). La página `/journey` se retiró de la app el 2026-11-04 por acuerdo del equipo; su contenido está en `docs/presentacion/journey-antes-y-despues.html` y en la presentación de Canva
 
 ### Nicole · Pedido y pago
 - [x] Revisión del carrito: cantidades, quitar, total
@@ -93,7 +94,7 @@ Versión inicial del panel hecha por Rafael (cola de pedidos, alertas de stock, 
 - [x] Respuestas basadas en los datos del panel (colas, stock, NPS, pedidos), sin claves de API
 - [x] Preguntas sugeridas: «¿Qué hago ahora?», «¿Qué repongo?», «¿Abro otra caja?»
 - [x] Mostrar qué datos usó la IA para cada recomendación
-- [x] Opcional: modo presentación (recorrido guiado de la demo)
+- [x] Opcional: modo presentación (recorrido guiado de la demo). Retirado el 2026-11-12 por decisión del líder: la app no lleva botones de demo
 - [x] Aplicar la «Guía visual» al Panel (el Panel se hizo antes del rediseño; hereda estilos pero conviene revisarlo)
 
 ## Contrato compartido
@@ -108,7 +109,7 @@ Todos los módulos se comunican por `src/lib/store.ts`:
 | `avanzarPedido` | Panel | Seguimiento |
 | `puntos`, `canjearPuntos` | Pedido (suma), Club (canje) | Club |
 | `registrarNps`, `encuestas` | Club / Seguimiento | Panel |
-| `cargarDemo`, `reiniciarDemo` | Inicio (modo demostración) | Todos |
+| `cargarDemo`, `reiniciarDemo` | El store (los datos de ejemplo se cargan solos al abrir la app y cada día nuevo) | Todos |
 
 Componentes compartidos para mostrar al cliente: `@/components/CodigoQr` (QR simulado de recojo o pago) y `@/components/AvisoWhatsapp` (vista previa de un aviso). Los datos de ejemplo están en `src/data/demo.ts`.
 

@@ -25,7 +25,7 @@ import {
 
 // Responsable: Edison Rosales · rama feat/panel
 // Lee: pedidos, encuestas, tiendaId (useApp), stock y tiendas (@/data/tiendas)
-// Escribe: avanzarPedido, cancelarPedido, setTienda, cargarDemo (simula el back-stage de la tienda)
+// Escribe: avanzarPedido, cancelarPedido, setTienda
 // Asistente IA: simulado en el frontend (reglas o respuestas preparadas). Nunca pongas claves de API en el código.
 
 const columnas: {
@@ -41,34 +41,6 @@ const columnas: {
   { estado: 'recogido', titulo: 'Recogidos', icono: 'check', subtitulo: 'Entregados en mostrador' },
 ]
 
-const pasosPresentacion = [
-  {
-    id: 'h-kpis',
-    titulo: '1. Indicadores de hoy',
-    guion: 'Mostramos la espera en caja de hoy frente a los 2 min de recojo en mostrador, los pedidos del día y el NPS de la sede.',
-  },
-  {
-    id: 'h-cola',
-    titulo: '2. Cola de pedidos',
-    guion: 'Avanzamos un pedido y vemos cómo llega al instante el aviso por WhatsApp y el QR de recojo al cliente.',
-  },
-  {
-    id: 'h-stock',
-    titulo: '3. Alertas de stock',
-    guion: 'Revisamos los quiebres y el stock bajo antes de que el cliente encuentre la góndola vacía.',
-  },
-  {
-    id: 'h-ia',
-    titulo: '4. Copiloto IA',
-    guion: 'Consultamos al asistente qué priorizar, si abrir otra caja en hora punta y qué datos en vivo sustentan su recomendación.',
-  },
-  {
-    id: 'h-voc',
-    titulo: '5. Voz del cliente',
-    guion: 'Cerramos con las calificaciones NPS y los comentarios que dejan los clientes al recoger.',
-  },
-] as const
-
 export default function PanelPage() {
   const {
     tiendaId,
@@ -77,11 +49,6 @@ export default function PanelPage() {
     encuestas,
     avanzarPedido,
     cancelarPedido,
-    carrito,
-    vaciarCarrito,
-    agregarAlCarrito,
-    crearPedido,
-    cargarDemo,
   } = useApp()
   const tienda = getTienda(tiendaId)
 
@@ -92,8 +59,6 @@ export default function PanelPage() {
     whatsapp?: { mensaje: string; hora?: number }
   } | null>(null)
   const [qrAbiertoId, setQrAbiertoId] = useState<string | null>(null)
-  const [modoPresentacion, setModoPresentacion] = useState(false)
-  const [pasoActivo, setPasoActivo] = useState(0)
 
   const deTienda = pedidos.filter((p) => p.tiendaId === tiendaId && p.estado !== 'cancelado')
   const hoy = pedidosDeHoy(deTienda)
@@ -126,35 +91,11 @@ export default function PanelPage() {
     }
   }
 
-  const simularPedidoDemo = () => {
-    const previo = [...carrito]
-    vaciarCarrito()
-    agregarAlCarrito('arroz-5kg', 1)
-    agregarAlCarrito('aceite-1l', 2)
-    agregarAlCarrito('leche-400', 3)
-    const nuevo = crearPedido({ franja: '18:00 – 18:30', metodoPago: 'qr' })
-    previo.forEach((i) => agregarAlCarrito(i.productoId, i.cantidad))
-    if (nuevo) {
-      setUltimoAviso({
-        titulo: `Pedido simulado ${nuevo.id} creado en ${tienda?.nombre ?? 'la tienda'} (${formatSoles(nuevo.total)}).`,
-        whatsapp: { mensaje: `Pedido ${nuevo.id}: ${avisoFrontStage.recibido}`, hora: nuevo.creadoEn },
-      })
-    }
-  }
-
   const marcarReposicion = (productoId: string, nombre: string) => {
     setReposicionPedida((prev) => ({ ...prev, [productoId]: true }))
     setUltimoAviso({
       titulo: `Orden interna enviada a trastienda para reponer: ${nombre}.`,
     })
-  }
-
-  const irAPaso = (index: number) => {
-    setPasoActivo(index)
-    const destino = pasosPresentacion[index]
-    if (destino) {
-      document.getElementById(destino.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
   }
 
   return (
@@ -187,72 +128,8 @@ export default function PanelPage() {
             </select>
           </span>
           <Badge tono="brand">{tienda?.horario}</Badge>
-          <Button
-            variante={modoPresentacion ? 'primary' : 'secondary'}
-            className="!px-3.5 !py-1.5 text-xs"
-            onClick={() => setModoPresentacion((v) => !v)}
-          >
-            {modoPresentacion ? 'Cerrar guía de exposición' : 'Modo presentación'}
-          </Button>
         </div>
       </PageHeader>
-
-      {modoPresentacion && (
-        <Card className="border-accent bg-accent-soft/60">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
-              <Badge tono="brand">Recorrido guiado para la exposición</Badge>
-              <span className="text-xs font-medium text-ink-muted">
-                Paso {pasoActivo + 1} de {pasosPresentacion.length}
-              </span>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <Button
-                variante="secondary"
-                className="!px-3 !py-1 text-xs"
-                onClick={() => {
-                  cargarDemo()
-                  setUltimoAviso({ titulo: 'Datos de demostración cargados en todas las tiendas.' })
-                }}
-              >
-                Cargar datos de demo
-              </Button>
-              <Button
-                variante="secondary"
-                className="!px-3 !py-1 text-xs"
-                disabled={pasoActivo === 0}
-                onClick={() => irAPaso(Math.max(0, pasoActivo - 1))}
-              >
-                Anterior
-              </Button>
-              <Button
-                variante="primary"
-                className="!px-3.5 !py-1 text-xs"
-                onClick={() => irAPaso((pasoActivo + 1) % pasosPresentacion.length)}
-              >
-                Siguiente punto <Icono nombre="flecha" className="size-3.5" />
-              </Button>
-            </div>
-          </div>
-          <div className="mt-3 flex flex-wrap gap-1.5">
-            {pasosPresentacion.map((p, i) => (
-              <button
-                key={p.id}
-                type="button"
-                onClick={() => irAPaso(i)}
-                className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
-                  pasoActivo === i ? 'bg-accent text-white' : 'bg-surface text-ink-muted hover:text-ink'
-                }`}
-              >
-                {p.titulo}
-              </button>
-            ))}
-          </div>
-          <p className="mt-3 rounded-xl bg-surface p-3 text-sm font-medium text-ink">
-            {pasosPresentacion[pasoActivo].guion}
-          </p>
-        </Card>
-      )}
 
       <div id="h-kpis" className="scroll-mt-24">
         <Card className="border-brand/30 bg-brand-soft/60">
@@ -262,16 +139,6 @@ export default function PanelPage() {
               <p className="mt-1 text-sm text-ink-muted">
                 Prepara cada pedido según su franja de recojo. El copiloto te avisa antes de que se acabe un producto o se forme cola en caja.
               </p>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <Button variante="primary" className="!px-4 !py-2 text-xs" onClick={simularPedidoDemo}>
-                <Icono nombre="mas" className="size-4" /> Simular pedido en cola
-              </Button>
-              {deTienda.length === 0 && (
-                <Button variante="secondary" className="!px-4 !py-2 text-xs" onClick={cargarDemo}>
-                  Cargar pedidos de ejemplo
-                </Button>
-              )}
             </div>
           </div>
         </Card>
@@ -357,17 +224,7 @@ export default function PanelPage() {
           <Card className="flex flex-wrap items-center justify-between gap-4">
             <div>
               <p className="font-bold">Aún no hay pedidos en {tienda?.nombre ?? 'esta tienda'}.</p>
-              <p className="mt-1 text-sm text-ink-muted">
-                Carga los pedidos de demostración o simula uno nuevo para mostrar el flujo en vivo.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <Button onClick={simularPedidoDemo}>
-                <Icono nombre="mas" className="size-4" /> Simular pedido ahora
-              </Button>
-              <Button variante="secondary" onClick={cargarDemo}>
-                Cargar demo completa
-              </Button>
+              <p className="mt-1 text-sm text-ink-muted">Cuando un cliente haga un pedido desde la app, aparecerá aquí al instante.</p>
             </div>
           </Card>
         ) : (
@@ -571,11 +428,8 @@ export default function PanelPage() {
         {encuestasTienda.length === 0 ? (
           <Card className="flex flex-wrap items-center justify-between gap-4">
             <p className="text-sm text-ink-muted">
-              Aún no hay respuestas NPS en {tienda?.nombre ?? 'esta sede'}. Carga los datos de demostración o envía una encuesta desde Club 3A.
+              Aún no hay respuestas NPS en {tienda?.nombre ?? 'esta sede'}. Aparecerán cuando los clientes califiquen su compra al recoger.
             </p>
-            <Button variante="secondary" className="!px-4 !py-2 text-xs" onClick={cargarDemo}>
-              Cargar opiniones de ejemplo
-            </Button>
           </Card>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

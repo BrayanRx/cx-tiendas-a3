@@ -37,6 +37,11 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-11-03 | hecho | Demo con dos pestañas: sesión por pestaña (sessionStorage) y sincronización de pedidos, encuestas y puntos en todas las páginas, sin bucles | este PR |
 | 2026-11-03 | hecho | Merge del PR #16 (ajustes de Nicole) y PR #17 con el panel de Edison que estaba sin PR | PR #16, PR #17 |
 | 2026-11-04 | cambio | Por acuerdo del equipo, la app queda como producto real: se retira la página Journey, la tabla antes y después y las notas de dolor, blueprint y conceptos del Panel, Seguimiento e Inicio. Todo se exporta a `docs/presentacion/` (HTML e imágenes) y a una presentación de Canva. Se mantienen las herramientas de demo | este PR |
+| 2026-11-05 | hecho | Customer Journey Map en una lámina 16:9 (HTML, PNG y PDF) en `docs/presentacion/` para la exposición | este PR |
+| 2026-11-05 | hecho | Entrega del taller «CJM del servicio» en PDF: CJM, estructura por fases y áreas, touchpoints y formulario de 10 preguntas (`docs/presentacion/taller-cjm.pdf`) | PR #25 |
+| 2026-11-10 | hecho | 27 capturas de la app publicada (cliente en celular y panel en computadora) para la presentación, en `docs/presentacion/capturas/` | PR #25 |
+| 2026-11-12 | cambio | La app queda sin botones de demo: se quitan «Simular», «Cargar datos de ejemplo» y «Modo presentación». Los pedidos y encuestas de ejemplo se cargan solos al abrir la app y se renuevan cada día; el pago QR se confirma con «Ya pagué» | este PR |
+| 2026-11-12 | cambio | CJM y entrega del taller actualizados con las 7 etapas y emociones del Taller 2 validadas por Ruth (promedio 3,1 → 4,7) | este PR |
 
 ## Ruth · Catálogo + Journey
 
@@ -47,6 +52,10 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-29 | asignado | Pulir catálogo y crear la página «Journey antes y después» (ver EQUIPO.md) | commit «Bitácora del equipo» |
 | 2026-10-30 | asignado | Validar las 7 etapas del Journey con el Taller 2 | este PR |
 | 2026-11-04 | cambio | La página `/journey` sale de la app por acuerdo del equipo; su contenido pasa a `docs/presentacion/` y a la presentación de Canva | este PR |
+| 2026-11-04 | hecho | Journey validado con el Customer Journey Map del Taller 2 (lámina 7). Las etapas no coincidían (Rafael las había armado desde los dolores de AGENTS.md): se reemplazaron por las 7 del Taller con sus acciones, dolores y emoción de «Hoy». La etapa de postventa ya no promete que el reclamo llegue al Panel | PR #23 |
+| 2026-11-04 | cambio | Emociones de «Hoy» según el color de la lámina 7 (naranja negativa, gris neutral, contorno blanco positiva): Duda 3 y Alivio 4. Promedio de 3,1 hoy a 4,7 con la app (+1,6) | PR #23 |
+| 2026-11-04 | bloqueo | Las etapas 2 y 6 del Journey dependen de dos cosas que el prototipo aún no hace: el stock no baja con los pedidos (Brayan, store.ts) y el reclamo no llega al Panel (Hemsy y Edison) | PR #23 |
+| 2026-11-12 | cambio | Como la página /journey salió de la app (PR #24), su validación se llevó al CJM de `docs/presentacion/`, a la entrega del taller y a la presentación de Canva (registrado por el líder; el PR #23 se cierra sin merge) | este PR |
 
 ## Nicole · Pedido y pago
 
@@ -58,6 +67,7 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-10-31 | hecho | Ajustes de revisión: tildes, signos ¿?, franja 24 h (con margen de 20 min), RECOJO_MIN = 2, texto de tarjeta y uso de CodigoQr compartido | este PR |
 | 2026-11-03 | asignado | Franjas de recojo solo dentro del horario de la tienda (hallazgo del recorrido completo) | este PR |
 | 2026-11-03 | hecho | Franjas respetan el horario de apertura y cierre de la tienda, con franjas para mañana si ya cerró y margen de 20 min de preparación | este PR |
+| 2026-11-12 | cambio | El botón «Simular pago realizado» pasa a «Ya pagué» (decisión del líder, mismo funcionamiento) | este PR |
 
 ## Hemsy · Seguimiento y recojo
 
@@ -70,6 +80,7 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-11-03 | asignado | Opcional: quitar `useSincronizarPedidos` (ahora el Layout sincroniza todas las páginas) | este PR |
 | 2026-11-03 | hecho | Seguimiento usa `CodigoQr` y `AvisoWhatsapp` compartidos, sin `useSincronizarPedidos` ni pedido de ejemplo, con la Guía visual aplicada | este PR |
 | 2026-11-04 | cambio | Se quita el bloque «Antes / Ahora» de Mis pedidos (material de presentación), por acuerdo del equipo | este PR |
+| 2026-11-12 | cambio | Se quita el botón «Simular avance de la tienda (demo)»: el pedido avanza desde el Panel, como en la tienda real (decisión del líder) | este PR |
 
 ## Rafael · Club 3A y NPS
 
@@ -99,3 +110,4 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-11-03 | hecho | Panel y asistente IA: chat con texto libre y preguntas sugeridas basadas en cola, stock, NPS y pedidos; etapas del Service Blueprint; alertas de stock con filtros; simulador de pedidos; voz del cliente (NPS) y tabla antes vs. después (commit 8e9f0f0, PR abierto por el líder) | este PR |
 | 2026-11-03 | hecho | Aplicar la Guía visual al Panel (`PageHeader` con resaltado, `SectionHeader`, `Icono`, `AvisoWhatsapp`, `CodigoQr`, fotos circulares en alertas de stock, fuente de datos en cada recomendación IA y modo presentación guiado) | este PR |
 | 2026-11-04 | cambio | Se quitan del Panel la tarjeta de dolor, la tabla antes y después y las etiquetas de blueprint y conceptos; los textos quedan en lenguaje de tienda. Se mantienen el modo presentación (pasos actualizados), el simulador y los datos de cada recomendación | este PR |
+| 2026-11-12 | cambio | Se quitan del Panel «Modo presentación», «Simular pedido» y los botones de cargar datos; los datos de ejemplo se cargan solos (decisión del líder) | este PR |

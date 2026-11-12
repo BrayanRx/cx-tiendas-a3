@@ -14,7 +14,7 @@ import type { Categoria, RespuestaNps } from '@/lib/types'
 // Responsable: Brayan Rojas · rama feat/base
 // Dolor que resuelve: poca presencia digital (el cliente no descubre ni ubica la tienda).
 // Lee: tiendaId, carrito, encuestas (useApp), stock (@/data/tiendas), canastas (@/data/canastas)
-// Escribe: setTienda, agregarAlCarrito (canastas y lo más pedido), cargarDemo y reiniciarDemo (modo demostración)
+// Escribe: setTienda, agregarAlCarrito (canastas y lo más pedido)
 
 const pasos = ['Elige tu tienda', 'Arma tu pedido', 'Paga con QR', 'Recoge sin fila']
 
@@ -80,7 +80,7 @@ function Estrellas({ puntaje, className = 'size-4' }: { puntaje: number; classNa
 }
 
 export default function HomePage() {
-  const { tiendaId, setTienda, carrito, agregarAlCarrito, encuestas, pedidos, cargarDemo, reiniciarDemo } = useApp()
+  const { tiendaId, setTienda, carrito, agregarAlCarrito, encuestas } = useApp()
   const tienda = getTienda(tiendaId)
   const { hash } = useLocation()
   const [aviso, setAviso] = useState<{ canastaId: string; texto: string } | null>(null)
@@ -518,22 +518,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Para la presentación en vivo: llena el Panel, Seguimiento y Club con pedidos y encuestas de ejemplo. */}
-      <section aria-label="Modo demostración" className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-ink-muted">
-        <span>
-          Modo demostración · {pedidos.length} pedidos y {encuestas.length} encuestas
-        </span>
-        <button type="button" onClick={cargarDemo} className="font-semibold text-brand hover:underline">
-          Cargar datos de ejemplo
-        </button>
-        <button
-          type="button"
-          onClick={() => confirm('¿Borrar pedidos, encuestas y carrito de esta demo?') && reiniciarDemo()}
-          className="hover:text-ink hover:underline"
-        >
-          Reiniciar
-        </button>
-      </section>
 
       {toast && (
         <div

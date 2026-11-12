@@ -177,7 +177,7 @@ export default function PedidoPage() {
     if (pedido) navigate(`/seguimiento/${pedido.id}`)
   }
 
-  function simularPagoQr() {
+  function confirmarPagoQr() {
     setPagando(true)
     setTimeout(finalizarPedido, 1800)
   }
@@ -470,10 +470,10 @@ export default function PedidoPage() {
 
             <Button
               className="mt-6 w-full"
-              onClick={simularPagoQr}
+              onClick={confirmarPagoQr}
               disabled={pagando}
             >
-              {pagando ? 'Procesando...' : 'Simular pago realizado'}
+              {pagando ? 'Confirmando tu pago…' : 'Ya pagué'}
             </Button>
             <button
               type="button"
