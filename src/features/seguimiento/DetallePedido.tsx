@@ -6,14 +6,13 @@ import { Badge, Button, Card, PageHeader } from '@/components/ui'
 import { getProducto } from '@/data/productos'
 import { getTienda } from '@/data/tiendas'
 import { formatHora, formatSoles } from '@/lib/format'
-import { precioUnitario, useApp } from '@/lib/store'
+import { precioUnitario } from '@/lib/store'
 import type { Pedido } from '@/lib/types'
 import Postventa from './Postventa'
 import { PASOS, etiquetaEstado, etiquetaPago, mensajeWhatsapp, tonoEstado } from './datos'
 
 export default function DetallePedido({ pedido }: { pedido: Pedido }) {
   const navigate = useNavigate()
-  const avanzarPedido = useApp((s) => s.avanzarPedido)
   const tienda = getTienda(pedido.tiendaId)
   const cancelado = pedido.estado === 'cancelado'
   const actual = PASOS.findIndex((p) => p.estado === pedido.estado)
@@ -86,11 +85,6 @@ export default function DetallePedido({ pedido }: { pedido: Pedido }) {
                   )
                 })}
               </ol>
-            )}
-            {!cancelado && pedido.estado !== 'recogido' && (
-              <Button variante="ghost" className="mt-1 !px-2 !py-1 text-xs" onClick={() => avanzarPedido(pedido.id)}>
-                Simular avance de la tienda (demo)
-              </Button>
             )}
           </Card>
 

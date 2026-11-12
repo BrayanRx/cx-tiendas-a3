@@ -202,6 +202,16 @@ export const useApp = create<AppState>()(
       partialize: ({ sesion: _sesion, ...resto }) => resto,
       // Si quedó una sesión guardada por una versión anterior, se ignora.
       merge: (guardado, actual) => ({ ...actual, ...(guardado as Partial<AppState>), sesion: actual.sesion }),
+      // Los pedidos y encuestas de ejemplo se cargan solos (no hay botón en la app): la primera vez que se abre,
+      // y cada día nuevo, para que el Panel siempre muestre pedidos «de hoy». Los pedidos del usuario se conservan.
+      onRehydrateStorage: () => (estado) => {
+        if (!estado) return
+        const inicioHoy = new Date().setHours(0, 0, 0, 0)
+        const idsDemo = new Set(pedidosDemo.map((d) => d.id))
+        const vacio = !estado.pedidos.length && !estado.encuestas.length
+        const demoDeOtroDia = estado.pedidos.some((p) => idsDemo.has(p.id) && p.creadoEn < inicioHoy && p.estado !== 'recogido' && p.estado !== 'cancelado')
+        if (vacio || demoDeOtroDia) estado.cargarDemo()
+      },
     },
   ),
 )

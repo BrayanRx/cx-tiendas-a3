@@ -12,7 +12,7 @@ Proyecto: prototipo frontend de experiencia de cliente «Pide y recoge» para un
 
 ## Criterios de diseño y contenido
 - Cada pantalla debe **resolver** un dolor (el campo `dolor` de su módulo en `src/config/equipo.ts`), pero **sin explicarlo en la interfaz**: la app se ve como un producto real que usaría el cliente o el administrador. Nada de tarjetas «Dolor que resuelve», «Antes / Ahora», tablas de antes y después ni etiquetas académicas.
-- La explicación (dolor, customer journey, blueprint, conceptos del curso) va en la presentación: `docs/presentacion/` y la presentación de Canva. Las herramientas de demo sí se quedan (cargar datos de ejemplo, simular pedidos, modo presentación del Panel), porque es un prototipo demostrativo.
+- La explicación (dolor, customer journey, blueprint, conceptos del curso) va en la presentación: `docs/presentacion/` y la presentación de Canva. No hay botones de demo en la interfaz (nada de «Simular», «Cargar datos de ejemplo» ni «Modo presentación»): los pedidos y encuestas de ejemplo se cargan solos al abrir la app (`onRehydrateStorage` en `src/lib/store.ts`) y el flujo se recorre como lo haría un cliente y un administrador reales.
 - Textos en español peruano, cercanos y simples: tutea al cliente, frases cortas, sin tecnicismos. Precios en soles con `formatSoles`.
 - Pensado primero para celular (el cliente compra desde su teléfono); el panel de tienda puede priorizar escritorio.
 - Los conceptos del curso (customer journey, blueprint, 7P, NPS, KPI, utilidad y garantía) se aplican en el diseño de la pantalla, no se rotulan en ella. Ej.: el Panel muestra la espera en caja y el NPS como indicadores de tienda, sin escribir «KPI» ni «back-stage».
