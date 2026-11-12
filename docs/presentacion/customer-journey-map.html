@@ -66,9 +66,9 @@
   .contacto .app { background: var(--azul-suave); color: var(--azul); }
 
   /* Curva de emoción */
-  .emocion { grid-column: 2 / -1; position: relative; height: 214px; margin-top: 10px; }
+  .emocion { grid-column: 2 / -1; position: relative; height: 244px; margin-top: 10px; }
   .emocion svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-  .caras { display: flex; flex-direction: column; justify-content: space-between; height: 214px; margin-top: 10px; padding: 12px 0 30px; font-size: 22px; }
+  .caras { display: flex; flex-direction: column; justify-content: space-between; height: 244px; margin-top: 10px; padding: 12px 0 34px; font-size: 22px; }
   .caras .tit { font-size: 12px; font-weight: 800; letter-spacing: .1em; color: var(--navy); margin-bottom: -6px; }
   .caras div { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: .08em; color: var(--gris); text-transform: uppercase; }
 
@@ -117,13 +117,13 @@
 
   <section class="mapa" id="mapa"></section>
 
-  <p class="nota">★ Momento de la verdad · Emoción de 1 (frustrada) a 5 (encantada) · Prototipo académico con datos simulados</p>
+  <p class="nota">★ Momento de la verdad · Etapas, dolores y emoción de hoy del CJM del Taller 2 · Emoción de 1 (frustrada) a 5 (encantada)</p>
   <footer class="franja">
     <p class="idea">De fidelizar solo por precio → a fidelizar <span>también por la experiencia</span></p>
     <div class="indicadores">
-      <div class="ind"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-3-6.2"/><path d="M8.5 13.5 12 9l3 3"/></svg></span><div><b>1.7 → 4.3</b><small>emoción promedio</small></div></div>
+      <div class="ind"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-3-6.2"/><path d="M8.5 13.5 12 9l3 3"/></svg></span><div><b>3.1 → 4.7</b><small>emoción promedio</small></div></div>
       <div class="ind"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><b>14 → 2 min</b><small>espera para pagar y recoger</small></div></div>
-      <div class="ind"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9z"/></svg></span><div><b>3 de 7</b><small>momentos de la verdad mejorados</small></div></div>
+      <div class="ind"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9z"/></svg></span><div><b>1 → 5</b><small>el pago: de frustración a satisfacción</small></div></div>
     </div>
     <div class="leyenda">
       <span><svg width="26" height="6"><line x1="0" y1="3" x2="26" y2="3" stroke="#c0392b" stroke-width="3" stroke-dasharray="5 4"/></svg>Hoy</span>
@@ -133,50 +133,50 @@
 </div>
 
 <script>
-  // Datos del journey (las mismas 7 etapas que se usaron en el prototipo).
+  // Datos del journey: etapas, acciones, dolores y emoción de «Hoy» del Customer Journey Map del Taller 2 (validado por Ruth Amaya).
   const etapas = [
-    { nombre: 'Descubrir la tienda', icono: 'pin', verdad: false,
-      accion: 'Busca dónde comprar su canasta; se entera por el barrio o al pasar por la puerta.',
-      hoy: 'Boca a boca, volantes', app: 'Web «Ubícanos»',
-      dolor: 'Poca presencia digital: no sabe qué tiendas hay cerca ni su horario.',
-      solucion: 'Ve las tiendas cercanas con su horario y cuánto demora la caja hoy.', pantalla: 'Inicio',
-      antes: 2, despues: 4 },
-    { nombre: 'Saber si hay stock', icono: 'caja', verdad: true,
-      accion: 'Se pregunta si encontrará lo que necesita antes de gastar pasaje y tiempo.',
+    { nombre: 'Descubrimiento', icono: 'pin', verdad: false, palabra: 'Curiosidad',
+      accion: 'Ve publicidad o pasa cerca de una tienda 3A.',
+      hoy: 'Volantes, redes, al pasar', app: 'Inicio y «Ubícanos»',
+      dolor: 'No puede ver precios ni ofertas antes de ir: la presencia digital es poca.',
+      solucion: 'Ve canastas y ofertas con precio claro, y su tienda con horario y espera en caja.', pantalla: 'Inicio',
+      antes: 4, despues: 5 },
+    { nombre: 'Decisión de visita', icono: 'caja', verdad: true, palabra: 'Duda',
+      accion: 'Compara precio y cercanía frente a otras opciones.',
       hoy: 'Ir a la tienda a ver', app: 'Catálogo con stock',
-      dolor: 'Va a la tienda y a veces regresa sin el producto.',
-      solucion: 'Ve cuántas unidades quedan y, si se agotó, la tienda cercana que sí tiene.', pantalla: 'Catálogo',
-      antes: 1, despues: 4 },
-    { nombre: 'Armar la compra', icono: 'carrito', verdad: false,
-      accion: 'Recorre pasillos comparando precios y marcas para que le alcance.',
-      hoy: 'Góndolas y carteles', app: 'Canastas armadas',
+      dolor: 'No sabe si hay stock: puede gastar pasaje y tiempo y volver sin el producto.',
+      solucion: 'Ve el stock de su tienda y, si se agotó, la tienda cercana que sí tiene.', pantalla: 'Catálogo',
+      antes: 3, despues: 4 },
+    { nombre: 'Llegada y exploración', icono: 'bolsa', verdad: true, palabra: 'Grata sorpresa',
+      accion: 'Entra a la tienda y recorre los anaqueles.',
+      hoy: 'Pasillos y personal', app: 'Mostrador Pide y recoge',
+      dolor: 'Atención desigual: personal nuevo y poco capacitado según la tienda.',
+      solucion: 'Va directo al mostrador con su QR y lo atienden igual en todas las tiendas.', pantalla: 'Seguimiento y QR',
+      antes: 4, despues: 5 },
+    { nombre: 'Selección y comparación', icono: 'carrito', verdad: false, palabra: 'Confusión',
+      accion: 'Compara marca propia vs. conocida y revisa promociones.',
+      hoy: 'Góndolas y carteles', app: 'Catálogo y carrito',
       dolor: 'Precios y señalización confusos: no ve cuánto ahorra con la marca propia.',
-      solucion: 'Precios claros, marca propia, precio bodeguero y canastas en un toque.', pantalla: 'Canastas',
+      solucion: 'Precios claros, filtro de marca propia, precio bodeguero y total a la vista.', pantalla: 'Catálogo y carrito',
       antes: 2, despues: 4 },
-    { nombre: 'Pagar', icono: 'qr', verdad: true,
-      accion: 'Hace fila para pagar justo en hora punta, cuando menos tiempo tiene.',
+    { nombre: 'Pago en caja', icono: 'qr', verdad: true, palabra: 'Frustración',
+      accion: 'Hace fila y paga en caja.',
       hoy: 'Caja tradicional', app: 'Pago QR · Yape, Plin',
-      dolor: '14 minutos de cola en caja: pierde tiempo y se va de mal humor.',
-      solucion: 'Elige su franja de recojo de 30 min y paga con QR desde casa.', pantalla: 'Pedido y pago',
+      dolor: 'Colas largas en hora punta por poco personal: pierde tiempo.',
+      solucion: 'Paga con QR y elige su franja de 30 min: recoge en 2 min, sin fila.', pantalla: 'Pedido y pago',
       antes: 1, despues: 5 },
-    { nombre: 'Recoger', icono: 'bolsa', verdad: true,
-      accion: 'Llega a retirar su compra o pide ayuda al personal.',
-      hoy: 'Mostrador sin información', app: 'WhatsApp + QR de recojo',
-      dolor: 'Atención desigual entre tiendas y no sabe cómo va su pedido.',
-      solucion: 'Le avisan por WhatsApp; muestra su QR y recoge en 2 min, sin fila.', pantalla: 'Seguimiento',
-      antes: 2, despues: 4 },
-    { nombre: 'Reclamar o cambiar', icono: 'chat', verdad: false,
-      accion: 'Algo salió mal con un producto o con el cobro y quiere solución.',
-      hoy: 'Volver a la tienda', app: 'Botón en su pedido',
-      dolor: 'Sin canal de reclamos: tiene que regresar y explicar todo de nuevo.',
-      solucion: 'Reclama desde el celular sobre el mismo pedido; responden en 24 h.', pantalla: 'Postventa',
-      antes: 1, despues: 4 },
-    { nombre: 'Volver a comprar', icono: 'corazon', verdad: false,
-      accion: 'Decide si regresa en su próxima compra quincenal.',
+    { nombre: 'Salida y uso', icono: 'chat', verdad: false, palabra: 'Alivio',
+      accion: 'Lleva y usa sus productos; si algo falla, quiere cambiarlo.',
+      hoy: 'Volver a la tienda', app: 'Reclamo en su pedido',
+      dolor: 'Cambios y consultas solo en tienda: sin chat ni teléfono.',
+      solucion: 'Reclama o pide un cambio desde el celular, sobre el mismo pedido.', pantalla: 'Postventa',
+      antes: 4, despues: 5 },
+    { nombre: 'Recompra y fidelización', icono: 'corazon', verdad: false, palabra: 'Confianza',
+      accion: 'Vuelve a comprar o recomienda la tienda.',
       hoy: 'Volantes de ofertas', app: 'Club 3A',
-      dolor: 'Fidelización solo por precio: se va si otra tienda baja un sol.',
-      solucion: 'Suma puntos, canjea cupones de marca propia y califica su experiencia.', pantalla: 'Club 3A',
-      antes: 3, despues: 5 },
+      dolor: 'El Club 3A no premia la recompra: fideliza casi solo por precio.',
+      solucion: 'Suma puntos por pedido, canjea cupones de marca propia y califica su compra.', pantalla: 'Club 3A',
+      antes: 4, despues: 5 },
   ]
 
   const ico = {
@@ -241,7 +241,8 @@
     s += `<line x1="${x(i)}" x2="${x(i)}" y1="${y(e.antes) - 18}" y2="${y(e.despues) + 22}" stroke="#15803d" stroke-width="1.5" stroke-dasharray="2 4" opacity=".5"/>`
     s += `<circle cx="${x(i)}" cy="${y(e.antes)}" r="17" fill="#fff" stroke="#c0392b" stroke-width="2.5"/><text x="${x(i)}" y="${y(e.antes) + 7}" text-anchor="middle" font-size="19">${caras[e.antes]}</text>`
     s += `<circle cx="${x(i)}" cy="${y(e.despues)}" r="20" fill="#fff" stroke="#15803d" stroke-width="3"/><text x="${x(i)}" y="${y(e.despues) + 8}" text-anchor="middle" font-size="22">${caras[e.despues]}</text>`
-    s += `<text x="${x(i) + 26}" y="${(y(e.antes) + y(e.despues)) / 2 + 5}" font-size="13" font-weight="800" fill="#15803d">+${e.despues - e.antes}</text>`
+    s += `<text x="${x(i) - 24}" y="${(y(e.antes) + y(e.despues)) / 2 + 5}" text-anchor="end" font-size="13" font-weight="800" fill="#15803d" stroke="#fff" stroke-width="4" paint-order="stroke">+${e.despues - e.antes}</text>`
+    s += `<text x="${x(i) + 24}" y="${y(e.antes) + 5}" font-size="13" font-weight="700" fill="#c0392b" stroke="#fff" stroke-width="4" paint-order="stroke">${e.palabra}</text>`
     if (e.verdad) s += `<text x="${x(i)}" y="${H - 6}" text-anchor="middle" font-size="12" font-weight="800" fill="#d44307" letter-spacing="1">★ MOMENTO DE LA VERDAD</text>`
   })
   document.getElementById('curva').innerHTML = s
