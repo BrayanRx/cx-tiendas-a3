@@ -44,6 +44,7 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-11-12 | cambio | CJM y entrega del taller actualizados con las 7 etapas y emociones del Taller 2 validadas por Ruth (promedio 3,1 → 4,7) | este PR |
 | 2026-11-19 | hecho | Entrega del taller «Hoja de ruta: hacia la mejora continua» en PDF (carátula + lámina): Estabilizar, Integrar, Automatizar e Innovar aplicados a Tiendas 3A | este PR |
 | 2026-11-19 | hecho | Hoja de ruta, versión gráfica en PDF (7 láminas con diagramas por etapa e indicadores) | este PR |
+| 2026-11-19 | hecho | Hoja de ruta v3: gráficos rehechos en HTML/CSS, sin huecos dentro de los diagramas | este PR |
 
 ## Ruth · Catálogo + Journey
 
