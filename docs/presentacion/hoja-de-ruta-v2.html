@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hoja de ruta CX · Tiendas 3A · v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Presentación del taller: láminas 16:9 (1920 × 1080) con la paleta del curso. */
+  @page { size: 1920px 1080px; margin: 0; }
+  :root {
+    --navy: #1e2a5e; --naranja: #f58a3c; --naranja-osc: #d44307; --naranja-suave: #fff1e6;
+    --azul: #3b63d6; --azul-suave: #e9eefc; --verde: #15803d; --verde-suave: #eaf7ee;
+    --rojo: #c0392b; --rojo-suave: #fdecea; --morado: #7c3aed; --morado-suave: #f1eafe;
+    --tinta: #1f2430; --gris: #6b7280; --linea: #e5e7eb; --fondo: #f4f5f7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #d9dce3; }
+  body { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; color: var(--tinta); -webkit-font-smoothing: antialiased; }
+  .lamina { width: 1920px; height: 1080px; margin: 0 auto 24px; background: #fff; position: relative; overflow: hidden; padding: 48px 64px 0; page-break-after: always; break-after: page; }
+  .lamina:last-child { page-break-after: auto; break-after: auto; }
+  .lamina.imagen { padding: 0; }
+  .lamina.imagen img { width: 1920px; height: 1080px; display: block; }
+  .lamina:not(.imagen)::before { content: ''; position: absolute; right: -120px; top: -120px; width: 340px; height: 340px; border-radius: 50%; border: 40px solid rgba(245, 138, 60, .12); }
+  @media print { html, body { background: #fff; } .lamina { margin: 0; } }
+
+  .pastilla { display: inline-block; background: var(--naranja); color: #fff; font-size: 13px; font-weight: 800; letter-spacing: .14em; padding: 6px 14px; border-radius: 999px; }
+  h1 { margin-top: 12px; font-size: 46px; line-height: 1.05; font-weight: 800; color: var(--navy); letter-spacing: -.02em; }
+  h1 span { color: var(--naranja-osc); }
+  .bajada { margin-top: 8px; font-size: 19px; color: var(--gris); max-width: 1300px; }
+  .franja { position: absolute; left: 0; right: 0; bottom: 0; height: 72px; background: var(--fondo); border-top: 1px solid var(--linea); display: flex; align-items: center; justify-content: space-between; padding: 0 64px; }
+  .franja .idea { font-size: 18px; font-weight: 800; color: var(--navy); }
+  .franja .idea span { color: var(--naranja-osc); }
+  .franja .pie { font-size: 12px; color: #9aa0ab; }
+  .ico { display: inline-grid; place-items: center; }
+
+  /* ---------- Lámina 2: estructura del CJM ---------- */
+  .estructura { margin-top: 28px; display: grid; grid-template-columns: 170px repeat(3, 1fr); gap: 14px 18px; }
+  .fase { text-align: center; }
+  .fase b { display: block; font-size: 20px; color: var(--navy); }
+  .fase small { display: inline-block; margin-top: 6px; font-size: 12.5px; font-weight: 700; color: var(--naranja-osc); background: var(--naranja-suave); border-radius: 999px; padding: 3px 12px; }
+  .linea-fases { grid-column: 2 / -1; height: 4px; border-radius: 4px; background: linear-gradient(90deg, var(--naranja), var(--azul)); position: relative; margin: 2px 0 4px; }
+  .linea-fases i { position: absolute; top: 50%; width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 4px solid var(--navy); transform: translate(-50%, -50%); }
+  .area { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border-radius: 18px; font-weight: 800; font-size: 15px; }
+  .area .circ { width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; color: #fff; font-size: 22px; font-weight: 800; }
+  .area small { font-size: 12px; font-weight: 600; color: var(--gris); text-align: center; line-height: 1.3; }
+  .bloque { border-radius: 18px; padding: 16px 18px; border: 1.5px solid var(--linea); background: #fff; position: relative; }
+  .bloque::after { content: ''; position: absolute; right: -14px; top: 50%; width: 14px; height: 14px; border-top: 2px solid #c5cad6; border-right: 2px solid #c5cad6; transform: translateY(-50%) rotate(45deg); }
+  .bloque.ult::after { display: none; }
+  .bloque h3 { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
+  .bloque ul { list-style: none; display: grid; gap: 5px; }
+  .bloque li { font-size: 13.5px; line-height: 1.35; display: flex; gap: 8px; }
+  .bloque li::before { content: ''; flex: none; width: 7px; height: 7px; border-radius: 50%; margin-top: 6px; background: currentColor; opacity: .55; }
+  .mk .circ { background: var(--naranja); } .mk h3, .mk li { color: var(--tinta); } .mk h3 { color: var(--naranja-osc); } .mk.bloque { border-color: #fbd2b4; background: #fffaf6; }
+  .op .circ { background: var(--azul); } .op h3 { color: var(--azul); } .op.bloque { border-color: #c9d5f6; background: #f8faff; }
+  .rh .circ { background: var(--morado); } .rh h3 { color: var(--morado); } .rh.bloque { border-color: #ddd0fb; background: #fbf9ff; }
+  .coordina { grid-column: 2 / -1; display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: center; border: 2px solid var(--navy); border-radius: 18px; padding: 16px 22px; margin-top: 4px; }
+  .coordina .ico { width: 52px; height: 52px; border-radius: 50%; background: var(--navy); color: #fff; }
+  .coordina b { font-size: 17px; color: var(--navy); }
+  .coordina p { font-size: 14.5px; line-height: 1.45; margin-top: 3px; }
+
+  /* ---------- Lámina 3: touchpoints ---------- */
+  .tps { margin-top: 26px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .col-fase { border-radius: 20px; background: var(--fondo); padding: 16px; }
+  .col-fase > header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; padding: 0 4px; }
+  .col-fase > header b { font-size: 20px; color: var(--navy); }
+  .col-fase > header small { font-size: 12.5px; font-weight: 700; color: var(--naranja-osc); }
+  .tp { display: grid; grid-template-columns: 46px 1fr auto; gap: 12px; align-items: start; background: #fff; border: 1.5px solid var(--linea); border-radius: 14px; padding: 11px 12px; margin-bottom: 9px; }
+  .tp.verdad { border-color: var(--naranja); box-shadow: 0 0 0 3px rgba(245, 138, 60, .14); }
+  .tp .ico { width: 46px; height: 46px; border-radius: 12px; }
+  .tp .dig { background: var(--azul-suave); color: var(--azul); }
+  .tp .fis { background: var(--naranja-suave); color: var(--naranja-osc); }
+  .tp .hum { background: var(--morado-suave); color: var(--morado); }
+  .tp b { display: block; font-size: 15px; }
+  .tp p { font-size: 12.8px; color: var(--gris); line-height: 1.35; margin-top: 2px; }
+  .tp .tags { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+  .tag { font-size: 11px; font-weight: 800; border-radius: 999px; padding: 2px 9px; white-space: nowrap; }
+  .t-mk { background: var(--naranja-suave); color: var(--naranja-osc); } .t-op { background: var(--azul-suave); color: var(--azul); } .t-rh { background: var(--morado-suave); color: var(--morado); }
+  .t-nuevo { background: var(--verde-suave); color: var(--verde); } .t-verdad { background: var(--naranja); color: #fff; }
+  .leyenda { display: flex; gap: 22px; font-size: 13px; font-weight: 600; color: var(--gris); }
+  .leyenda span { display: flex; align-items: center; gap: 7px; }
+  .leyenda i { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
+
+  /* ---------- Lámina 4: formulario ---------- */
+  .form-cab { display: flex; justify-content: space-between; align-items: flex-end; gap: 30px; }
+  .ficha { display: flex; gap: 14px; align-items: center; border: 2px solid var(--azul); border-radius: 16px; padding: 12px 18px; max-width: 560px; }
+  .ficha .ico { width: 48px; height: 48px; border-radius: 50%; background: var(--azul-suave); color: var(--azul); flex: none; }
+  .ficha b { font-size: 15px; color: var(--navy); display: block; }
+  .ficha p { font-size: 13px; color: var(--gris); line-height: 1.4; }
+  .preguntas { margin-top: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 22px; }
+  .preg { display: grid; grid-template-columns: 44px 1fr; gap: 14px; border: 1.5px solid var(--linea); border-radius: 16px; padding: 12px 16px 12px 12px; background: #fff; }
+  .preg .n { width: 44px; height: 44px; border-radius: 12px; background: var(--navy); color: #fff; font-size: 19px; font-weight: 800; display: grid; place-items: center; }
+  .preg .q { font-size: 15.5px; font-weight: 700; line-height: 1.3; color: var(--tinta); }
+  .resp { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
+  .op-r { font-size: 12px; font-weight: 600; border: 1.5px solid #d6d9e0; border-radius: 999px; padding: 2px 10px; color: #4b5160; }
+  .escala { display: flex; gap: 4px; margin-top: 7px; }
+  .escala span { width: 26px; height: 26px; border-radius: 8px; border: 1.5px solid #d6d9e0; display: grid; place-items: center; font-size: 12px; font-weight: 700; color: #4b5160; }
+  .escala.nps span { width: 24px; }
+  .escala span.bueno { border-color: #9fd3ae; background: var(--verde-suave); color: var(--verde); }
+  .escala span.malo { border-color: #f1b7b0; background: var(--rojo-suave); color: var(--rojo); }
+  .abierta { margin-top: 7px; height: 26px; border: 1.5px dashed #c9cdd6; border-radius: 8px; font-size: 12px; color: #9aa0ab; display: flex; align-items: center; padding: 0 10px; }
+  .meta-p { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .t-f { background: var(--verde-suave); color: var(--verde); } .t-d { background: var(--rojo-suave); color: var(--rojo); } .t-e { background: var(--fondo); color: #4b5160; }
+
+  /* Ajustes de escala para llenar la lámina y dejar el círculo decorativo al fondo. */
+  .lamina > :not(.franja) { position: relative; z-index: 1; }
+  .franja { z-index: 1; }
+  .estructura { margin-top: 40px; gap: 20px 22px; }
+  .fase b { font-size: 23px; }
+  .fase small { font-size: 14px; }
+  .bloque { padding: 20px 22px; }
+  .bloque h3 { font-size: 19px; margin-bottom: 10px; }
+  .bloque ul { gap: 7px; }
+  .bloque li { font-size: 15.5px; }
+  .area { font-size: 17px; }
+  .area .circ { width: 64px; height: 64px; font-size: 26px; }
+  .area small { font-size: 13px; }
+  .coordina { padding: 20px 26px; margin-top: 8px; }
+  .coordina b { font-size: 19px; }
+  .coordina p { font-size: 16px; }
+  .tps { margin-top: 34px; gap: 26px; }
+  .col-fase { padding: 20px; }
+  .col-fase > header b { font-size: 23px; }
+  .col-fase > header small { font-size: 14px; }
+  .tp { padding: 15px 14px; margin-bottom: 12px; grid-template-columns: 52px 1fr auto; }
+  .tp .ico { width: 52px; height: 52px; }
+  .tp b { font-size: 17px; }
+  .tp p { font-size: 14px; }
+  .tag { font-size: 12px; padding: 3px 10px; }
+  .leyenda { font-size: 14px; }
+  .preguntas { margin-top: 30px; gap: 16px 24px; }
+  .preg { padding: 16px 20px 16px 16px; grid-template-columns: 50px 1fr; }
+  .preg .n { width: 50px; height: 50px; font-size: 21px; }
+  .preg .q { font-size: 18px; }
+  .op-r { font-size: 13.5px; padding: 3px 12px; }
+  .resp, .escala, .meta-p { margin-top: 9px; }
+  .escala span { width: 30px; height: 30px; font-size: 13px; }
+  .escala.nps span { width: 30px; }
+  .abierta { height: 30px; font-size: 13px; }
+  /* Lámina 2: un poco más compacta para que el recuadro de coordinación no toque la franja. */
+  .estructura { margin-top: 26px; gap: 14px 22px; }
+  .bloque { padding: 15px 20px; }
+  .bloque h3 { font-size: 18px; margin-bottom: 8px; }
+  .bloque ul { gap: 5px; }
+  .bloque li { font-size: 15px; }
+  .coordina { padding: 16px 24px; margin-top: 4px; }
+  .coordina p { font-size: 15px; }
+  /* Lámina 3: más aire entre touchpoints. */
+  .tp { margin-bottom: 16px; padding: 17px 14px; }
+  /* Carátula */
+  .caratula { display: grid; grid-template-columns: 1fr 820px; padding: 0; }
+  .lamina.caratula::before { display: none; }
+  .caratula .izq { padding: 110px 0 0 96px; display: flex; flex-direction: column; }
+  .caratula h1 { font-size: 76px; margin-top: 20px; line-height: 1.02; }
+  .caratula .caso { margin-top: 18px; font-size: 26px; color: var(--gris); }
+  .caratula .tema { margin-top: 34px; display: inline-flex; align-items: center; gap: 14px; font-size: 22px; font-weight: 800; color: var(--navy); }
+  .caratula .tema i { width: 10px; height: 46px; border-radius: 6px; background: var(--naranja); }
+  .caratula .tema small { display: block; font-size: 16px; font-weight: 600; color: var(--gris); }
+  .integrantes { margin-top: 56px; }
+  .integrantes h2 { font-size: 14px; font-weight: 800; letter-spacing: .16em; color: var(--gris); margin-bottom: 14px; }
+  .integrantes ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, auto); grid-auto-flow: column; gap: 14px 40px; max-width: 900px; }
+  .integrantes li { font-size: 21px; line-height: 1.3; display: flex; gap: 12px; align-items: center; }
+  .integrantes li span { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--naranja-suave); color: var(--naranja-osc); font-size: 13px; font-weight: 800; display: grid; place-items: center; }
+  .integrantes li b { font-weight: 700; }
+  .caratula .pie-c { margin-top: auto; margin-bottom: 64px; font-size: 15px; color: #9aa0ab; }
+  .caratula .der { position: relative; background: var(--naranja); border-radius: 0 0 0 120px; overflow: hidden; }
+  .caratula .der .marca { position: absolute; left: -10px; top: 70px; font-size: 150px; font-weight: 800; line-height: .9; color: rgba(255,255,255,.13); letter-spacing: -.03em; }
+  .caratula .der .anillo { position: absolute; right: -150px; bottom: -150px; width: 520px; height: 520px; border-radius: 50%; border: 60px solid rgba(255, 194, 51, .55); }
+  .caratula .der img { position: absolute; border-radius: 50%; object-fit: cover; border: 10px solid #fff; box-shadow: 0 24px 50px rgba(0,0,0,.25); }
+  .caratula .der .f1 { width: 360px; height: 360px; left: 230px; top: 330px; }
+  .caratula .der .f2 { width: 200px; height: 200px; left: 90px; top: 640px; border-width: 8px; }
+  .caratula .der .f3 { width: 210px; height: 210px; left: 540px; top: 170px; border-width: 8px; }
+  .caratula .der .f4 { width: 170px; height: 170px; left: 560px; top: 700px; border-width: 8px; }
+  .caratula .der .frase { position: absolute; left: 64px; right: 64px; bottom: 56px; color: #fff; font-size: 30px; font-weight: 800; line-height: 1.15; }
+
+  /* Hoja de ruta */
+  .ruta { margin-top: 26px; position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .eje { grid-column: 1 / -1; position: relative; height: 54px; }
+  .eje::before { content: ''; position: absolute; left: 30px; right: 30px; top: 26px; height: 4px; border-radius: 4px; background: linear-gradient(90deg, var(--naranja), var(--azul), var(--morado), var(--verde)); }
+  .eje span { position: absolute; top: 0; width: 25%; display: flex; justify-content: center; }
+  .eje b { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; background: #fff; border: 4px solid; font-size: 20px; font-weight: 800; }
+  .fase-r { border-radius: 20px; border: 1.5px solid var(--linea); background: #fff; padding: 18px 20px 16px; display: flex; flex-direction: column; }
+  .fase-r header { display: flex; align-items: center; gap: 12px; }
+  .fase-r header .ico { width: 46px; height: 46px; border-radius: 14px; flex: none; }
+  .fase-r h2 { font-size: 24px; font-weight: 800; line-height: 1; }
+  .fase-r .cuando { font-size: 12.5px; font-weight: 700; color: var(--gris); margin-top: 3px; }
+  .fase-r .def { margin-top: 12px; font-size: 13.5px; color: var(--gris); font-style: italic; line-height: 1.4; border-left: 3px solid var(--linea); padding-left: 10px; }
+  .fase-r h3 { margin-top: 14px; font-size: 12px; font-weight: 800; letter-spacing: .1em; color: var(--navy); }
+  .fase-r ul { list-style: none; display: grid; gap: 7px; margin-top: 8px; }
+  .fase-r li { font-size: 14.5px; line-height: 1.38; display: flex; gap: 8px; }
+  .fase-r li::before { content: ''; flex: none; width: 7px; height: 7px; border-radius: 50%; margin-top: 7px; background: currentColor; opacity: .5; }
+  .fase-r .hecho { margin-top: 12px; font-size: 13px; line-height: 1.4; background: var(--fondo); border-radius: 12px; padding: 9px 12px; }
+  .fase-r .hecho b { color: var(--verde); }
+  .fase-r .kpi { margin-top: auto; padding-top: 12px; display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 700; }
+  .fase-r .kpi span { font-size: 11px; font-weight: 800; letter-spacing: .1em; border-radius: 999px; padding: 3px 9px; }
+  .f1 { border-color: #fbd2b4; } .f1 h2, .f1 li { color: var(--naranja-osc); } .f1 li { color: var(--tinta); } .f1 .ico { background: var(--naranja-suave); color: var(--naranja-osc); } .f1 .kpi span { background: var(--naranja-suave); color: var(--naranja-osc); }
+  .f2 { border-color: #c9d5f6; } .f2 h2 { color: var(--azul); } .f2 .ico { background: var(--azul-suave); color: var(--azul); } .f2 .kpi span { background: var(--azul-suave); color: var(--azul); }
+  .f3 { border-color: #ddd0fb; } .f3 h2 { color: var(--morado); } .f3 .ico { background: var(--morado-suave); color: var(--morado); } .f3 .kpi span { background: var(--morado-suave); color: var(--morado); }
+  .f4 { border-color: #bfe3c9; } .f4 h2 { color: var(--verde); } .f4 .ico { background: var(--verde-suave); color: var(--verde); } .f4 .kpi span { background: var(--verde-suave); color: var(--verde); }
+  .lamina.caratula::before { display: none; }
+  .cita { position: relative; z-index: 1; margin-top: 18px; border-left: 5px solid var(--naranja); padding: 4px 0 4px 18px; font-size: 18px; color: var(--gris); }
+  .cita b { color: var(--navy); }
+  /* Escala para llenar la lámina */
+  .ruta { margin-top: 32px; gap: 22px; }
+  .fase-r { padding: 22px 22px 20px; }
+  .fase-r header .ico { width: 54px; height: 54px; }
+  .fase-r h2 { font-size: 30px; }
+  .fase-r .cuando { font-size: 14px; margin-top: 5px; }
+  .fase-r .def { font-size: 15.5px; margin-top: 16px; }
+  .fase-r h3 { font-size: 13px; margin-top: 18px; }
+  .fase-r ul { gap: 10px; margin-top: 10px; }
+  .fase-r li { font-size: 16.5px; }
+  .fase-r li::before { margin-top: 8px; }
+  .fase-r .hecho { font-size: 14.5px; margin-top: 16px; padding: 11px 14px; }
+  .fase-r .kpi { font-size: 15.5px; padding-top: 16px; }
+  .fase-r .kpi span { font-size: 12px; }
+  .cita { font-size: 21px; margin-top: 26px; }
+
+  /* ---------- v2: láminas gráficas ---------- */
+  .cab-l { position: relative; z-index: 1; }
+  .num-et { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 800; letter-spacing: .14em; }
+  .num-et i { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-style: normal; font-size: 15px; letter-spacing: 0; }
+  .def-g { margin-top: 10px; font-size: 19px; color: var(--gris); max-width: 1250px; }
+  .def-g b { color: var(--tinta); }
+  .cuerpo { position: relative; z-index: 1; margin-top: 30px; display: grid; gap: 40px; }
+  .rotulo { font-size: 12.5px; font-weight: 800; letter-spacing: .14em; color: var(--gris); margin-bottom: 14px; }
+  .nota { position: absolute; right: 64px; bottom: 84px; font-size: 12px; color: #9aa0ab; z-index: 1; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; border-radius: 999px; padding: 4px 12px; }
+  .acc { list-style: none; display: grid; gap: 12px; }
+  .acc li { display: grid; grid-template-columns: 28px 1fr; gap: 10px; font-size: 16.5px; line-height: 1.4; }
+  .acc li b { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; font-size: 13px; }
+  svg text { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+
+  /* Panorama: escalera */
+  .escalera { position: relative; z-index: 1; margin-top: 34px; display: grid; grid-template-columns: 210px repeat(4, 1fr); gap: 18px; align-items: end; height: 610px; }
+  .hoy { align-self: end; border: 2px dashed #c9cdd6; border-radius: 18px; padding: 18px; height: 170px; display: flex; flex-direction: column; justify-content: space-between; }
+  .hoy small { font-size: 12px; font-weight: 800; letter-spacing: .14em; color: var(--gris); }
+  .hoy b { font-size: 20px; color: var(--navy); line-height: 1.2; }
+  .hoy p { font-size: 13.5px; color: var(--gris); line-height: 1.4; }
+  .peldano { border-radius: 22px 22px 0 0; padding: 22px 22px 0; display: flex; flex-direction: column; position: relative; }
+  .peldano .n { font-size: 64px; font-weight: 800; line-height: .9; opacity: .18; position: absolute; right: 18px; top: 14px; }
+  .peldano h2 { font-size: 30px; font-weight: 800; }
+  .peldano .pl { font-size: 14px; font-weight: 700; margin-top: 4px; }
+  .peldano p { font-size: 15.5px; line-height: 1.45; margin-top: 14px; color: var(--tinta); }
+  .peldano .al { margin-top: auto; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 700; }
+  .peldano .al span { display: flex; gap: 3px; }
+  .peldano .al span i { width: 9px; height: 13px; border-radius: 2px; }
+  .piso { position: relative; z-index: 1; height: 6px; border-radius: 6px; background: linear-gradient(90deg, #c9cdd6 0 12%, var(--naranja) 12% 34%, var(--azul) 34% 56%, var(--morado) 56% 78%, var(--verde) 78%); }
+  .lamina > .nota { position: absolute !important; }
+  .escalera { height: 720px; margin-top: 30px; }
+  .peldano h2 { font-size: 34px; } .peldano .pl { font-size: 15px; } .peldano p { font-size: 17px; } .peldano .al { font-size: 15px; }
+  .hoy { height: 290px; } .hoy b { font-size: 22px; } .hoy p { font-size: 15px; }
+  .acc li { font-size: 17.5px; }
+</style>
+</head>
+<body>
+
+<!-- 0. Carátula -->
+<section class="lamina caratula">
+  <div class="izq">
+    <div><span class="pastilla">TALLER · PROCESO DE CX</span></div>
+    <h1>Ing. Sistemas<br>de <span>Servicio</span></h1>
+    <p class="caso">Caso de estudio: Tiendas 3A · «Pide y recoge»</p>
+    <p class="tema"><i></i><span>Hoja de ruta: hacia la mejora continua<small>Versión gráfica · Estabilizar · Integrar · Automatizar · Innovar · Noviembre 2026</small></span></p>
+    <div class="integrantes">
+      <h2>INTEGRANTES</h2>
+      <ul>
+        <li><span>RA</span><b>Amaya Huacache, Ruth Yasmin</b></li>
+        <li><span>NA</span><b>Auqui Castilla, Nicole Ximena</b></li>
+        <li><span>HC</span><b>Cardenas Arzapalo, Hemsy Lucía</b></li>
+        <li><span>RC</span><b>Chu-lau Yllescas, Rafael Andrés</b></li>
+        <li><span>BR</span><b>Rojas Torres, Brayan Jesús Alexander</b></li>
+        <li><span>ER</span><b>Rosales Avila, Edison Edwin</b></li>
+      </ul>
+    </div>
+    <p class="pie-c">Prototipo académico con datos simulados · no afiliado a ninguna cadena comercial</p>
+  </div>
+  <div class="der" aria-hidden="true">
+    <span class="marca">PIDE Y<br>RECOGE</span>
+    <span class="anillo"></span>
+    <img class="f1" src="../../public/productos/huevos-15.jpg" alt="">
+    <img class="f2" src="../../public/productos/papa-1kg.jpg" alt="">
+    <img class="f3" src="../../public/productos/arroz-5kg.jpg" alt="">
+    <img class="f4" src="../../public/productos/fideos-500.jpg" alt="">
+    <p class="frase">Barato en precio.<br>Barato en tiempo.</p>
+  </div>
+</section>
+
+<!-- 1. Panorama -->
+<section class="lamina">
+  <div class="cab-l"><span class="pastilla">HOJA DE RUTA · PANORAMA</span>
+  <h1>De un prototipo a una red que <span>mejora sola</span></h1>
+  <p class="bajada">Cuatro etapas. Cada una se apoya en la anterior y amplía el alcance: de una tienda piloto a las 258 tiendas.</p></div>
+  <div class="escalera">
+    <div class="hoy"><small>HOY</small><b>Prototipo «Pide y recoge»</b><p>Catálogo con stock, pago QR, recojo sin fila, panel de tienda y copiloto IA, con datos simulados.</p></div>
+    <div class="peldano" style="height:340px;background:#fff1e6;border-top:5px solid #f58a3c">
+      <span class="n" style="color:#d44307">1</span>
+      <h2 style="color:#d44307">Estabilizar</h2><p class="pl" style="color:#d44307">Meses 0 a 3</p>
+      <p>Corregir los dolores críticos y tener datos confiables: stock real, precios únicos y el mismo estándar de atención.</p>
+      <p class="al"><span><i style="background:#f58a3c"></i><i style="background:#e5e7eb"></i><i style="background:#e5e7eb"></i><i style="background:#e5e7eb"></i><i style="background:#e5e7eb"></i><i style="background:#e5e7eb"></i><i style="background:#e5e7eb"></i><i style="background:#e5e7eb"></i></span>1 tienda piloto</p>
+    </div>
+    <div class="peldano" style="height:460px;background:#e9eefc;border-top:5px solid #3b63d6">
+      <span class="n" style="color:#3b63d6">2</span>
+      <h2 style="color:#3b63d6">Integrar</h2><p class="pl" style="color:#3b63d6">Meses 3 a 6</p>
+      <p>Conectar la app con la caja, el inventario, los pagos y WhatsApp: un pedido, un dato, todas las áreas.</p>
+      <p class="al"><span><i style="background:#3b63d6"></i><i style="background:#3b63d6"></i><i style="background:#e5e7eb"></i><i style="background:#e5e7eb"></i><i style="background:#e5e7eb"></i><i style="background:#e5e7eb"></i><i style="background:#e5e7eb"></i><i style="background:#e5e7eb"></i></span>1 tienda conectada</p>
+    </div>
+    <div class="peldano" style="height:580px;background:#f1eafe;border-top:5px solid #7c3aed">
+      <span class="n" style="color:#7c3aed">3</span>
+      <h2 style="color:#7c3aed">Automatizar</h2><p class="pl" style="color:#7c3aed">Meses 6 a 12</p>
+      <p>Que lo repetible lo haga el sistema: reposición, franjas, avisos y encuestas, para liberar al personal.</p>
+      <p class="al"><span><i style="background:#7c3aed"></i><i style="background:#7c3aed"></i><i style="background:#7c3aed"></i><i style="background:#7c3aed"></i><i style="background:#7c3aed"></i><i style="background:#e5e7eb"></i><i style="background:#e5e7eb"></i><i style="background:#e5e7eb"></i></span>20 tiendas</p>
+    </div>
+    <div class="peldano" style="height:700px;background:#eaf7ee;border-top:5px solid #15803d">
+      <span class="n" style="color:#15803d">4</span>
+      <h2 style="color:#15803d">Innovar</h2><p class="pl" style="color:#15803d">Año 2</p>
+      <p>Usar los datos para crear valor nuevo: demanda predicha, canastas personalizadas y pedidos para bodegueros.</p>
+      <p class="al"><span><i style="background:#15803d"></i><i style="background:#15803d"></i><i style="background:#15803d"></i><i style="background:#15803d"></i><i style="background:#15803d"></i><i style="background:#15803d"></i><i style="background:#15803d"></i><i style="background:#15803d"></i></span>258 tiendas</p>
+    </div>
+  </div>
+  <div class="piso"></div>
+  <footer class="franja"><p class="idea">Primero <span>que funcione</span>, luego que se conecte, que se automatice y que aprenda</p><p class="pie">Taller CX · Ingeniería de Sistemas de Servicio · Caso Tiendas 3A</p></footer>
+</section>
+<!-- 2. Estabilizar -->
+<section class="lamina">
+  <div class="cab-l">
+    <span class="num-et" style="color:#d44307"><i style="background:#f58a3c">1</i>ETAPA 1 · ESTABILIZAR</span>
+    <h1 style="margin-top:14px">Una sola verdad <span style="color:#d44307">sobre el stock</span></h1>
+    <p class="def-g">Corregir los puntos de dolor críticos y <b>establecer una base de datos confiable</b>. Hoy el cliente ve un stock, la góndola tiene otro y la caja un tercero.</p>
+  </div>
+
+  <div class="cuerpo" style="grid-template-columns:1fr auto 1fr;align-items:center;gap:30px">
+    <div><p class="rotulo">HOY · DATOS QUE NO COINCIDEN</p><svg viewBox="0 0 520 430" width="520" height="430">
+<g transform="translate(0,0)"><rect width="230" height="96" rx="18" fill="#fff" stroke="#c0392b" stroke-width="2"/>
+<text x="22" y="40" font-size="17" font-weight="700" fill="#1f2430">App</text><text x="22" y="70" font-size="14" fill="#6b7280">Arroz extra 5 kg</text>
+<text x="208" y="62" text-anchor="end" font-size="34" font-weight="800" fill="#c0392b">12</text></g><g transform="translate(0,166)"><rect width="230" height="96" rx="18" fill="#fff" stroke="#c0392b" stroke-width="2"/>
+<text x="22" y="40" font-size="17" font-weight="700" fill="#1f2430">Góndola</text><text x="22" y="70" font-size="14" fill="#6b7280">Arroz extra 5 kg</text>
+<text x="208" y="62" text-anchor="end" font-size="34" font-weight="800" fill="#c0392b">0</text></g><g transform="translate(0,332)"><rect width="230" height="96" rx="18" fill="#fff" stroke="#c0392b" stroke-width="2"/>
+<text x="22" y="40" font-size="17" font-weight="700" fill="#1f2430">Caja</text><text x="22" y="70" font-size="14" fill="#6b7280">Arroz extra 5 kg</text>
+<text x="208" y="62" text-anchor="end" font-size="34" font-weight="800" fill="#c0392b">5</text></g>
+<g stroke="#e5a49c" stroke-width="2" stroke-dasharray="6 6" fill="none"><path d="M230 48 C 330 48, 330 214, 400 214"/><path d="M230 214 L 400 214"/><path d="M230 380 C 330 380, 330 214, 400 214"/></g>
+<circle cx="440" cy="214" r="40" fill="#fdecea"/><path d="M425 199 l30 30 M455 199 l-30 30" stroke="#c0392b" stroke-width="5" stroke-linecap="round"/>
+<text x="440" y="285" text-anchor="middle" font-size="15" font-weight="700" fill="#c0392b">3 cifras</text><text x="440" y="305" text-anchor="middle" font-size="15" font-weight="700" fill="#c0392b">distintas</text></svg></div>
+    <svg width="60" height="40" viewBox="0 0 60 40"><path d="M4 20h48M38 6l14 14-14 14" stroke="#c5cad6" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div><p class="rotulo">META · UN DATO PARA TODOS</p><svg viewBox="0 0 560 430" width="560" height="430">
+<rect x="0" y="149" width="200" height="130" rx="22" fill="#fff1e6" stroke="#f58a3c" stroke-width="2"/>
+<text x="100" y="196" text-anchor="middle" font-size="15" font-weight="800" fill="#d44307" letter-spacing="1.5">INVENTARIO ÚNICO</text>
+<text x="100" y="242" text-anchor="middle" font-size="40" font-weight="800" fill="#d44307">8</text><text x="100" y="266" text-anchor="middle" font-size="13" fill="#6b7280">baja con cada venta y pedido</text>
+<g stroke="#f58a3c" stroke-width="2.5" fill="none"><path d="M200 214 C 260 214, 260 48, 330 48"/><path d="M200 214 L 330 214"/><path d="M200 214 C 260 214, 260 380, 330 380"/></g>
+<g transform="translate(330,0)"><rect width="230" height="96" rx="18" fill="#fff" stroke="#15803d" stroke-width="2"/>
+<text x="22" y="40" font-size="17" font-weight="700" fill="#1f2430">App</text><text x="22" y="70" font-size="14" fill="#6b7280">Arroz extra 5 kg</text>
+<text x="208" y="62" text-anchor="end" font-size="34" font-weight="800" fill="#15803d">8</text></g><g transform="translate(330,166)"><rect width="230" height="96" rx="18" fill="#fff" stroke="#15803d" stroke-width="2"/>
+<text x="22" y="40" font-size="17" font-weight="700" fill="#1f2430">Góndola</text><text x="22" y="70" font-size="14" fill="#6b7280">Arroz extra 5 kg</text>
+<text x="208" y="62" text-anchor="end" font-size="34" font-weight="800" fill="#15803d">8</text></g><g transform="translate(330,332)"><rect width="230" height="96" rx="18" fill="#fff" stroke="#15803d" stroke-width="2"/>
+<text x="22" y="40" font-size="17" font-weight="700" fill="#1f2430">Caja</text><text x="22" y="70" font-size="14" fill="#6b7280">Arroz extra 5 kg</text>
+<text x="208" y="62" text-anchor="end" font-size="34" font-weight="800" fill="#15803d">8</text></g></svg></div>
+  </div>
+  <div style="position:relative;z-index:1;margin-top:34px;display:grid;grid-template-columns:1.15fr 1fr;gap:56px">
+    <div><p class="rotulo">ESPERA PARA PAGAR EN HORA PUNTA · TIENDA CANTO GRANDE</p>
+      <div style="display:grid;grid-template-columns:210px 1fr;align-items:center;gap:16px;margin-bottom:14px"><span style="font-size:15px;font-weight:700">Hoy, en caja</span><div style="display:flex;align-items:center;gap:12px"><span style="height:26px;width:640px;border-radius:8px;background:#c0392b"></span><b style="font-size:20px;color:#c0392b">14 min</b></div></div><div style="display:grid;grid-template-columns:210px 1fr;align-items:center;gap:16px;margin-bottom:14px"><span style="font-size:15px;font-weight:700">Meta de la etapa</span><div style="display:flex;align-items:center;gap:12px"><span style="height:26px;width:228px;border-radius:8px;background:#f58a3c"></span><b style="font-size:20px;color:#f58a3c">&lt; 5 min</b></div></div><div style="display:grid;grid-template-columns:210px 1fr;align-items:center;gap:16px;margin-bottom:14px"><span style="font-size:15px;font-weight:700">Con Pide y recoge</span><div style="display:flex;align-items:center;gap:12px"><span style="height:26px;width:91px;border-radius:8px;background:#15803d"></span><b style="font-size:20px;color:#15803d">2 min</b></div></div></div>
+    <div><p class="rotulo">QUÉ HACEMOS</p><ul class="acc"><li><b style="background:#fff1e6;color:#d44307">1</b><span>Piloto del mostrador «Pide y recoge» en Canto Grande (SJL)</span></li><li><b style="background:#fff1e6;color:#d44307">2</b><span>Stock real que baja con cada venta y cada pedido</span></li><li><b style="background:#fff1e6;color:#d44307">3</b><span>Un solo maestro de productos y precios</span></li><li><b style="background:#fff1e6;color:#d44307">4</b><span>Guion y tiempos de atención iguales en el mostrador</span></li></ul></div>
+  </div>
+  <footer class="franja"><p class="idea">Sin datos confiables <span>no hay experiencia confiable</span></p><p class="pie">Taller CX · Ingeniería de Sistemas de Servicio · Caso Tiendas 3A</p></footer>
+</section>
+<!-- 3. Integrar -->
+<section class="lamina">
+  <div class="cab-l">
+    <span class="num-et" style="color:#3b63d6"><i style="background:#3b63d6">2</i>ETAPA 2 · INTEGRAR</span>
+    <h1 style="margin-top:14px">Un pedido, <span style="color:#3b63d6">todas las áreas</span></h1>
+    <p class="def-g">Conectar sistemas, áreas y flujos para <b>eliminar silos de información</b>: lo que el cliente pide lo ven al mismo tiempo la caja, el almacén, el panel y atención al cliente.</p>
+  </div>
+
+  <div class="cuerpo" style="grid-template-columns:300px 900px 1fr;align-items:center;gap:30px;margin-top:6px">
+    <div><p class="rotulo">HOY · SILOS</p><svg viewBox="0 0 320 350" width="320" height="350"><rect x="10" y="10" width="120" height="50" rx="14" fill="#f4f5f7" stroke="#d6d9e0" stroke-width="2" stroke-dasharray="5 5"/><text x="70" y="41" text-anchor="middle" font-size="15" font-weight="600" fill="#6b7280">Caja</text><rect x="150" y="60" width="120" height="50" rx="14" fill="#f4f5f7" stroke="#d6d9e0" stroke-width="2" stroke-dasharray="5 5"/><text x="210" y="91" text-anchor="middle" font-size="15" font-weight="600" fill="#6b7280">App</text><rect x="40" y="140" width="120" height="50" rx="14" fill="#f4f5f7" stroke="#d6d9e0" stroke-width="2" stroke-dasharray="5 5"/><text x="100" y="171" text-anchor="middle" font-size="15" font-weight="600" fill="#6b7280">Inventario</text><rect x="190" y="170" width="120" height="50" rx="14" fill="#f4f5f7" stroke="#d6d9e0" stroke-width="2" stroke-dasharray="5 5"/><text x="250" y="201" text-anchor="middle" font-size="15" font-weight="600" fill="#6b7280">Pagos</text><rect x="20" y="250" width="120" height="50" rx="14" fill="#f4f5f7" stroke="#d6d9e0" stroke-width="2" stroke-dasharray="5 5"/><text x="80" y="281" text-anchor="middle" font-size="15" font-weight="600" fill="#6b7280">WhatsApp</text><rect x="160" y="290" width="120" height="50" rx="14" fill="#f4f5f7" stroke="#d6d9e0" stroke-width="2" stroke-dasharray="5 5"/><text x="220" y="321" text-anchor="middle" font-size="15" font-weight="600" fill="#6b7280">Reclamos</text></svg>
+      <p style="font-size:15px;color:var(--gris);line-height:1.5;margin-top:8px">Cada sistema guarda su propia versión. Un reclamo no llega a quien lo puede resolver.</p></div>
+    <div><svg viewBox="0 0 760 580" width="900" height="687"><line x1="380" y1="290" x2="380" y2="65" stroke="#c9d5f6" stroke-width="2.5"/><line x1="380" y1="290" x2="539" y2="131" stroke="#c9d5f6" stroke-width="2.5"/><line x1="380" y1="290" x2="605" y2="290" stroke="#c9d5f6" stroke-width="2.5"/><line x1="380" y1="290" x2="539" y2="449" stroke="#c9d5f6" stroke-width="2.5"/><line x1="380" y1="290" x2="380" y2="515" stroke="#c9d5f6" stroke-width="2.5"/><line x1="380" y1="290" x2="221" y2="449" stroke="#c9d5f6" stroke-width="2.5"/><line x1="380" y1="290" x2="155" y2="290" stroke="#c9d5f6" stroke-width="2.5"/><line x1="380" y1="290" x2="221" y2="131" stroke="#c9d5f6" stroke-width="2.5"/><rect x="293" y="43" width="174" height="44" rx="22" fill="#fff" stroke="#3b63d6" stroke-width="2"/><text x="380" y="71" text-anchor="middle" font-size="16" font-weight="700" fill="#1e2a5e">App del cliente</text><rect x="475" y="109" width="128" height="44" rx="22" fill="#fff" stroke="#3b63d6" stroke-width="2"/><text x="539" y="137" text-anchor="middle" font-size="16" font-weight="700" fill="#1e2a5e">Caja (POS)</text><rect x="486" y="268" width="238" height="44" rx="22" fill="#fff" stroke="#3b63d6" stroke-width="2"/><text x="605" y="296" text-anchor="middle" font-size="16" font-weight="700" fill="#1e2a5e">Centro de distribución</text><rect x="424" y="427" width="229" height="44" rx="22" fill="#fff" stroke="#3b63d6" stroke-width="2"/><text x="539" y="455" text-anchor="middle" font-size="16" font-weight="700" fill="#1e2a5e">Yape · Plin · tarjeta</text><rect x="284" y="493" width="192" height="44" rx="22" fill="#fff" stroke="#3b63d6" stroke-width="2"/><text x="380" y="521" text-anchor="middle" font-size="16" font-weight="700" fill="#1e2a5e">WhatsApp Business</text><rect x="134" y="427" width="174" height="44" rx="22" fill="#fff" stroke="#3b63d6" stroke-width="2"/><text x="221" y="455" text-anchor="middle" font-size="16" font-weight="700" fill="#1e2a5e">Panel de tienda</text><rect x="50" y="268" width="211" height="44" rx="22" fill="#fff" stroke="#3b63d6" stroke-width="2"/><text x="155" y="296" text-anchor="middle" font-size="16" font-weight="700" fill="#1e2a5e">Atención al cliente</text><rect x="171" y="109" width="100" height="44" rx="22" fill="#fff" stroke="#3b63d6" stroke-width="2"/><text x="221" y="137" text-anchor="middle" font-size="16" font-weight="700" fill="#1e2a5e">Club 3A</text>
+<circle cx="380" cy="290" r="92" fill="#3b63d6"/><circle cx="380" cy="290" r="108" fill="none" stroke="#3b63d6" stroke-opacity=".2" stroke-width="10"/>
+<text x="380" y="282" text-anchor="middle" font-size="16" font-weight="700" fill="#fff" opacity=".85">Un pedido</text><text x="380" y="310" text-anchor="middle" font-size="24" font-weight="800" fill="#fff">un solo dato</text></svg></div>
+    <div><p class="rotulo">QUÉ HACEMOS</p><ul class="acc"><li><b style="background:#e9eefc;color:#3b63d6">1</b><span>Conectar la app con la caja y el centro de distribución</span></li><li><b style="background:#e9eefc;color:#3b63d6">2</b><span>Pagos reales con Yape, Plin y tarjeta</span></li><li><b style="background:#e9eefc;color:#3b63d6">3</b><span>Avisos de estado por WhatsApp Business</span></li><li><b style="background:#e9eefc;color:#3b63d6">4</b><span>El reclamo llega al panel y a atención al cliente</span></li><li><b style="background:#e9eefc;color:#3b63d6">5</b><span>Un panel común para Marketing, Operaciones y RRHH</span></li></ul>
+      <p class="chip" style="margin-top:24px;background:var(--azul-suave);color:var(--azul)">Meta: 98 % de pedidos sin errores de stock</p></div>
+  </div>
+  <footer class="franja"><p class="idea">Integrar es que <span>nadie vuelva a preguntar</span> lo que el sistema ya sabe</p><p class="pie">Taller CX · Ingeniería de Sistemas de Servicio · Caso Tiendas 3A</p></footer>
+</section>
+<!-- 4. Automatizar -->
+<section class="lamina">
+  <div class="cab-l">
+    <span class="num-et" style="color:#7c3aed"><i style="background:#7c3aed">3</i>ETAPA 3 · AUTOMATIZAR</span>
+    <h1 style="margin-top:14px">Lo repetible lo hace el sistema, <span style="color:#7c3aed">las personas atienden</span></h1>
+    <p class="def-g">Estandarizar lo repetible con tecnología para <b>liberar capacidad humana</b>: en hora punta, el personal deja de revisar, llamar y avisar, y vuelve a atender.</p>
+  </div>
+
+  <div class="cuerpo" style="grid-template-columns:1.35fr 1fr;gap:56px;margin-top:40px">
+    <div>
+      <div style="display:flex;gap:46px;margin-bottom:12px" class="rotulo"><span style="flex:1">CUANDO PASA…</span><span style="flex:1">EL SISTEMA…</span><span style="flex:1">Y EL PERSONAL…</span></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:22px"><div style="flex:1;background:#fff;border:1.5px solid #e5e7eb;border-radius:16px;padding:22px 18px;font-size:18px;font-weight:600;color:#1f2430;line-height:1.35">Un producto llega a 0 unidades</div><svg width="36" height="20" viewBox="0 0 36 20" style="flex:none"><path d="M2 10h28M22 3l8 7-8 7" stroke="#c5cad6" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div style="flex:1;background:#f1eafe;border:1.5px solid #ddd0fb;border-radius:16px;padding:22px 18px;font-size:18px;font-weight:600;color:#5b21b6;line-height:1.35">Genera la orden a trastienda o al CD</div><svg width="36" height="20" viewBox="0 0 36 20" style="flex:none"><path d="M2 10h28M22 3l8 7-8 7" stroke="#c5cad6" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div style="flex:1;background:#eaf7ee;border:1.5px solid #bfe3c9;border-radius:16px;padding:22px 18px;font-size:18px;font-weight:600;color:#15803d;line-height:1.35">Nadie revisa góndolas a mano</div></div><div style="display:flex;align-items:center;gap:10px;margin-bottom:22px"><div style="flex:1;background:#fff;border:1.5px solid #e5e7eb;border-radius:16px;padding:22px 18px;font-size:18px;font-weight:600;color:#1f2430;line-height:1.35">La franja de 18:00 se llena</div><svg width="36" height="20" viewBox="0 0 36 20" style="flex:none"><path d="M2 10h28M22 3l8 7-8 7" stroke="#c5cad6" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div style="flex:1;background:#f1eafe;border:1.5px solid #ddd0fb;border-radius:16px;padding:22px 18px;font-size:18px;font-weight:600;color:#5b21b6;line-height:1.35">Abre la siguiente y la ofrece en la app</div><svg width="36" height="20" viewBox="0 0 36 20" style="flex:none"><path d="M2 10h28M22 3l8 7-8 7" stroke="#c5cad6" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div style="flex:1;background:#eaf7ee;border:1.5px solid #bfe3c9;border-radius:16px;padding:22px 18px;font-size:18px;font-weight:600;color:#15803d;line-height:1.35">El mostrador no se satura</div></div><div style="display:flex;align-items:center;gap:10px;margin-bottom:22px"><div style="flex:1;background:#fff;border:1.5px solid #e5e7eb;border-radius:16px;padding:22px 18px;font-size:18px;font-weight:600;color:#1f2430;line-height:1.35">El pedido se marca «listo»</div><svg width="36" height="20" viewBox="0 0 36 20" style="flex:none"><path d="M2 10h28M22 3l8 7-8 7" stroke="#c5cad6" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div style="flex:1;background:#f1eafe;border:1.5px solid #ddd0fb;border-radius:16px;padding:22px 18px;font-size:18px;font-weight:600;color:#5b21b6;line-height:1.35">Envía el WhatsApp con el QR de recojo</div><svg width="36" height="20" viewBox="0 0 36 20" style="flex:none"><path d="M2 10h28M22 3l8 7-8 7" stroke="#c5cad6" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div style="flex:1;background:#eaf7ee;border:1.5px solid #bfe3c9;border-radius:16px;padding:22px 18px;font-size:18px;font-weight:600;color:#15803d;line-height:1.35">Cero llamadas de «¿ya está?»</div></div><div style="display:flex;align-items:center;gap:10px;margin-bottom:22px"><div style="flex:1;background:#fff;border:1.5px solid #e5e7eb;border-radius:16px;padding:22px 18px;font-size:18px;font-weight:600;color:#1f2430;line-height:1.35">La espera en caja pasa de 12 min</div><svg width="36" height="20" viewBox="0 0 36 20" style="flex:none"><path d="M2 10h28M22 3l8 7-8 7" stroke="#c5cad6" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div style="flex:1;background:#f1eafe;border:1.5px solid #ddd0fb;border-radius:16px;padding:22px 18px;font-size:18px;font-weight:600;color:#5b21b6;line-height:1.35">El copiloto sugiere abrir otra caja</div><svg width="36" height="20" viewBox="0 0 36 20" style="flex:none"><path d="M2 10h28M22 3l8 7-8 7" stroke="#c5cad6" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div style="flex:1;background:#eaf7ee;border:1.5px solid #bfe3c9;border-radius:16px;padding:22px 18px;font-size:18px;font-weight:600;color:#15803d;line-height:1.35">Decide con datos, no a ojo</div></div>
+    </div>
+    <div><p class="rotulo">UN TURNO DE HORA PUNTA · ESTIMACIÓN DEL EQUIPO</p>
+      <p style="font-size:17px;font-weight:700;margin:26px 0 10px">Hoy</p>
+<div style="display:flex;height:62px;border-radius:14px;overflow:hidden;font-size:16px;font-weight:700;color:#fff">
+<span style="width:60%;background:#9aa0ab;display:grid;place-items:center">Tareas manuales 60 %</span><span style="width:40%;background:#7c3aed;display:grid;place-items:center">Atender al cliente 40 %</span></div><p style="font-size:17px;font-weight:700;margin:26px 0 10px">Con la etapa 3</p>
+<div style="display:flex;height:62px;border-radius:14px;overflow:hidden;font-size:16px;font-weight:700;color:#fff">
+<span style="width:25%;background:#9aa0ab;display:grid;place-items:center">Tareas manuales 25 %</span><span style="width:75%;background:#7c3aed;display:grid;place-items:center">Atender al cliente 75 %</span></div>
+      <div style="margin-top:34px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;background:var(--morado-suave);border-radius:18px;padding:18px 20px">
+        <b style="font-size:56px;color:var(--morado);line-height:1">+35 %</b><span style="font-size:18px;line-height:1.4">del turno vuelve a la atención: orientar, reponer y abrir caja cuando hace falta.</span></div>
+    </div>
+  </div>
+  <footer class="franja"><p class="idea">Automatizar no reemplaza a las personas: <span>les devuelve tiempo para el cliente</span></p><p class="pie">Taller CX · Ingeniería de Sistemas de Servicio · Caso Tiendas 3A</p></footer>
+</section>
+<!-- 5. Innovar -->
+<section class="lamina">
+  <div class="cab-l">
+    <span class="num-et" style="color:#15803d"><i style="background:#15803d">4</i>ETAPA 4 · INNOVAR</span>
+    <h1 style="margin-top:14px">Los datos del cliente <span style="color:#15803d">crean valor nuevo</span></h1>
+    <p class="def-g">Crear nuevas propuestas de valor centradas en el cliente <b>con datos y aprendizaje</b>: lo que ya medimos (NPS, pedidos y recompra) nos dice qué inventar después.</p>
+  </div>
+
+  <div class="cuerpo" style="grid-template-columns:560px 1fr;gap:70px;margin-top:24px;align-items:start">
+    <div><svg viewBox="0 0 560 560" width="560" height="560"><circle cx="280" cy="280" r="190" fill="none" stroke="#bfe3c9" stroke-width="3"/><path d="M -10 -8 L 0 0 L -10 8" transform="translate(414,146) rotate(45)" stroke="#15803d" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M -10 -8 L 0 0 L -10 8" transform="translate(414,414) rotate(135)" stroke="#15803d" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M -10 -8 L 0 0 L -10 8" transform="translate(146,414) rotate(225)" stroke="#15803d" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M -10 -8 L 0 0 L -10 8" transform="translate(146,146) rotate(315)" stroke="#15803d" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="280" cy="90" r="78" fill="#fff" stroke="#15803d" stroke-width="3"/><text x="280" y="80" text-anchor="middle" font-size="22" font-weight="800" fill="#15803d">Medir</text><text x="280" y="104" text-anchor="middle" font-size="13.5" fill="#6b7280">NPS, pedidos</text><text x="280" y="121" text-anchor="middle" font-size="13.5" fill="#6b7280">y recompra</text><circle cx="470" cy="280" r="78" fill="#fff" stroke="#15803d" stroke-width="3"/><text x="470" y="270" text-anchor="middle" font-size="22" font-weight="800" fill="#15803d">Aprender</text><text x="470" y="294" text-anchor="middle" font-size="13.5" fill="#6b7280">qué gusta</text><text x="470" y="311" text-anchor="middle" font-size="13.5" fill="#6b7280">y qué falla</text><circle cx="280" cy="470" r="78" fill="#fff" stroke="#15803d" stroke-width="3"/><text x="280" y="460" text-anchor="middle" font-size="22" font-weight="800" fill="#15803d">Probar</text><text x="280" y="484" text-anchor="middle" font-size="13.5" fill="#6b7280">una mejora</text><text x="280" y="501" text-anchor="middle" font-size="13.5" fill="#6b7280">en 1 tienda</text><circle cx="90" cy="280" r="78" fill="#fff" stroke="#15803d" stroke-width="3"/><text x="90" y="270" text-anchor="middle" font-size="22" font-weight="800" fill="#15803d">Escalar</text><text x="90" y="294" text-anchor="middle" font-size="13.5" fill="#6b7280">si funciona,</text><text x="90" y="311" text-anchor="middle" font-size="13.5" fill="#6b7280">a toda la red</text><text x="280" y="274" text-anchor="middle" font-size="16" font-weight="800" letter-spacing="2" fill="#1e2a5e">MEJORA</text><text x="280" y="298" text-anchor="middle" font-size="16" font-weight="800" letter-spacing="2" fill="#1e2a5e">CONTINUA</text></svg></div>
+    <div>
+      <p class="rotulo">NUEVAS PROPUESTAS DE VALOR</p>
+      <div style="display:grid;grid-template-columns:48px 1fr;gap:14px;align-items:start;padding:14px 0;border-bottom:1px solid var(--linea)"><span style="width:48px;height:48px;border-radius:14px;background:var(--verde-suave);color:var(--verde);display:grid;place-items:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span><div><b style="font-size:20px">Demanda predicha por tienda y hora</b><p style="font-size:16.5px;color:var(--gris);margin-top:3px;line-height:1.4">La IA anticipa quincenas, feriados y clima para reponer y programar personal.</p></div></div>
+      <div style="display:grid;grid-template-columns:48px 1fr;gap:14px;align-items:start;padding:14px 0;border-bottom:1px solid var(--linea)"><span style="width:48px;height:48px;border-radius:14px;background:var(--verde-suave);color:var(--verde);display:grid;place-items:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.5 11h-11z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg></span><div><b style="font-size:20px">Canastas personalizadas</b><p style="font-size:16.5px;color:var(--gris);margin-top:3px;line-height:1.4">Cada familia ve su canasta según lo que compra; un toque y repite su pedido.</p></div></div>
+      <div style="display:grid;grid-template-columns:48px 1fr;gap:14px;align-items:start;padding:14px 0;border-bottom:1px solid var(--linea)"><span style="width:48px;height:48px;border-radius:14px;background:var(--verde-suave);color:var(--verde);display:grid;place-items:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v6h6"/><path d="M20 20v-6h-6"/><path d="M20 9A8 8 0 0 0 6 5L4 10M4 15a8 8 0 0 0 14 4l2-5"/></svg></span><div><b style="font-size:20px">Pedidos recurrentes para bodegueros</b><p style="font-size:16.5px;color:var(--gris);margin-top:3px;line-height:1.4">Reposición por WhatsApp con precio por volumen y recojo programado.</p></div></div>
+      <p class="rotulo" style="margin-top:26px">EJEMPLO · DEMANDA DE ARROZ EN UN MES <span style="font-weight:600;letter-spacing:0;color:#9aa0ab">— real (gris) y predicha (verde)</span></p>
+      <svg viewBox="0 0 560 214" width="900" height="250" preserveAspectRatio="none"><line x1="20" y1="170" x2="540" y2="170" stroke="#e5e7eb" stroke-width="2"/>
+<polyline points="20,139 38,145 56,147 74,142 92,132 110,119 128,124 146,145 163,150 181,152 199,147 217,139 235,124 253,94 271,48 289,83 307,119 325,134 343,142 361,145 379,139 397,132 414,119 432,127 450,137 468,132 486,114 504,81 522,38 540,73" fill="none" stroke="#c5cad6" stroke-width="3"/><polyline points="20,145 38,145 56,145 74,142 92,134 110,124 128,127 146,142 163,147 181,150 199,147 217,137 235,122 253,89 271,53 289,81 307,117 325,132 343,139 361,142 379,139 397,129 414,122 432,127 450,134 468,129 486,111 504,76 522,43 540,71" fill="none" stroke="#15803d" stroke-width="3.5" stroke-dasharray="8 6"/>
+<text x="271" y="18" text-anchor="middle" font-size="13" font-weight="700" fill="#15803d">Quincena</text><text x="522" y="18" text-anchor="middle" font-size="13" font-weight="700" fill="#15803d">Fin de mes</text>
+<text x="20" y="202" font-size="12" fill="#9aa0ab">Día 1</text><text x="540" y="202" text-anchor="end" font-size="12" fill="#9aa0ab">Día 30</text></svg>
+    </div>
+  </div>
+  <p class="nota">Datos ilustrativos</p>
+  <footer class="franja"><p class="idea">Innovar es <span>aprender del cliente</span> más rápido que la competencia</p><p class="pie">Taller CX · Ingeniería de Sistemas de Servicio · Caso Tiendas 3A</p></footer>
+</section>
+<!-- 6. Indicadores -->
+<section class="lamina">
+  <div class="cab-l"><span class="pastilla">HOJA DE RUTA · CÓMO LO MEDIMOS</span>
+  <h1>Cuatro indicadores, <span>una misma dirección</span></h1>
+  <p class="bajada">Los mismos indicadores que ya muestra el panel de tienda, con la meta de cada etapa. Si una etapa no los mueve, se corrige antes de pasar a la siguiente.</p></div>
+  <div style="position:relative;z-index:1;margin-top:24px">
+    <div style="display:grid;grid-template-columns:330px 980px"><span></span><svg viewBox="0 0 980 40" width="980" height="40"><text x="60" y="26" text-anchor="middle" font-size="15" font-weight="800" fill="#9aa0ab">Hoy · prototipo</text><text x="275" y="26" text-anchor="middle" font-size="15" font-weight="800" fill="#d44307">1 · Estabilizar</text><text x="490" y="26" text-anchor="middle" font-size="15" font-weight="800" fill="#3b63d6">2 · Integrar</text><text x="705" y="26" text-anchor="middle" font-size="15" font-weight="800" fill="#7c3aed">3 · Automatizar</text><text x="920" y="26" text-anchor="middle" font-size="15" font-weight="800" fill="#15803d">4 · Innovar</text></svg></div>
+    <div style="display:grid;grid-template-columns:330px 980px;align-items:center;border-bottom:1px solid var(--linea);padding:2px 0"><b style="font-size:20px;color:var(--navy)">Espera para pagar y recoger</b><svg viewBox="0 0 980 140" width="980" height="140"><polyline points="60,118 275,61 490,55 705,48 920,42" fill="none" stroke="#e5e7eb" stroke-width="4"/><circle cx="60" cy="118" r="10" fill="#9aa0ab"/><text x="60" y="98" text-anchor="middle" font-size="19" font-weight="800" fill="#9aa0ab">14 min</text><circle cx="275" cy="61" r="10" fill="#d44307"/><text x="275" y="41" text-anchor="middle" font-size="19" font-weight="800" fill="#d44307">&lt; 5</text><circle cx="490" cy="55" r="10" fill="#3b63d6"/><text x="490" y="35" text-anchor="middle" font-size="19" font-weight="800" fill="#3b63d6">&lt; 4</text><circle cx="705" cy="48" r="10" fill="#7c3aed"/><text x="705" y="28" text-anchor="middle" font-size="19" font-weight="800" fill="#7c3aed">&lt; 3</text><circle cx="920" cy="42" r="10" fill="#15803d"/><text x="920" y="22" text-anchor="middle" font-size="19" font-weight="800" fill="#15803d">2 min</text></svg></div><div style="display:grid;grid-template-columns:330px 980px;align-items:center;border-bottom:1px solid var(--linea);padding:2px 0"><b style="font-size:20px;color:var(--navy)">Pedidos sin errores de stock</b><svg viewBox="0 0 980 140" width="980" height="140"><polyline points="60,118 275,79 490,47 705,44 920,42" fill="none" stroke="#e5e7eb" stroke-width="4"/><circle cx="60" cy="118" r="10" fill="#9aa0ab"/><text x="60" y="98" text-anchor="middle" font-size="19" font-weight="800" fill="#9aa0ab">sin medir</text><circle cx="275" cy="79" r="10" fill="#d44307"/><text x="275" y="59" text-anchor="middle" font-size="19" font-weight="800" fill="#d44307">90 %</text><circle cx="490" cy="47" r="10" fill="#3b63d6"/><text x="490" y="27" text-anchor="middle" font-size="19" font-weight="800" fill="#3b63d6">98 %</text><circle cx="705" cy="44" r="10" fill="#7c3aed"/><text x="705" y="24" text-anchor="middle" font-size="19" font-weight="800" fill="#7c3aed">99 %</text><circle cx="920" cy="42" r="10" fill="#15803d"/><text x="920" y="22" text-anchor="middle" font-size="19" font-weight="800" fill="#15803d">99 %</text></svg></div><div style="display:grid;grid-template-columns:330px 980px;align-items:center;border-bottom:1px solid var(--linea);padding:2px 0"><b style="font-size:20px;color:var(--navy)">NPS por tienda</b><svg viewBox="0 0 980 140" width="980" height="140"><polyline points="60,118 275,99 490,80 705,61 920,42" fill="none" stroke="#e5e7eb" stroke-width="4"/><circle cx="60" cy="118" r="10" fill="#9aa0ab"/><text x="60" y="98" text-anchor="middle" font-size="19" font-weight="800" fill="#9aa0ab">40</text><circle cx="275" cy="99" r="10" fill="#d44307"/><text x="275" y="79" text-anchor="middle" font-size="19" font-weight="800" fill="#d44307">45</text><circle cx="490" cy="80" r="10" fill="#3b63d6"/><text x="490" y="60" text-anchor="middle" font-size="19" font-weight="800" fill="#3b63d6">50</text><circle cx="705" cy="61" r="10" fill="#7c3aed"/><text x="705" y="41" text-anchor="middle" font-size="19" font-weight="800" fill="#7c3aed">55</text><circle cx="920" cy="42" r="10" fill="#15803d"/><text x="920" y="22" text-anchor="middle" font-size="19" font-weight="800" fill="#15803d">60</text></svg></div><div style="display:grid;grid-template-columns:330px 980px;align-items:center;border-bottom:1px solid var(--linea);padding:2px 0"><b style="font-size:20px;color:var(--navy)">Recompra en el Club 3A</b><svg viewBox="0 0 980 140" width="980" height="140"><polyline points="60,118 275,100 490,89 705,71 920,42" fill="none" stroke="#e5e7eb" stroke-width="4"/><circle cx="60" cy="118" r="10" fill="#9aa0ab"/><text x="60" y="98" text-anchor="middle" font-size="19" font-weight="800" fill="#9aa0ab">67 %</text><circle cx="275" cy="100" r="10" fill="#d44307"/><text x="275" y="80" text-anchor="middle" font-size="19" font-weight="800" fill="#d44307">70 %</text><circle cx="490" cy="89" r="10" fill="#3b63d6"/><text x="490" y="69" text-anchor="middle" font-size="19" font-weight="800" fill="#3b63d6">72 %</text><circle cx="705" cy="71" r="10" fill="#7c3aed"/><text x="705" y="51" text-anchor="middle" font-size="19" font-weight="800" fill="#7c3aed">75 %</text><circle cx="920" cy="42" r="10" fill="#15803d"/><text x="920" y="22" text-anchor="middle" font-size="19" font-weight="800" fill="#15803d">80 %</text></svg></div>
+  </div>
+  <div style="position:relative;z-index:1;margin-top:30px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center">
+    <p class="cita" style="margin:0">La transformación digital no es un destino — es la <b>capacidad constante de evolucionar junto al cliente</b>.</p>
+    <span class="chip" style="background:var(--fondo);color:var(--gris)">Punto de partida: datos del prototipo · metas propuestas por el equipo</span>
+  </div>
+  <footer class="franja"><p class="idea">Barato en precio, <span>barato en tiempo</span> · y cada vez mejor</p><p class="pie">Taller CX · Ingeniería de Sistemas de Servicio · Caso Tiendas 3A</p></footer>
+</section>
+
+</body>
+</html>
