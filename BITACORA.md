@@ -42,6 +42,7 @@ Registro de lo que se **asigna** y lo que se **hace** en el proyecto. Las tareas
 | 2026-11-10 | hecho | 27 capturas de la app publicada (cliente en celular y panel en computadora) para la presentación, en `docs/presentacion/capturas/` | PR #25 |
 | 2026-11-12 | cambio | La app queda sin botones de demo: se quitan «Simular», «Cargar datos de ejemplo» y «Modo presentación». Los pedidos y encuestas de ejemplo se cargan solos al abrir la app y se renuevan cada día; el pago QR se confirma con «Ya pagué» | este PR |
 | 2026-11-12 | cambio | CJM y entrega del taller actualizados con las 7 etapas y emociones del Taller 2 validadas por Ruth (promedio 3,1 → 4,7) | este PR |
+| 2026-11-19 | hecho | Entrega del taller «Hoja de ruta: hacia la mejora continua» en PDF (carátula + lámina): Estabilizar, Integrar, Automatizar e Innovar aplicados a Tiendas 3A | este PR |
 
 ## Ruth · Catálogo + Journey
 
